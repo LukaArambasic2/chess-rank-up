@@ -1,4 +1,4 @@
-package com.fer.tzk.rankup;
+package hr.fer.tzk.rankup;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
