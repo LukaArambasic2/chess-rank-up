@@ -1,10 +1,10 @@
-package com.fer.chess_rank_up;
+package hr.fer.tzk.rankup;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ChessRankUpApplicationTests {
+class RankUpApplicationTests {
 
 	@Test
 	void contextLoads() {

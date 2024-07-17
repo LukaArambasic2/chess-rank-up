@@ -1,3 +1,6 @@
 spring:
   application:
-    name: chess-rank-up
+    name: tzk-rank-up
+
+server:
+  port: 3000
