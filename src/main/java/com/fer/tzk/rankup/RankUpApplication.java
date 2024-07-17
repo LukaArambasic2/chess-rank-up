@@ -1,13 +1,13 @@
-package com.fer.chess_rank_up;
+package com.fer.tzk.rankup;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ChessRankUpApplication {
+public class RankUpApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ChessRankUpApplication.class, args);
+		SpringApplication.run(RankUpApplication.class, args);
 	}
 
 }
