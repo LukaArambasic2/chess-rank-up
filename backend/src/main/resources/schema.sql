@@ -45,8 +45,8 @@ CREATE TABLE Semester
 (
   idSemester SERIAL PRIMARY KEY,
   nameSemester VARCHAR(30) NOT NULL,
-  dateFrom DATE NOT NULL,
-  dateTo DATE,
+  dateFromSemester DATE NOT NULL,
+  dateToSemester DATE,
   CONSTRAINT checkDates CHECK (dateTo IS NULL OR dateTo >= dateFrom)
 );
 
@@ -61,8 +61,8 @@ CREATE TABLE Event
 (
   idEvent SERIAL PRIMARY KEY,
   nameEvent VARCHAR(30) NOT NULL,
-  dateFrom DATE NOT NULL,
-  dateTo DATE,
+  dateFromEvent DATE NOT NULL,
+  dateToEvent DATE,
   descriptionEvent VARCHAR(80) NOT NULL,
   idSection INT NOT NULL,
   idEventType INT NOT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE SectionSemester
   FOREIGN KEY (idSemester) REFERENCES Semester(idSemester),
   FOREIGN KEY (idSection) REFERENCES Section(idSection),
   FOREIGN KEY (idMember) REFERENCES Member(idMember),
-  UNIQUE (idSemester, idSection)
+  UNIQUE (idMember, idSemester, idSection)
 );
 
 CREATE TABLE News
