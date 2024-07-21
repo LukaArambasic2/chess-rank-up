@@ -11,13 +11,16 @@ public class Section {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idSection;
+    @Column(name = "idSection")
+    private Long id;
 
     @NotBlank
     @Size(max = 30)
+    @Column(name = "nameSection")
     private String name;
 
     @Size(max = 80)
+    @Column(name = "descriptionSection")
     private String description;
 
     @NotBlank
@@ -26,20 +29,16 @@ public class Section {
 
     public Section() {}
 
-    public Section(Long idSection, String name, String description, String logo) {
-        this.idSection = idSection;
+    public Section(Long id, String name, String description, String logo) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.logo = logo;
     }
 
-    public Long getIdSection() {
-        return idSection;
-    }
+    public Long getId() { return id; }
 
-    public void setIdSection(Long idSection) {
-        this.idSection = idSection;
-    }
+    public void setId(Long id) { this.id = id; }
 
     public @NotBlank @Size(max = 30) String getName() {
         return name;
@@ -68,7 +67,7 @@ public class Section {
     @Override
     public String toString() {
         return "Section{" +
-                "idSection=" + idSection +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", logo='" + logo + '\'' +
