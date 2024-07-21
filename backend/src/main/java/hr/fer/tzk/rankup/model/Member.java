@@ -13,7 +13,8 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idMember;
+    @Column(name = "idMember")
+    private Long id;
 
     @NotBlank
     @Size(max = 30)
@@ -59,12 +60,12 @@ public class Member {
         this.salt = salt;
     }
 
-    public Long getIdMember() {
-        return idMember;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdMember(Long idMember) {
-        this.idMember = idMember;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public @NotBlank @Size(max = 30) String getFirstName() {
@@ -118,7 +119,7 @@ public class Member {
     @Override
     public String toString() {
         return "Member{" +
-                "idMember=" + idMember +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", jmbag='" + jmbag + '\'' +
