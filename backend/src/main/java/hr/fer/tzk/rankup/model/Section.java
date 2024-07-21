@@ -16,29 +16,29 @@ public class Section {
 
     @NotBlank
     @Size(max = 30)
-    @Column(name = "nameSection")
+    @Column(name = "nameSection", nullable = false)
     private String name;
 
     @Size(max = 80)
-    @Column(name = "descriptionSection")
+    @Column(name = "descriptionSection", nullable = false)
     private String description;
 
-    @NotBlank
     @Size(max = 80)
     private String logo;
 
     public Section() {}
 
-    public Section(Long id, String name, String description, String logo) {
-        this.id = id;
+    public Section(String name) {
+        this.name = name;
+    }
+
+    public Section(String name, String description, String logo) {
         this.name = name;
         this.description = description;
         this.logo = logo;
     }
 
     public Long getId() { return id; }
-
-    public void setId(Long id) { this.id = id; }
 
     public @NotBlank @Size(max = 30) String getName() {
         return name;

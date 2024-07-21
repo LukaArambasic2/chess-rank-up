@@ -18,15 +18,18 @@ public class Member {
 
     @NotBlank
     @Size(max = 30)
+    @Column(nullable = false)
     private String firstName;
 
     @NotBlank
     @Size(max = 30)
+    @Column(nullable = false)
     private String lastName;
 
     @ValidJmbag
     @NotBlank
     @Size(min = 10, max = 10)
+    @Column(nullable = false)
     private String jmbag;
 
     @ValidEmail
@@ -62,10 +65,6 @@ public class Member {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public @NotBlank @Size(max = 30) String getFirstName() {
