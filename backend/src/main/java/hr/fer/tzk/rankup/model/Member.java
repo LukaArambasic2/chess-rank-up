@@ -28,12 +28,12 @@ public class Member {
     @ValidJmbag
     @NotBlank
     @Size(min = 10, max = 10)
-    @Column(name = "jmbag", nullable = false)
+    @Column(name = "jmbag", nullable = false, unique = true)
     private String jmbag;
 
     @ValidEmail
     @Size(max = 50)
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Size(max = 255)
