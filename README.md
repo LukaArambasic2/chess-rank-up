@@ -1,3 +1,5 @@
-# chess-rank-up
+# RankUp
 
-App made by FER students for our Chess club
+## About
+
+RankUp is web application where students of Croatian University of Zagreb can view their stats for PE.
