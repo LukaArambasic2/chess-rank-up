@@ -3,7 +3,8 @@ package hr.fer.tzk.rankup.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -12,35 +13,47 @@ public class Semester {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idSemester;
+    @Column(name = "idSemester")
+    private Long id;
 
     @NotBlank
     @Size(max = 30)
+    @Column(name = "nameSemester", nullable = false)
     private String name;
 
     @NotBlank
     @Temporal(TemporalType.DATE)
-    private Date dateFrom;
+    @Column(name = "dateFromSemester", nullable = false)
+    private LocalDate dateFrom;
 
     @NotBlank
     @Temporal(TemporalType.DATE)
-    private Date dateTo;
+    @Column(name = "dateToSemester", nullable = false)
+    private LocalDate dateTo;
 
-    public Semester(Long idSemester, String name, Date dateFrom, Date dateTo) {
-        this.idSemester = idSemester;
+    public Semester() {}
+
+    public Semester(String name, LocalDate dateFrom) {
+        this.name = name;
+        this.dateFrom = dateFrom;
+    }
+
+    public Semester(String name, LocalDate dateFrom, LocalDate dateTo) {
         this.name = name;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
     }
 
-    public Semester() {}
-
-    public Long getIdSemester() {
-        return idSemester;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdSemester(Long idSemester) {
-        this.idSemester = idSemester;
+    public void setDateFrom(@NotBlank LocalDate dateFrom) {
+        this.dateFrom = dateFrom;
+    }
+
+    public void setDateTo(@NotBlank LocalDate dateTo) {
+        this.dateTo = dateTo;
     }
 
     public @NotBlank @Size(max = 30) String getName() {
@@ -51,26 +64,10 @@ public class Semester {
         this.name = name;
     }
 
-    public @NotBlank Date getDateFrom() {
-        return dateFrom;
-    }
-
-    public void setDateFrom(@NotBlank Date dateFrom) {
-        this.dateFrom = dateFrom;
-    }
-
-    public @NotBlank Date getDateTo() {
-        return dateTo;
-    }
-
-    public void setDateTo(@NotBlank Date dateTo) {
-        this.dateTo = dateTo;
-    }
-
     @Override
     public String toString() {
         return "Semester{" +
-                "idSemester=" + idSemester +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", dateFrom=" + dateFrom +
                 ", dateTo=" + dateTo +
