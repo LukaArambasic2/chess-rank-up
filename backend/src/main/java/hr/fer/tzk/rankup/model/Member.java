@@ -10,7 +10,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "Member")
 public class Member {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idMember")
@@ -29,17 +28,20 @@ public class Member {
     @ValidJmbag
     @NotBlank
     @Size(min = 10, max = 10)
-    @Column(nullable = false)
+    @Column(name = "jmbag", nullable = false)
     private String jmbag;
 
     @ValidEmail
     @Size(max = 50)
+    @Column(name = "email")
     private String email;
 
     @Size(max = 255)
+    @Column(name = "passwordHash")
     private String passwordHash;
 
     @Size(max = 32)
+    @Column(name = "salt")
     private String salt;
 
     // Empty constructor
