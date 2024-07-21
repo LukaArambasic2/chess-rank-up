@@ -4,13 +4,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class JMBAGUtilsTest {
+public class JmbagUtilsTest {
 
-    private static String[] validJMBAGs;
+    private static String[] validJmbags;
 
     @BeforeAll
     public static void setUp() {
-        validJMBAGs = new String[] {
+        validJmbags = new String[] {
                 "0006040945", "0036533665", "0036538219", "0036539669", "0036540976", "0036542367", "0036543684",
                 "0016140662", "0036533670", "0036538245", "0036539718", "0036540997", "0036542372", "0036543707",
                 "0035214385", "0036533777", "0036538250", "0036539723", "0036541060", "0036542388", "0036543712",
@@ -61,43 +61,44 @@ public class JMBAGUtilsTest {
 
     @Test
     public void should_return_false_because_wrong_length() {
-        final String validJMBAG = validJMBAGs[0];
-        final String invalidJMBAG1 = validJMBAG + '1'; // too long
-        final String invalidJMBAG2 = validJMBAG.substring(0, validJMBAG.length() - 1); // too short
+        final String validJmbag = validJmbags[0];
+        final String invalidJmbag1 = validJmbag + '1'; // Too long
+        final String invalidJmbag2 = validJmbag.substring(0, validJmbag.length() - 1); // Too short
 
-        assertThat(JMBAGUtils.validateJMBAG(invalidJMBAG1)).isEqualTo(false);
-        assertThat(JMBAGUtils.validateJMBAG(invalidJMBAG2)).isEqualTo(false);
+        assertThat(JmbagUtils.validateJmbag(invalidJmbag1)).isEqualTo(false);
+        assertThat(JmbagUtils.validateJmbag(invalidJmbag2)).isEqualTo(false);
     }
 
     @Test
     public void should_return_false_because_non_digit_char() {
-        final String validJMBAG = validJMBAGs[0];
-        final String invalidJMBAG1 = 'a' + validJMBAG.substring(1);
-        final String invalidJMBAG2 = validJMBAG.substring(0, validJMBAG.length() - 1) + 'a';
-        assertThat(JMBAGUtils.validateJMBAG(invalidJMBAG1)).isEqualTo(false);
-        assertThat(JMBAGUtils.validateJMBAG(invalidJMBAG2)).isEqualTo(false);
+        final String validJmbag = validJmbags[0];
+        final String invalidJmbag1 = 'a' + validJmbag.substring(1);
+        final String invalidJmbag2 = validJmbag.substring(0, validJmbag.length() - 1) + 'a';
+        assertThat(JmbagUtils.validateJmbag(invalidJmbag1)).isEqualTo(false);
+        assertThat(JmbagUtils.validateJmbag(invalidJmbag2)).isEqualTo(false);
     }
 
     @Test
     public void should_return_false_because_wrong_digit() {
-        // eg. "123456789", pick digit 1 and then go through 2, 3, ..., 9 and return it to the original JMBAG
-        // it should be invalid
-        // do that for all digits for all valid JMBAGs
+        // Eg. JMBAG is "123456789"
+        // Pick digit 1 and then go through 2, 3, ..., 9 and swap it with its original place in JMBAG
+        // JMBAG should be invalid after that change
+        // Do that for all digits for all valid JMBAGs
 
-        // doesn't work for some reason
+        // Doesn't work for some reason
         /*
-        for (String validJMBAG : validJMBAGs) {
-            for (int i = 0; i < validJMBAG.length(); i++) {
-                char originalChar = validJMBAG.charAt(i);
+        for (String validJmbag : validJmbags) {
+            for (int i = 0; i < validJmbag.length(); i++) {
+                char originalChar = validJmbag.charAt(i);
                 for (char newChar = '0'; newChar <= '9'; newChar++) {
                     if (newChar != originalChar) {
-                        String invalidJMBAG = validJMBAG.substring(0, i) + newChar + validJMBAG.substring(i + 1);
-                        boolean result = JMBAGUtils.validateJMBAG(invalidJMBAG);
+                        String invalidJmbag = validJmbag.substring(0, i) + newChar + validJmbag.substring(i + 1);
+                        boolean result = JmbagUtils.validateJmbag(invalidJmbag);
                         if (result) {
-                            System.out.println("Origianl JMBAG: " + validJMBAG);
-                            System.out.println("Invalid JMBAG: " + invalidJMBAG);
+                            System.out.println("Original JMBAG: " + validJmbag);
+                            System.out.println("Invalid JMBAG: " + invalidJmbag);
                         }
-                        assertThat(JMBAGUtils.validateJMBAG(invalidJMBAG)).isEqualTo(false);
+                        assertThat(JmbagUtils.validateJMBAG(invalidJmbag)).isEqualTo(false);
                     }
                 }
             }
@@ -107,8 +108,8 @@ public class JMBAGUtilsTest {
 
     @Test
     public void should_return_true() {
-        for (String JMBAG : validJMBAGs) {
-            assertThat(JMBAGUtils.validateJMBAG(JMBAG)).isEqualTo(true);
+        for (String jmbag : validJmbags) {
+            assertThat(JmbagUtils.validateJmbag(jmbag)).isEqualTo(true);
         }
     }
 }
