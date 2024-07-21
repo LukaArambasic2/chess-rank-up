@@ -47,7 +47,7 @@ CREATE TABLE Semester
   nameSemester VARCHAR(30) NOT NULL,
   dateFromSemester DATE NOT NULL,
   dateToSemester DATE,
-  CONSTRAINT checkDates CHECK (dateTo IS NULL OR dateTo >= dateFrom)
+  CONSTRAINT checkDates CHECK (dateToSemester IS NULL OR dateToSemester >= dateFromSemester)
 );
 
 CREATE TABLE EventType 
