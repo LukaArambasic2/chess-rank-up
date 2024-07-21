@@ -1,5 +1,7 @@
 package hr.fer.tzk.rankup.model;
 
+import hr.fer.tzk.rankup.validation.ValidEmail;
+import hr.fer.tzk.rankup.validation.ValidJmbag;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -11,7 +13,8 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idMember;
+    @Column(name = "idMember")
+    private Long id;
 
     @NotBlank
     @Size(max = 30)
@@ -21,10 +24,12 @@ public class Member {
     @Size(max = 30)
     private String lastName;
 
+    @ValidJmbag
     @NotBlank
     @Size(min = 10, max = 10)
     private String jmbag;
 
+    @ValidEmail
     @Size(max = 50)
     private String email;
 
@@ -34,8 +39,18 @@ public class Member {
     @Size(max = 32)
     private String salt;
 
+    // Empty constructor
     public Member() {}
 
+    // Use case: Member is added in a database by the section leader
+    public Member(String firstName, String lastName, String jmbag) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.jmbag = jmbag;
+    }
+
+    // General full args constructor
+    // Use case: Member is added after registration
     public Member(String firstName, String lastName, String jmbag, String email, String passwordHash, String salt) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,12 +60,12 @@ public class Member {
         this.salt = salt;
     }
 
-    public Long getIdMember() {
-        return idMember;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdMember(Long idMember) {
-        this.idMember = idMember;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public @NotBlank @Size(max = 30) String getFirstName() {
@@ -69,19 +84,19 @@ public class Member {
         this.lastName = lastName;
     }
 
-    public @NotBlank @Size(min = 10, max = 10) String getJmbag() {
+    public @ValidJmbag @NotBlank @Size(min = 10, max = 10) String getJmbag() {
         return jmbag;
     }
 
-    public void setJmbag(@NotBlank @Size(min = 10, max = 10) String jmbag) {
+    public void setJmbag(@ValidJmbag @NotBlank @Size(min = 10, max = 10) String jmbag) {
         this.jmbag = jmbag;
     }
 
-    public @Size(max = 50) String getEmail() {
+    public @ValidEmail @Size(max = 50) String getEmail() {
         return email;
     }
 
-    public void setEmail(@Size(max = 50) String email) {
+    public void setEmail(@ValidEmail @Size(max = 50) String email) {
         this.email = email;
     }
 
@@ -104,13 +119,12 @@ public class Member {
     @Override
     public String toString() {
         return "Member{" +
-                "idMember=" + idMember +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", jmbag='" + jmbag + '\'' +
                 ", email='" + email + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
-                ", salt='" + salt + '\'' +
                 '}';
     }
 
