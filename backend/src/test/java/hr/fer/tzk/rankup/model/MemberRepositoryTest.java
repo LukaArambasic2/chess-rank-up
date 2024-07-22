@@ -20,7 +20,7 @@ public class MemberRepositoryTest {
     @Test
     @DirtiesContext
     public void shouldAddMember() {
-        Member member = new Member("Hrvoje", "Horvat", "1234567890");
+        Member member = new Member("Hrvoje", "Horvat", "1234567890", "hh56789@fer.hr");
         memberRepository.save(member);
         assertNotNull(member.getId());
     }
@@ -49,7 +49,7 @@ public class MemberRepositoryTest {
 
     @Test
     @DirtiesContext
-    public void shouldDeclineBecauseInvalidJmbag() {
+    public void shouldGiveErrorBecauseInvalidJmbag() {
         Exception exception1 = assertThrows(IllegalArgumentException.class, () -> {
             Member member1 = new Member("Hrvoje", "Horvat", "123456789");
         });
@@ -60,6 +60,14 @@ public class MemberRepositoryTest {
 
         Exception exception3 = assertThrows(IllegalArgumentException.class, () -> {
             Member member3 = new Member("Hrvoje", "Horvat", "1234567891");
+        });
+    }
+
+    @Test
+    @DirtiesContext
+    public void shouldGiveErrorBecauseNotMatchingJmbagAndEmail() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            Member member = new Member("Hrvoje", "Horvat", "1234567890", "hh56788@fer.hr");
         });
     }
 }
