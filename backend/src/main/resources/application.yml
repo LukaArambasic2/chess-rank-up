@@ -2,25 +2,6 @@ spring:
     application:
         name: tzk-rank-up
 
-    # H2 database for testing
-    #  datasource:
-    #    url: jdbc:h2:mem:testdb;MODE=PostgreSQL
-    #    driver-class-name: org.h2.Driver
-    #    username: rankupadmin
-    #    password: rankupadmin
-    #    h2:
-    #      console:
-    #        enabled: true
-    #        path: /h2-console
-    #
-    #  jpa:
-    #    show-sql: true
-    #    hibernate:
-    #      ddl-auto: validate
-    #      naming:
-    #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    #        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-
     datasource:
         url: jdbc:postgresql://localhost:5432/rankupdb
         username: rankupadmin
