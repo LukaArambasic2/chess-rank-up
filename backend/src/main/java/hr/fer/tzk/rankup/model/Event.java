@@ -1,57 +1,80 @@
 package hr.fer.tzk.rankup.model;
 
-import java.util.Date;
-import java.util.Objects;
+import java.time.LocalDate;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "Event")
 public class Event {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idEvent;
+    @Column(name = "idEvent")
+    private Long id;
 
     @NotBlank
     @Size(max = 30)
+    @Column(name = "nameEvent", nullable = false)
     private String name;
 
-    @Min(0)
-    private long defaultPoints;
+    @NotBlank
+    @Temporal(TemporalType.DATE)
+    @Column(name = "dateFromEvent", nullable = false)
+    private LocalDate dateFrom;
 
     @NotBlank
-    @Temporal(TemporalType.DATE) //ovo provjerit, mislim da je okej
-    private Date date;
-
+    @Temporal(TemporalType.DATE)
+    @Column(name = "dateToEvent", nullable = false)
+    private LocalDate dateTo;
+    
     @Size(max = 80)
+    @Column(name = "descriptionEvent")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "idSection", nullable = false)
-    //ovo mi je chatGPT rekao da stavim, cini mi se da je okej,
-    //tip je Section jer vuce type iz Sectiona tek
-    private Section idSection;
+    private Section section;
 
-    public Event() {}
+    @ManyToOne
+    @JoinColumn(name = "idEventType", nullable = false)
+    private EventType eventType;
 
-    public Event(Long idEvent, String name, long defaultPoints, Date date, String description, Section idSection) {
-        this.idEvent = idEvent;
+    public Event() { }
+
+    public Event(String name, LocalDate dateFrom, Section section, EventType eventType) {
         this.name = name;
-        this.defaultPoints = defaultPoints;
-        this.date = date;
+        this.dateFrom = dateFrom;
+        this.section = section;
+        this.eventType = eventType;
+    }
+
+    public Event(String name, LocalDate dateFrom, String description, Section section, EventType eventType) {
+        this.name = name;
+        this.dateFrom = dateFrom;
         this.description = description;
-        this.idSection = idSection;
+        this.section = section;
+        this.eventType = eventType;
     }
 
-    public Long getIdEvent() {
-        return idEvent;
+    public Event(String name, LocalDate dateFrom, LocalDate dateTo, String description, Section section, EventType eventType) {
+        if (dateFrom.isAfter(dateTo)) {
+            throw new IllegalArgumentException("Date from must be before date to");
+        }
+        this.name = name;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.description = description;
+        this.section = section;
+        this.eventType = eventType;
     }
 
-    public void setIdEvent(Long idEvent) {
-        this.idEvent = idEvent;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public @NotBlank @Size(max = 30) String getName() {
@@ -62,21 +85,26 @@ public class Event {
         this.name = name;
     }
 
-    @Min(0)
-    public long getDefaultPoints() {
-        return defaultPoints;
+    public @NotBlank LocalDate getDateFrom() {
+        return dateFrom;
     }
 
-    public void setDefaultPoints(@Min(0) long defaultPoints) {
-        this.defaultPoints = defaultPoints;
+    public void setDateFrom(@NotBlank LocalDate dateFrom) {
+        if (dateFrom.isAfter(dateTo)) {
+            throw new IllegalArgumentException("Date from must be before date to");
+        }
+        this.dateFrom = dateFrom;
     }
 
-    public @NotBlank Date getDate() {
-        return date;
+    public @NotBlank LocalDate getDateTo() {
+        return dateTo;
     }
 
-    public void setDate(@NotBlank Date date) {
-        this.date = date;
+    public void setDateTo(@NotBlank LocalDate dateTo) {
+        if (dateFrom.isAfter(dateTo)) {
+            throw new IllegalArgumentException("Date from must be before date to");
+        }
+        this.dateTo = dateTo;
     }
 
     public @Size(max = 80) String getDescription() {
@@ -87,37 +115,19 @@ public class Event {
         this.description = description;
     }
 
-    public Section getIdSection() {
-        return idSection;
+    public Section getSection() {
+        return section;
     }
 
-    public void setIdSection(Section idSection) {
-        this.idSection = idSection;
+    public void setSection(Section section) {
+        this.section = section;
     }
 
-    @Override
-    public String toString() {
-        return "Event{" +
-                "idEvent=" + idEvent +
-                ", name='" + name + '\'' +
-                ", defaultPoints=" + defaultPoints +
-                ", date=" + date +
-                ", description='" + description + '\'' +
-                ", idSection=" + idSection +
-                '}';
+    public EventType getEventType() {
+        return eventType;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Event event = (Event) o;
-        return Objects.equals(name, event.name) && Objects.equals(date, event.date) && Objects.equals(idSection, event.idSection);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, date, idSection);
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
     }
 }
-
