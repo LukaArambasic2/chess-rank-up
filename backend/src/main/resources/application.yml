@@ -2,32 +2,22 @@ spring:
     application:
         name: tzk-rank-up
 
-    # H2 database for testing
-#    datasource:
-#        url: jdbc:h2:mem:testdb
-#        driver-class-name: org.h2.Driver
-#        username: sa
-#        password: password
-#    h2:
-#        console:
-#            enabled: true
-#            path: /h2-console
-#    jpa:
-#        hibernate:
-#            ddl-auto: update
-#        show-sql: true
     datasource:
         url: jdbc:postgresql://localhost:5432/rankupdb
-        username: postgres
-        password: postgres
+        username: rankupadmin
+        password: rankupadmin
         driver-class-name: org.postgresql.Driver
 
     jpa:
-        hibernate:
-            ddl-auto: update
         show-sql: true
+        hibernate:
+            ddl-auto: validate
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+                implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
+
 server:
     port: 3000

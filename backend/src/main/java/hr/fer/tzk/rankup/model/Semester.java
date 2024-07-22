@@ -39,6 +39,9 @@ public class Semester {
     }
 
     public Semester(String name, LocalDate dateFrom, LocalDate dateTo) {
+        if (dateFrom.isAfter(dateTo)) {
+            throw new IllegalArgumentException("dateFrom must be after dateTo");
+        }
         this.name = name;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
@@ -48,12 +51,26 @@ public class Semester {
         return id;
     }
 
-    public void setDateFrom(@NotBlank LocalDate dateFrom) {
-        this.dateFrom = dateFrom;
+    public @NotBlank LocalDate getDateTo() {
+        return dateTo;
     }
 
     public void setDateTo(@NotBlank LocalDate dateTo) {
+        if (dateFrom.isAfter(dateTo)) {
+            throw new IllegalArgumentException("dateFrom must be after dateTo");
+        }
         this.dateTo = dateTo;
+    }
+
+    public @NotBlank LocalDate getDateFrom() {
+        return dateFrom;
+    }
+
+    public void setDateFrom(@NotBlank LocalDate dateFrom) {
+        if (dateTo != null && dateFrom.isAfter(dateTo)) {
+            throw new IllegalArgumentException("dateFrom must be after dateTo");
+        }
+        this.dateFrom = dateFrom;
     }
 
     public @NotBlank @Size(max = 30) String getName() {

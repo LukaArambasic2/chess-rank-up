@@ -13,10 +13,11 @@ DROP TABLE IF EXISTS MemberInfo CASCADE;
 
 CREATE TABLE Member
 (
-  idMember SERIAL PRIMARY KEY,
+  idMember BIGSERIAL PRIMARY KEY,
   firstName VARCHAR(30) NOT NULL,
   lastName VARCHAR(30) NOT NULL,
-  jmbag CHAR(10) NOT NULL,
+  -- jmbag CHAR(10) NOT NULL,
+  jmbag VARCHAR(10) NOT NULL CHECK (LENGTH(jmbag) = 10),
   email VARCHAR(50),
 
   -- 2 bytes for '{' and '}', 10 bytes for name of encoder
@@ -33,49 +34,49 @@ CREATE TABLE Member
 
 CREATE TABLE Section
 (
-  idSection SERIAL PRIMARY KEY,
+  idSection BIGSERIAL PRIMARY KEY,
   nameSection VARCHAR(30) NOT NULL,
   descriptionSection VARCHAR(80) NOT NULL,
   logo VARCHAR(80)
 );
 
--- TODO: in backend add constraint so no new semester can intefer with the interval: [dateFrom, dateTo]
+-- TODO: in backend add constraint so no new semester can interfere with the interval: [dateFrom, dateTo]
 -- of any other semester
 CREATE TABLE Semester
 (
-  idSemester SERIAL PRIMARY KEY,
+  idSemester BIGSERIAL PRIMARY KEY,
   nameSemester VARCHAR(30) NOT NULL,
   dateFromSemester DATE NOT NULL,
   dateToSemester DATE,
-  CONSTRAINT checkDates CHECK (dateTo IS NULL OR dateTo >= dateFrom)
+  CONSTRAINT checkDates CHECK (dateToSemester IS NULL OR dateToSemester >= dateFromSemester)
 );
 
 CREATE TABLE EventType 
 (
-  idEventType SERIAL PRIMARY KEY,
+  idEventType BIGSERIAL PRIMARY KEY,
   nameEventType VARCHAR(30) NOT NULL,
   defaultPoints INT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE Event
 (
-  idEvent SERIAL PRIMARY KEY,
+  idEvent BIGSERIAL PRIMARY KEY,
   nameEvent VARCHAR(30) NOT NULL,
   dateFromEvent DATE NOT NULL,
   dateToEvent DATE,
   descriptionEvent VARCHAR(80) NOT NULL,
-  idSection INT NOT NULL,
-  idEventType INT NOT NULL,
+  idSection BIGINT NOT NULL,
+  idEventType BIGINT NOT NULL,
   FOREIGN KEY (idSection) REFERENCES Section(idSection),
   FOREIGN KEY (idEventType) REFERENCES EventType(idEventType)
 );
 
 CREATE TABLE Participation
 (
-  idParticipation SERIAL PRIMARY KEY,
+  idParticipation BIGSERIAL PRIMARY KEY,
   addPoints INT NOT NULL DEFAULT 0,
-  idMember INT NOT NULL,
-  idEvent INT NOT NULL,
+  idMember BIGINT NOT NULL,
+  idEvent BIGINT NOT NULL,
   FOREIGN KEY (idMember) REFERENCES Member(idMember),
   FOREIGN KEY (idEvent) REFERENCES Event(idEvent),
   UNIQUE(idMember, idEvent)
@@ -83,7 +84,7 @@ CREATE TABLE Participation
 
 CREATE TABLE Rank
 (
-  idRank SERIAL PRIMARY KEY,
+  idRank BIGSERIAL PRIMARY KEY,
   nameRank VARCHAR(30) NOT NULL,
   image VARCHAR(80),
   pointsModifier INT NOT NULL DEFAULT 0,
@@ -95,19 +96,19 @@ CREATE TABLE Rank
 
 CREATE TABLE Attribute
 (
-  idAttribute SERIAL PRIMARY KEY,
+  idAttribute BIGSERIAL PRIMARY KEY,
   nameAttribute VARCHAR(30) NOT NULL,
   dataType VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE SectionSemester
 (
-  idSectionSemester SERIAL PRIMARY KEY,
+  idSectionSemester BIGSERIAL PRIMARY KEY,
   threshold INT NOT NULL,
   points INT NOT NULL DEFAULT 0,
-  idSemester INT NOT NULL,
-  idSection INT NOT NULL,
-  idMember INT NOT NULL,
+  idSemester BIGINT NOT NULL,
+  idSection BIGINT NOT NULL,
+  idMember BIGINT NOT NULL,
   FOREIGN KEY (idSemester) REFERENCES Semester(idSemester),
   FOREIGN KEY (idSection) REFERENCES Section(idSection),
   FOREIGN KEY (idMember) REFERENCES Member(idMember),
@@ -116,26 +117,26 @@ CREATE TABLE SectionSemester
 
 CREATE TABLE News
 (
-  idNews SERIAL PRIMARY KEY,
+  idNews BIGSERIAL PRIMARY KEY,
   title VARCHAR(80) NOT NULL,
   timestampCreated DATE NOT NULL,
   timestampEdited DATE,
   content VARCHAR(80) NOT NULL,
   images VARCHAR(80),
-  idSection INT NOT NULL,
-  idAuthor INT NOT NULL,
+  idSection BIGINT NOT NULL,
+  idAuthor BIGINT NOT NULL,
   FOREIGN KEY (idSection) REFERENCES Section(idSection),
   FOREIGN KEY (idAuthor) REFERENCES Member(idMember)
 );
 
 CREATE TABLE SectionMember
 (
-  idSectionMember SERIAL PRIMARY KEY,
+  idSectionMember BIGSERIAL PRIMARY KEY,
   isActive BOOLEAN NOT NULL,
   pointsAll INT NOT NULL DEFAULT 0,
-  idMember INT NOT NULL,
-  idSection INT NOT NULL,
-  idRank INT NOT NULL,
+  idMember BIGINT NOT NULL,
+  idSection BIGINT NOT NULL,
+  idRank BIGINT NOT NULL,
   FOREIGN KEY (idMember) REFERENCES Member(idMember),
   FOREIGN KEY (idSection) REFERENCES Section(idSection),
   FOREIGN KEY (idRank) REFERENCES Rank(idRank),
@@ -144,12 +145,12 @@ CREATE TABLE SectionMember
 
 CREATE TABLE MemberInfo
 (
-  idInfo SERIAL PRIMARY KEY,
+  idInfo BIGSERIAL PRIMARY KEY,
   stringValue VARCHAR(40), -- can be added later
   showOnProfile BOOLEAN NOT NULL DEFAULT FALSE,
-  idSection INT NOT NULL,
-  idAttribute INT NOT NULL,
-  idMember INT NOT NULL,
+  idSection BIGINT NOT NULL,
+  idAttribute BIGINT NOT NULL,
+  idMember BIGINT NOT NULL,
   FOREIGN KEY (idSection) REFERENCES Section(idSection),
   FOREIGN KEY (idAttribute) REFERENCES Attribute(idAttribute),
   FOREIGN KEY (idMember) REFERENCES Member(idMember),
