@@ -93,7 +93,6 @@ CREATE TABLE Rank
   FOREIGN KEY (idSection) REFERENCES Section(idSection)
 );
 
-
 CREATE TABLE Attribute
 (
   idAttribute BIGSERIAL PRIMARY KEY,
