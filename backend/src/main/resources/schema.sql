@@ -40,7 +40,7 @@ CREATE TABLE Section
   logo VARCHAR(80)
 );
 
--- TODO: in backend add constraint so no new semester can intefer with the interval: [dateFrom, dateTo]
+-- TODO: in backend add constraint so no new semester can interfere with the interval: [dateFrom, dateTo]
 -- of any other semester
 CREATE TABLE Semester
 (
@@ -65,8 +65,8 @@ CREATE TABLE Event
   dateFromEvent DATE NOT NULL,
   dateToEvent DATE,
   descriptionEvent VARCHAR(80) NOT NULL,
-  idSection INT NOT NULL,
-  idEventType INT NOT NULL,
+  idSection BIGINT NOT NULL,
+  idEventType BIGINT NOT NULL,
   FOREIGN KEY (idSection) REFERENCES Section(idSection),
   FOREIGN KEY (idEventType) REFERENCES EventType(idEventType)
 );
@@ -75,8 +75,8 @@ CREATE TABLE Participation
 (
   idParticipation BIGSERIAL PRIMARY KEY,
   addPoints INT NOT NULL DEFAULT 0,
-  idMember INT NOT NULL,
-  idEvent INT NOT NULL,
+  idMember BIGINT NOT NULL,
+  idEvent BIGINT NOT NULL,
   FOREIGN KEY (idMember) REFERENCES Member(idMember),
   FOREIGN KEY (idEvent) REFERENCES Event(idEvent),
   UNIQUE(idMember, idEvent)
@@ -123,8 +123,8 @@ CREATE TABLE News
   timestampEdited DATE,
   content VARCHAR(80) NOT NULL,
   images VARCHAR(80),
-  idSection INT NOT NULL,
-  idAuthor INT NOT NULL,
+  idSection BIGINT NOT NULL,
+  idAuthor BIGINT NOT NULL,
   FOREIGN KEY (idSection) REFERENCES Section(idSection),
   FOREIGN KEY (idAuthor) REFERENCES Member(idMember)
 );
@@ -134,9 +134,9 @@ CREATE TABLE SectionMember
   idSectionMember BIGSERIAL PRIMARY KEY,
   isActive BOOLEAN NOT NULL,
   pointsAll INT NOT NULL DEFAULT 0,
-  idMember INT NOT NULL,
-  idSection INT NOT NULL,
-  idRank INT NOT NULL,
+  idMember BIGINT NOT NULL,
+  idSection BIGINT NOT NULL,
+  idRank BIGINT NOT NULL,
   FOREIGN KEY (idMember) REFERENCES Member(idMember),
   FOREIGN KEY (idSection) REFERENCES Section(idSection),
   FOREIGN KEY (idRank) REFERENCES Rank(idRank),
@@ -148,9 +148,9 @@ CREATE TABLE MemberInfo
   idInfo BIGSERIAL PRIMARY KEY,
   stringValue VARCHAR(40), -- can be added later
   showOnProfile BOOLEAN NOT NULL DEFAULT FALSE,
-  idSection INT NOT NULL,
-  idAttribute INT NOT NULL,
-  idMember INT NOT NULL,
+  idSection BIGINT NOT NULL,
+  idAttribute BIGINT NOT NULL,
+  idMember BIGINT NOT NULL,
   FOREIGN KEY (idSection) REFERENCES Section(idSection),
   FOREIGN KEY (idAttribute) REFERENCES Attribute(idAttribute),
   FOREIGN KEY (idMember) REFERENCES Member(idMember),
