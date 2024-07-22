@@ -1,5 +1,7 @@
 package hr.fer.tzk.rankup.model;
 
+import hr.fer.tzk.rankup.utils.EmailUtils;
+import hr.fer.tzk.rankup.utils.JmbagUtils;
 import hr.fer.tzk.rankup.validation.ValidEmail;
 import hr.fer.tzk.rankup.validation.ValidJmbag;
 import jakarta.persistence.*;
@@ -8,7 +10,10 @@ import jakarta.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Member")
+@Table(name = "Member", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "jmbag"),
+        @UniqueConstraint(columnNames = "email")
+})
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,16 +52,42 @@ public class Member {
     // Empty constructor
     public Member() {}
 
-    // Use case: Member is added in a database by the section leader
+    // Use case: Member is added by the section leader into the database
     public Member(String firstName, String lastName, String jmbag) {
+        if (!JmbagUtils.validateJmbag(jmbag)) {
+            throw new IllegalArgumentException("Invalid JMBAG");
+        }
         this.firstName = firstName;
         this.lastName = lastName;
         this.jmbag = jmbag;
     }
 
+    // Use case: Member is added by the section leader into the database with email specified
+    public Member(String firstName, String lastName, String jmbag, String email) {
+        if (!JmbagUtils.validateJmbag(jmbag)) {
+            throw new IllegalArgumentException("Invalid JMBAG");
+        } else if (!EmailUtils.validateEmail(email)) {
+            throw new IllegalArgumentException("Invalid email");
+        }
+        else if (!email.substring(2, 7).equals(jmbag.substring(4, 9))) {
+            throw new IllegalArgumentException("Middle part of email and JMBAG don't match");
+        }
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.jmbag = jmbag;
+        this.email = email;
+    }
+
     // General full args constructor
     // Use case: Member is added after registration
     public Member(String firstName, String lastName, String jmbag, String email, String passwordHash, String salt) {
+        if (!JmbagUtils.validateJmbag(jmbag)) {
+            throw new IllegalArgumentException("Invalid jmbag");
+        } else if (!EmailUtils.validateEmail(email)) {
+            throw new IllegalArgumentException("Invalid email");
+        } else if (!email.substring(2, 7).equals(jmbag.substring(4, 9))) {
+            throw new IllegalArgumentException("Middle part of email and JMBAG don't match");
+        }
         this.firstName = firstName;
         this.lastName = lastName;
         this.jmbag = jmbag;
@@ -90,6 +121,11 @@ public class Member {
     }
 
     public void setJmbag(@ValidJmbag @NotBlank @Size(min = 10, max = 10) String jmbag) {
+        if (!JmbagUtils.validateJmbag(jmbag)) {
+            throw new IllegalArgumentException("Invalid JMBAG");
+        } else if (!email.substring(2, 7).equals(jmbag.substring(4, 9))) {
+            throw new IllegalArgumentException("Middle part of email and JMBAG don't match");
+        }
         this.jmbag = jmbag;
     }
 
@@ -98,6 +134,11 @@ public class Member {
     }
 
     public void setEmail(@ValidEmail @Size(max = 50) String email) {
+        if (!EmailUtils.validateEmail(email)) {
+            throw new IllegalArgumentException("Invalid email");
+        } else if (!email.substring(2, 7).equals(jmbag.substring(4, 9))) {
+            throw new IllegalArgumentException("Middle part of email and JMBAG don't match");
+        }
         this.email = email;
     }
 
