@@ -123,7 +123,7 @@ public class Member {
     public void setJmbag(@ValidJmbag @NotBlank @Size(min = 10, max = 10) String jmbag) {
         if (!JmbagUtils.validateJmbag(jmbag)) {
             throw new IllegalArgumentException("Invalid JMBAG");
-        } else if (!email.substring(2, 7).equals(jmbag.substring(4, 9))) {
+        } else if (email != null && !email.substring(2, 7).equals(jmbag.substring(4, 9))) {
             throw new IllegalArgumentException("Middle part of email and JMBAG don't match");
         }
         this.jmbag = jmbag;
