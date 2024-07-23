@@ -14,6 +14,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.annotation.DirtiesContext.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class SectionControllerTest {
     TestRestTemplate restTemplate;
 
     @Test
+    @DirtiesContext
     void shouldReturnAllSections() {
         ResponseEntity<List<Section>> response = restTemplate.exchange(
                 "/sections",
@@ -42,7 +44,26 @@ public class SectionControllerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         List<Section> sections = response.getBody();
         assertNotNull(sections);
-        assertThat(sections.size()).isEqualTo(1);
+        assertThat(sections.size()).isEqualTo(2);
         assertThat(sections.get(0)).isEqualTo(section);
+    }
+
+    @Test
+    @DirtiesContext
+    void shouldReturnSectionChess() {
+        ResponseEntity<Section> response = restTemplate.getForEntity("/sections/1", Section.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        Section section = response.getBody();
+        assertNotNull(section);
+        assertThat(section.getName()).isEqualTo("Chess");
+        assertThat(section.getDescription()).isEqualTo("We are FER's Chess section");
+    }
+
+    @Test
+    void shouldReturnNotFoundSection() {
+        ResponseEntity<Section> response = restTemplate.getForEntity("/sections/100", Section.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        Section section = response.getBody();
+        assertNull(section);
     }
 }
