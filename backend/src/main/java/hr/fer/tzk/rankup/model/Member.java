@@ -69,9 +69,14 @@ public class Member {
         } else if (!EmailUtils.validateEmail(email)) {
             throw new IllegalArgumentException("Invalid email");
         }
-        else if (!email.substring(2, 7).equals(jmbag.substring(4, 9))) {
+        // TODO: Check for two versions of email, eg. ii45678@fer.hr and ivan.ivanovic@fer.hr are both valid
+        // but only one should be checked if it is compatible with JMBAG.
+        // Or remove feature altogether.
+        /*
+        else if (email != null && !email.substring(2, 7).equals(jmbag.substring(4, 9))) {
             throw new IllegalArgumentException("Middle part of email and JMBAG don't match");
         }
+        */
         this.firstName = firstName;
         this.lastName = lastName;
         this.jmbag = jmbag;
@@ -85,9 +90,12 @@ public class Member {
             throw new IllegalArgumentException("Invalid jmbag");
         } else if (!EmailUtils.validateEmail(email)) {
             throw new IllegalArgumentException("Invalid email");
-        } else if (!email.substring(2, 7).equals(jmbag.substring(4, 9))) {
+        }
+        /*
+        else if (email != null && !email.substring(2, 7).equals(jmbag.substring(4, 9))) {
             throw new IllegalArgumentException("Middle part of email and JMBAG don't match");
         }
+        */
         this.firstName = firstName;
         this.lastName = lastName;
         this.jmbag = jmbag;
@@ -123,9 +131,12 @@ public class Member {
     public void setJmbag(@ValidJmbag @NotBlank @Size(min = 10, max = 10) String jmbag) {
         if (!JmbagUtils.validateJmbag(jmbag)) {
             throw new IllegalArgumentException("Invalid JMBAG");
-        } else if (email != null && !email.substring(2, 7).equals(jmbag.substring(4, 9))) {
+        }
+        /*
+        else if (email != null && email != null && !email.substring(2, 7).equals(jmbag.substring(4, 9))) {
             throw new IllegalArgumentException("Middle part of email and JMBAG don't match");
         }
+        */
         this.jmbag = jmbag;
     }
 
@@ -136,9 +147,13 @@ public class Member {
     public void setEmail(@ValidEmail @Size(max = 50) String email) {
         if (!EmailUtils.validateEmail(email)) {
             throw new IllegalArgumentException("Invalid email");
-        } else if (!email.substring(2, 7).equals(jmbag.substring(4, 9))) {
+        }
+        /*
+        else if (email != null && !email.substring(2, 7).equals(jmbag.substring(4, 9))) {
             throw new IllegalArgumentException("Middle part of email and JMBAG don't match");
         }
+        */
+
         this.email = email;
     }
 
