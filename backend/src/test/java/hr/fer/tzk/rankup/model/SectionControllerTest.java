@@ -29,7 +29,6 @@ public class SectionControllerTest {
     TestRestTemplate restTemplate;
 
     @Test
-    @DirtiesContext
     void shouldReturnAllSections() {
         ResponseEntity<List<Section>> response = restTemplate.exchange(
                 "/sections",
@@ -49,7 +48,6 @@ public class SectionControllerTest {
     }
 
     @Test
-    @DirtiesContext
     void shouldReturnSectionChess() {
         ResponseEntity<Section> response = restTemplate.getForEntity("/sections/1", Section.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
