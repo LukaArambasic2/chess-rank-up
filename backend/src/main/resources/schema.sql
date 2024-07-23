@@ -89,7 +89,7 @@ CREATE TABLE Rank
   image VARCHAR(80),
   pointsModifier INT NOT NULL DEFAULT 0,
   pointsRequired INT,  -- NULL if it is impossible to get that rank with the points alone  
-  idSection INT NOT NULL,
+  idSection BIGINT NOT NULL,
   FOREIGN KEY (idSection) REFERENCES Section(idSection)
 );
 
@@ -131,7 +131,7 @@ CREATE TABLE News
 CREATE TABLE SectionMember
 (
   idSectionMember BIGSERIAL PRIMARY KEY,
-  isActive BOOLEAN NOT NULL,
+  isActive BOOLEAN NOT NULL DEFAULT TRUE,
   pointsAll INT NOT NULL DEFAULT 0,
   idMember BIGINT NOT NULL,
   idSection BIGINT NOT NULL,
