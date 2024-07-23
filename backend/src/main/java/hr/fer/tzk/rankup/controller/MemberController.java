@@ -36,7 +36,7 @@ public class MemberController {
     }
 
     // TODO: Fix this function
-    // It should return BAD_REQUEST if JMBAG or EMAIL already exist
+    // It should return BAD_REQUEST if JMBAG or email already exist
     @PostMapping
     public ResponseEntity<String> createMember(@Valid @RequestBody Member member) {
         // Check if there exists a user with the same JMBAG
