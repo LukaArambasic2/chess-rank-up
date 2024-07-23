@@ -24,12 +24,13 @@ public class Section {
     private String description;
 
     @Size(max = 80)
+    @Column(name = "logo")
     private String logo;
 
-    public Section() {}
+    public Section() { }
 
-    public Section(String name) {
-        this.name = name;
+    public Section(Long id) {
+        this.id = id;
     }
 
     public Section(String name, String description, String logo) {
@@ -38,7 +39,16 @@ public class Section {
         this.logo = logo;
     }
 
+    public Section(Long id, String name, String description, String logo) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.logo = logo;
+    }
+
     public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
 
     public @NotBlank @Size(max = 30) String getName() {
         return name;
@@ -56,11 +66,11 @@ public class Section {
         this.description = description;
     }
 
-    public @NotBlank @Size(max = 80) String getLogo() {
+    public @Size(max = 80) String getLogo() {
         return logo;
     }
 
-    public void setLogo(@NotBlank @Size(max = 80) String logo) {
+    public void setLogo(@Size(max = 80) String logo) {
         this.logo = logo;
     }
 

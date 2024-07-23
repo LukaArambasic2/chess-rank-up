@@ -8,97 +8,106 @@ import java.util.Objects;
 @Entity
 @Table(name = "Rank")
 public class Rank {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idRank;
+    @Column(name = "idRank")
+    private Long id;
 
     @NotBlank
+    @Size(max = 30)
+    @Column(name = "nameRank", nullable = false)
     private String name;
 
-    @NotBlank
     @Size(max = 80)
+    @Column(name = "image")
     private String image;
 
-    @NotBlank
-    private Long pointsModifier;
+    @Column(name = "pointsModifier", nullable = false)
+    private int pointsModifier;
 
-    @NotBlank
-    private Long pointsRequired;
+    @Column(name = "pointsRequired")
+    private int pointsRequired;
 
-    //opet provjerit ManyToOne
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idSection", nullable = false)
-    private Section idSection;
+    private Section section;
 
     public Rank() {}
 
-    public Rank(Long idRank, String name, String image, Long pointsModifier, Long pointsRequired, Section idSection) {
-        this.idRank = idRank;
+    public Rank(String name, String image, int pointsModifier, int pointsRequired, Section section) {
         this.name = name;
         this.image = image;
         this.pointsModifier = pointsModifier;
         this.pointsRequired = pointsRequired;
-        this.idSection = idSection;
+        this.section = section;
     }
 
-    public Long getIdRank() {
-        return idRank;
+    public Rank(Long id, String name, String image, int pointsModifier, int pointsRequired, Section section) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.pointsModifier = pointsModifier;
+        this.pointsRequired = pointsRequired;
+        this.section = section;
+    }
+    
+    public Long getId() {
+        return id;
     }
 
-    public void setIdRank(Long idRank) {
-        this.idRank = idRank;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public @NotBlank String getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(@NotBlank String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public @NotBlank @Size(max = 80) String getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(@NotBlank @Size(max = 80) String image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
-    public @NotBlank Long getPointsModifier() {
+    public int getPointsModifier() {
         return pointsModifier;
     }
 
-    public void setPointsModifier(@NotBlank Long pointsModifier) {
+    public void setPointsModifier(int pointsModifier) {
         this.pointsModifier = pointsModifier;
     }
 
-    public @NotBlank Long getPointsRequired() {
+    public int getPointsRequired() {
         return pointsRequired;
     }
 
-    public void setPointsRequired(@NotBlank Long pointsRequired) {
+    public void setPointsRequired(int pointsRequired) {
         this.pointsRequired = pointsRequired;
     }
 
-    public Section getIdSection() {
-        return idSection;
+    public Section getSection() {
+        return section;
     }
 
-    public void setIdSection(Section idSection) {
-        this.idSection = idSection;
+    public void setSection(Section section) {
+        this.section = section;
     }
 
     @Override
     public String toString() {
         return "Rank{" +
-                "idRank=" + idRank +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", image='" + image + '\'' +
                 ", pointsModifier=" + pointsModifier +
                 ", pointsRequired=" + pointsRequired +
-                ", idSection=" + idSection +
+                ", section=" + section +
                 '}';
     }
 
@@ -107,11 +116,11 @@ public class Rank {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rank rank = (Rank) o;
-        return Objects.equals(name, rank.name) && Objects.equals(idSection, rank.idSection);
+        return Objects.equals(name, rank.name) && Objects.equals(section, rank.section);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, idSection);
+        return Objects.hash(name, section);
     }
 }
