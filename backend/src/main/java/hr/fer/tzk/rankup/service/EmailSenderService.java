@@ -19,7 +19,7 @@ import java.io.IOException;
 public class EmailSenderService {
 
     // Greška vjerojatno zbog postavki u application.yml, popraviti kasnije!!
-    @Autowired
+    //@Autowired
     private JavaMailSender javaMailSender;
 
     public void sendEmail(String to, String subject, String body, String logoPath, String attachmentPath) throws MessagingException, IOException {
