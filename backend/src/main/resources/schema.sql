@@ -27,6 +27,7 @@ CREATE TABLE Member
   passwordHash VARCHAR(255), 
   
   salt VARCHAR(32),
+  -- TODO: Check for edge cases in default values
   isVerified BOOLEAN NOT NULL DEFAULT FALSE,
   verifyCode VARCHAR(64),
 
