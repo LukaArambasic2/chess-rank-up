@@ -97,7 +97,7 @@ public class Member {
     // Use case: Member is added after registration
     public Member(String firstName, String lastName, String jmbag, String email, String passwordHash, String salt) {
         if (!JmbagUtils.validateJmbag(jmbag)) {
-            throw new IllegalArgumentException("Invalid jmbag");
+            throw new IllegalArgumentException("Invalid JMBAG");
         } else if (!EmailUtils.validateEmail(email)) {
             throw new IllegalArgumentException("Invalid email");
         }
@@ -213,6 +213,7 @@ public class Member {
                 ", jmbag='" + jmbag + '\'' +
                 ", email='" + email + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
+                ", salt='" + salt + '\'' +
                 '}';
     }
 
