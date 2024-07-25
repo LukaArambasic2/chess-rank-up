@@ -51,8 +51,16 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Missing first name");
         }
 
+        if (memberRegister.getFirstName().length() > 30) {
+            return ResponseEntity.badRequest().body("First name must be 30 characters or less");
+        }
+
         if (memberRegister.getLastName() == null || memberRegister.getLastName().isBlank()) {
             return ResponseEntity.badRequest().body("Missing last name");
+        }
+
+        if (memberRegister.getLastName().length() > 30) {
+            return ResponseEntity.badRequest().body("Last name must be 30 characters or less");
         }
 
         if (memberRegister.getJmbag() == null || memberRegister.getJmbag().isBlank()) {
