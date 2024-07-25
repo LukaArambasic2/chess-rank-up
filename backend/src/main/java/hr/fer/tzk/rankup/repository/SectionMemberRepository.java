@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface SectionMemberRepository extends JpaRepository<Section, Long> {
 
-    Optional<SectionMember> findBySectionIdAndMemberId(Long sectionId, Long memberId);
+    //Optional<SectionMember> findBySectionIdAndMemberId(Long sectionId, Long memberId);
 
-    List<SectionMember> findAllBySectionId(Long idSection);
+    //List<SectionMember> findAllBySectionId(Long idSection);
 }
