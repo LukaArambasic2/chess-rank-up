@@ -23,9 +23,11 @@ public class News {
 
     @NotNull
     @Column(name = "dateCreated", nullable = false)
+    @Temporal(TemporalType.DATE)
     private LocalDate dateCreated;
 
     @Column(name = "dateEdited")
+    @Temporal(TemporalType.DATE)
     private LocalDate dateEdited;
 
     @NotBlank
