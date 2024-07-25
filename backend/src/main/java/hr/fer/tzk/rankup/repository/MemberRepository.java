@@ -12,4 +12,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByJmbag(String jmbag);
 
     Optional<Member> findByEmail(String email);
+
 }
