@@ -5,6 +5,7 @@ import hr.fer.tzk.rankup.utils.JmbagUtils;
 import hr.fer.tzk.rankup.validation.ValidEmail;
 import hr.fer.tzk.rankup.validation.ValidJmbag;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.util.Objects;
@@ -48,6 +49,13 @@ public class Member {
     @Size(max = 32)
     @Column(name = "salt")
     private String salt;
+
+    @Size(max = 64)
+    @Column(name = "verifyCode")
+    private String verificationCode;
+
+    @Column(name = "isVerified")
+    private boolean verified = false;
 
     // Empty constructor
     public Member() {}

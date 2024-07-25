@@ -27,6 +27,8 @@ CREATE TABLE Member
   passwordHash VARCHAR(255), 
   
   salt VARCHAR(32),
+  isVerified BOOLEAN NOT NULL DEFAULT FALSE,
+  verifyCode VARCHAR(64),
 
   UNIQUE (jmbag),
   UNIQUE (email)
