@@ -27,6 +27,9 @@ CREATE TABLE Member
   passwordHash VARCHAR(255), 
   
   salt VARCHAR(32),
+  -- TODO: Check for edge cases in default values
+  isVerified BOOLEAN NOT NULL DEFAULT FALSE,
+  verifyCode VARCHAR(64),
 
   UNIQUE (jmbag),
   UNIQUE (email)
@@ -118,8 +121,8 @@ CREATE TABLE News
 (
   idNews BIGSERIAL PRIMARY KEY,
   title VARCHAR(80) NOT NULL,
-  timestampCreated DATE NOT NULL,
-  timestampEdited DATE,
+  dateCreated DATE NOT NULL,
+  dateEdited DATE,
   content VARCHAR(80) NOT NULL,
   images VARCHAR(80),
   idSection BIGINT NOT NULL,

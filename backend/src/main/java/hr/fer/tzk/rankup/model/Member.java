@@ -5,6 +5,7 @@ import hr.fer.tzk.rankup.utils.JmbagUtils;
 import hr.fer.tzk.rankup.validation.ValidEmail;
 import hr.fer.tzk.rankup.validation.ValidJmbag;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.util.Objects;
@@ -49,6 +50,13 @@ public class Member {
     @Column(name = "salt")
     private String salt;
 
+    @Size(max = 64)
+    @Column(name = "verifyCode")
+    private String verificationCode;
+
+    @Column(name = "isVerified")
+    private boolean verified = false;
+
     // Empty constructor
     public Member() {}
 
@@ -60,6 +68,7 @@ public class Member {
         this.firstName = firstName;
         this.lastName = lastName;
         this.jmbag = jmbag;
+        this.verified = false;
     }
 
     // Use case: Member is added by the section leader into the database with email specified
@@ -81,6 +90,7 @@ public class Member {
         this.lastName = lastName;
         this.jmbag = jmbag;
         this.email = email;
+        this.verified = false;
     }
 
     // General full args constructor
@@ -102,10 +112,15 @@ public class Member {
         this.email = email;
         this.passwordHash = passwordHash;
         this.salt = salt;
+        this.verified = false;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public @NotBlank @Size(max = 30) String getFirstName() {
@@ -171,6 +186,22 @@ public class Member {
 
     public void setSalt(@Size(max = 32) String salt) {
         this.salt = salt;
+    }
+
+    public @Size(max = 64) String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(@Size(max = 64) String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     @Override

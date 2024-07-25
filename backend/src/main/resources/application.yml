@@ -18,11 +18,12 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
   mail:
     host: smtp.gmail.com
     port: 587
-    username: #e-mail
-    password: #generirana lozinka
+    username: email@example.com
+    password: password
     properties:
       mail:
         smtp:

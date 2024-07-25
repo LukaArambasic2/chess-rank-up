@@ -18,8 +18,9 @@ import java.io.IOException;
 @Service
 public class EmailSenderService {
 
-    // Greška vjerojatno zbog postavki u application.yml, popraviti kasnije!!
-    @Autowired
+    // TODO: Set correct information about SMTP account into application.yml
+    // Use .env files for security
+    //@Autowired
     private JavaMailSender javaMailSender;
 
     public void sendEmail(String to, String subject, String body, String logoPath, String attachmentPath) throws MessagingException, IOException {
