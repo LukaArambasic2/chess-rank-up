@@ -1,4 +1,4 @@
-package hr.fer.tzk.rankup.controllers;
+package hr.fer.tzk.rankup.controller;
 
 import hr.fer.tzk.rankup.model.Section;
 import org.junit.jupiter.api.Test;
