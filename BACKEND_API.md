@@ -1,4 +1,4 @@
-# Backend Endpoints Documentation
+# Backend API Documentation
 
 ## AuthController Endpoints
 
