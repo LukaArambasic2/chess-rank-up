@@ -41,4 +41,20 @@ public class MemberService {
     public void addMember(Member member) {
         memberRepository.save(member);
     }
+
+    public void updateMember(Member member) {
+        memberRepository.save(member);
+    }
+
+    public void deleteMemberById(Long id) {
+        memberRepository.deleteById(id);
+    }
+
+    public void deleteMemberByJmbag(String jmbag) {
+        memberRepository.deleteByJmbag(jmbag);
+    }
+
+    public void deleteMemberByEmail(String email) {
+        memberRepository.deleteByEmail(email);
+    }
 }
