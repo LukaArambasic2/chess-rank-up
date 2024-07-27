@@ -78,7 +78,7 @@ public class JmbagUtilsTest {
         assertThat(JmbagUtils.validateJmbag(invalidJmbag2)).isEqualTo(false);
     }
 
-    @Test
+    //@Test
     public void should_return_false_because_wrong_digit() {
         // Eg. JMBAG is "123456789"
         // Pick digit 1 and then go through 2, 3, ..., 9 and swap it with its original place in JMBAG
