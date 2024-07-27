@@ -145,6 +145,7 @@ public class AuthControllerTest {
         ResponseEntity<String> response3 = restTemplate.postForEntity("/auth/login", member3, String.class);
         assertThat(response3.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 
+        // Member doesn't exist
         MemberLoginDto member4 = new MemberLoginDto("i123@fer.hr", "password1");
         ResponseEntity<String> response4 = restTemplate.postForEntity("/auth/login", member4, String.class);
         assertThat(response4.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
