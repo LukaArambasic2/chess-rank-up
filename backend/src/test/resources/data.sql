@@ -1,6 +1,6 @@
 -- Adding sections
-INSERT INTO section (nameSection, descriptionSection) VALUES ('Chess', 'We are FER''s Chess section');
-INSERT INTO section (nameSection, descriptionSection) VALUES ('Biking', 'We are Biking section');
+INSERT INTO section (nameSection) VALUES ('Chess');
+INSERT INTO section (nameSection) VALUES ('Biking');
 
 -- Adding members, some may be logged in
 INSERT INTO member (firstName, lastName, jmbag, isVerified) VALUES ('Hrvoje', 'Horvat', '0006040945', false);

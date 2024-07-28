@@ -39,8 +39,9 @@ CREATE TABLE Section
 (
   idSection BIGSERIAL PRIMARY KEY,
   nameSection VARCHAR(30) NOT NULL,
-  descriptionSection VARCHAR(80) NOT NULL,
-  logo VARCHAR(80)
+  descriptionSection VARCHAR(80),
+  logo VARCHAR(80),
+  UNIQUE (nameSection)
 );
 
 -- TODO: in backend add constraint so no new semester can interfere with the interval: [dateFrom, dateTo]
@@ -67,7 +68,7 @@ CREATE TABLE Event
   nameEvent VARCHAR(30) NOT NULL,
   dateFromEvent DATE NOT NULL,
   dateToEvent DATE,
-  descriptionEvent VARCHAR(80) NOT NULL,
+  descriptionEvent VARCHAR(80),
   idSection BIGINT NOT NULL,
   idEventType BIGINT NOT NULL,
   FOREIGN KEY (idSection) REFERENCES Section(idSection),
