@@ -20,13 +20,8 @@ public class Event {
 
     @NotBlank
     @Temporal(TemporalType.DATE)
-    @Column(name = "dateFromEvent", nullable = false)
-    private LocalDate dateFrom;
-
-    @NotBlank
-    @Temporal(TemporalType.DATE)
-    @Column(name = "dateToEvent", nullable = false)
-    private LocalDate dateTo;
+    @Column(name = "dateEvent", nullable = false)
+    private LocalDate date;
     
     @Size(max = 80)
     @Column(name = "descriptionEvent")
@@ -42,32 +37,21 @@ public class Event {
 
     public Event() { }
 
-    public Event(String name, LocalDate dateFrom, Section section, EventType eventType) {
+    public Event(String name, LocalDate date, Section section, EventType eventType) {
         this.name = name;
-        this.dateFrom = dateFrom;
+        this.date = date;
         this.section = section;
         this.eventType = eventType;
     }
 
-    public Event(String name, LocalDate dateFrom, String description, Section section, EventType eventType) {
+    public Event(String name, LocalDate date, String description, Section section, EventType eventType) {
         this.name = name;
-        this.dateFrom = dateFrom;
+        this.date = date;
         this.description = description;
         this.section = section;
         this.eventType = eventType;
     }
 
-    public Event(String name, LocalDate dateFrom, LocalDate dateTo, String description, Section section, EventType eventType) {
-        if (dateFrom.isAfter(dateTo)) {
-            throw new IllegalArgumentException("Date from must be before date to");
-        }
-        this.name = name;
-        this.dateFrom = dateFrom;
-        this.dateTo = dateTo;
-        this.description = description;
-        this.section = section;
-        this.eventType = eventType;
-    }
 
     public Long getId() {
         return id;
@@ -85,26 +69,12 @@ public class Event {
         this.name = name;
     }
 
-    public @NotBlank LocalDate getDateFrom() {
-        return dateFrom;
+    public @NotBlank LocalDate getDate() {
+        return date;
     }
 
-    public void setDateFrom(@NotBlank LocalDate dateFrom) {
-        if (dateFrom.isAfter(dateTo)) {
-            throw new IllegalArgumentException("Date from must be before date to");
-        }
-        this.dateFrom = dateFrom;
-    }
-
-    public @NotBlank LocalDate getDateTo() {
-        return dateTo;
-    }
-
-    public void setDateTo(@NotBlank LocalDate dateTo) {
-        if (dateFrom.isAfter(dateTo)) {
-            throw new IllegalArgumentException("Date from must be before date to");
-        }
-        this.dateTo = dateTo;
+    public void setDateTo(@NotBlank LocalDate date) {
+        this.date = date;
     }
 
     public @Size(max = 80) String getDescription() {
