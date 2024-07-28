@@ -1,0 +1,43 @@
+.navBar{
+    position:absolute;
+    top: 15px;
+    left: 15px;
+    color:black;
+    z-index: 1000;
+}
+
+.navBarList a{
+    color:white;
+    text-decoration: none;
+    font-size: 32px;
+    font-weight: bold;
+    
+}
+
+li{
+    list-style-type: none;
+    margin: 16px;
+}
+
+.openNavBar{
+    display: grid;
+    background-color: #7F61BA;
+    width: 100vw;
+    justify-items: center;
+    align-items: center;
+    
+    position: absolute;
+    top:0px;
+    left:0px;
+
+    height: 100vh;
+    
+}
+
+.logout{
+    display: flex;
+    justify-content: center;
+    width: 100%; /* Ensure the button container takes the full width */
+    margin-top: 32px; /* Optional: Add some spacing if needed */
+
+}
