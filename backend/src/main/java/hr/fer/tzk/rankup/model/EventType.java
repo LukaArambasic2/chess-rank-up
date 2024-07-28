@@ -3,6 +3,7 @@ package hr.fer.tzk.rankup.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -18,7 +19,7 @@ public class EventType {
     @Column(name = "nameEventType", nullable = false)
     private String name;
 
-    @NotBlank
+    @NotNull
     @Column(name = "defaultPoints")
     @Min(0)
     private int defaultPoints;
@@ -50,11 +51,11 @@ public class EventType {
         this.name = name;
     }
 
-    public @Min(0) @NotBlank int getDefaultPoints() {
+    public @Min(0) @NotNull int getDefaultPoints() {
         return defaultPoints;
     }
 
-    public void setDefaultPoints(@Min(0) @NotBlank int defaultPoints) {
+    public void setDefaultPoints(@Min(0) @NotNull int defaultPoints) {
         this.defaultPoints = defaultPoints;
     }
 }
