@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -17,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,7 +23,6 @@ import static org.springframework.test.annotation.DirtiesContext.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
@@ -101,7 +98,7 @@ public class SectionControllerTest {
     }
 
     @Test
-//    @DirtiesContext
+    @DirtiesContext
     void shouldNotCreateSection() {
         SectionDto newSection = new SectionDto("Chess");
         ResponseEntity<String> response = restTemplate.postForEntity("/sections", newSection, String.class);
@@ -116,7 +113,7 @@ public class SectionControllerTest {
     }
 
     @Test
-//    @DirtiesContext
+    @DirtiesContext
     void shouldNotDeleteSection() {
         ResponseEntity<Void> response = restTemplate.exchange("/sections/0", HttpMethod.DELETE, null, Void.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -136,7 +133,7 @@ public class SectionControllerTest {
     }
 
     @Test
-//    @DirtiesContext
+    @DirtiesContext
     void shouldNotUpdateSection() {
         SectionDto newSection = new SectionDto("Powerlifting");
         ResponseEntity<SectionDto> response = restTemplate.exchange("/sections/0", HttpMethod.PUT, new HttpEntity<>(newSection), SectionDto.class);

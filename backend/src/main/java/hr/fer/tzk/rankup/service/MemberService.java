@@ -16,9 +16,8 @@ public class MemberService {
 
 
     @Autowired
-    public MemberService(MemberRepository memberRepository, SectionMemberRepository sectionMemberRepository) {
+    public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
-        this.sectionMemberRepository = sectionMemberRepository;
     }
 
     public List<Member> findAllMembers() {
