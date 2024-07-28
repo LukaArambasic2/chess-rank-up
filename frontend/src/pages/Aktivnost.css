@@ -1,0 +1,52 @@
+.bodycontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    height: 100vh;
+    width: 100wv;
+    margin: 0;
+    padding: 0;
+}
+
+.bold{
+    position: absolute;
+    font-size: 30px;
+    font-weight: 600;
+    top: 8.38vh;
+}
+
+.dab{
+    position: absolute;
+    top: 15vh;
+    display: flex;
+    width: 81vw;
+    padding: 0 2vw;
+    background-color: #7F61BA;
+    color: white;
+    font-weight: 600;
+    font-size: 4.36vw;
+    border-radius: 3px;
+}
+
+.maleni1{
+    width: 26vw;
+    margin: 0;
+}
+.maleni2{
+    width: 40vw;
+    margin: 0;
+}
+.maleni3{
+    width: 15vw;
+    margin: 0;
+    text-align: center;
+}
+
+.nazad{
+    position: absolute;
+    height: 4vh;
+    top: 4vh;
+    left: 5vw;
+}
