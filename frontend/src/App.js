@@ -2,20 +2,20 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import './App.css';
-import Aktivnost from './pages/Aktivnost';
+import Aktivnost from './pages/activity/Aktivnost';
 import ExamplePage from './pages/examplePage/ExamplePage';
-import OnlineLiga from './pages/OnlineLiga';
-import Prijava from './pages/Prijava';
+import OnlineLiga from './pages/leaderboard/OnlineLiga';
+import Prijava from './pages/login/Prijava';
 import Profil from './pages/Profil';
-import Registracija from './pages/Registracija';
-import Reset from './pages/Reset';
+import Registracija from './pages/registration/Registracija';
+import Reset from './pages/reset/Reset';
 import SBgodina from './pages/SBgodina';
 import SBsemestar from './pages/SBsemestar';
 import SBukupno from './pages/SBukupno';
-import Scoreboard from './pages/Scoreboard';
+import Scoreboard from './pages/scoreboard/Scoreboard';
 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/home/HomePage';
 
 const sections = [
   { id: 'section1', name: 'Šahovska sekcija', heading: 'DOBRO DOŠLI', description: 'Igramo šah' },
