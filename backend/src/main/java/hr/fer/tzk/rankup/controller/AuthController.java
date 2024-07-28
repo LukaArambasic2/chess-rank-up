@@ -144,7 +144,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
 
-        memberService.addMember(newMember);
+        memberService.createMember(newMember);
         return ResponseEntity.ok(null);
     }
 }

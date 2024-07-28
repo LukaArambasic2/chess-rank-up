@@ -125,7 +125,7 @@ public class MemberController {
         } catch (IllegalArgumentException exception) {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
-        memberService.addMember(newMember);
+        memberService.createMember(newMember);
 
         Optional<Member> createdMemberOpt = memberService.findMemberByJmbag(memberDto.getJmbag());
         if (createdMemberOpt.isEmpty()) {

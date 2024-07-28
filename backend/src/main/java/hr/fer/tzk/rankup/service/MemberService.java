@@ -38,7 +38,7 @@ public class MemberService {
         return memberRepository.findByEmail(email);
     }
 
-    public void addMember(Member member) {
+    public void createMember(Member member) {
         memberRepository.save(member);
     }
 
