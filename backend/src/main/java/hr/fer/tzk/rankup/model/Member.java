@@ -50,10 +50,6 @@ public class Member {
     @Column(name = "salt")
     private String salt;
 
-    @Size(max = 64)
-    @Column(name = "verifyCode")
-    private String verificationCode;
-
     @Column(name = "isVerified")
     private boolean verified = false;
 
@@ -186,14 +182,6 @@ public class Member {
 
     public void setSalt(@Size(max = 32) String salt) {
         this.salt = salt;
-    }
-
-    public @Size(max = 64) String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCode(@Size(max = 64) String verificationCode) {
-        this.verificationCode = verificationCode;
     }
 
     public boolean isVerified() {

@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS Member CASCADE;
+DROP TABLE IF EXISTS Verification CASCADE;
 DROP TABLE IF EXISTS Section CASCADE;
 DROP TABLE IF EXISTS Semester CASCADE;
 DROP TABLE IF EXISTS EventType CASCADE;
@@ -29,10 +30,19 @@ CREATE TABLE Member
   salt VARCHAR(32),
   -- TODO: Check for edge cases in default values
   isVerified BOOLEAN NOT NULL DEFAULT FALSE,
-  verifyCode VARCHAR(64),
 
   UNIQUE (jmbag),
   UNIQUE (email)
+);
+
+CREATE TABLE Verification 
+(
+  idVerification BIGSERIAL PRIMARY KEY,
+  url VARCHAR(80) NOT NULL,
+  expirationTime TIMESTAMP NOT NULL,
+  idMember BIGINT NOT NULL,
+  FOREIGN KEY (idMember) REFERENCES Member(idMember),
+  UNIQUE (url)
 );
 
 CREATE TABLE Section
