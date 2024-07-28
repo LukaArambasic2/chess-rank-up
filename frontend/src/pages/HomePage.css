@@ -1,0 +1,107 @@
+body,
+html {
+   margin: 0;
+   padding: 0;
+   font-family: 'Inter', sans-serif;
+   box-sizing: border-box;
+   background-color: #f0f0f0;
+}
+
+.home-page {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 20px;
+}
+
+.welcome-message {
+   background-color: #7F61BA;
+   color: white;
+   padding: 20px;
+   width: 360px;
+   height: 180px;
+   border-radius: 0px 0px 30px 30px;
+   text-align: center;
+   box-shadow: 0px 4px 4px 0px #00000040;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+
+.welcome-message h1 {
+   margin: 0;
+   font-size: 30px;
+   font-weight: bold;
+   text-shadow: 0px 4px 4px #00000040;
+}
+
+.welcome-message p {
+   margin: 30px 0;
+   font-size: 18px;
+   font-weight: bold;
+   text-shadow: 0px 4px 4px #00000040;
+}
+
+.section-list {
+   width: 100%;
+   max-width: 270px;
+   margin-top: 20px;
+   display: flex;
+   flex-direction: column;
+   align-items: stretch;
+}
+
+.section-list button {
+   padding: 50px;
+   font-size: 18px;
+   font-weight: bold;
+   text-shadow: 0px 1px 1px #00000040;
+   border: none;
+   background-color: white;
+   color: #7F61BA;
+   border-radius: 10px;
+   cursor: pointer;
+   margin-bottom: 10px;
+   box-shadow: 0px 4px 4px 0px #00000040;
+   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.section-list button:hover {
+   background-color: #f0f0f0;
+   color: #7F61BA;
+}
+
+.section-list button.active {
+   background-color: #7F61BA;
+   color: white;
+   box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.section-details {
+   margin-top: 20px;
+   width: 100%;
+   max-width: 360px;
+   background-color: #e0e0e0;
+   padding: 20px;
+   border-radius: 10px;
+   box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+/* ChatGPT reka da nadodan jer san ga pita oce se prikazivat
+dobro na mobitelima , IDK */
+@media (max-width: 600px) {
+   .home-page {
+      padding: 10px;
+   }
+
+   .welcome-message {
+      font-size: 18px;
+      padding: 15px;
+   }
+
+   .section-list button {
+      font-size: 16px;
+      padding: 20px;
+   }
+}
