@@ -28,13 +28,13 @@ public class SectionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Section>> getAllSections() {
+    public ResponseEntity<List<Section>> findAllSections() {
         List<Section> sections = sectionService.findAllSections();
         return ResponseEntity.ok(sections);
     }
 
     @GetMapping("/{idSection}")
-    public ResponseEntity<SectionDto> getSectionById(@PathVariable Long idSection) {
+    public ResponseEntity<SectionDto> findSectionById(@PathVariable Long idSection) {
         Optional<Section> sectionOpt = sectionService.findSectionById(idSection);
         if (sectionOpt.isEmpty()) {
             return ResponseEntity.notFound().build();

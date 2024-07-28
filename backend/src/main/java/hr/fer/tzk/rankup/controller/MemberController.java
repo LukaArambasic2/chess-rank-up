@@ -36,7 +36,7 @@ public class MemberController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MemberGlobalDto>> getMembers() {
+    public ResponseEntity<List<MemberGlobalDto>> findAllMembers() {
         List<Member> members = memberService.findAllMembers();
         List<MemberGlobalDto> memberGlobalDtos = members.stream()
                 .map(this::convertToDto)
@@ -45,7 +45,7 @@ public class MemberController {
     }
 
     @GetMapping("/{idMember}")
-    public ResponseEntity<MemberGlobalDto> getMember(@PathVariable Long idMember) {
+    public ResponseEntity<MemberGlobalDto> findMember(@PathVariable Long idMember) {
         Optional<Member> memberOpt = memberService.findMemberById(idMember);
         if (memberOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
