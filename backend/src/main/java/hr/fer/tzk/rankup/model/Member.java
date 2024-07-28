@@ -7,7 +7,10 @@ import hr.fer.tzk.rankup.validation.ValidJmbag;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.ColumnDefault;
+
 import java.util.Objects;
 
 @Entity
@@ -50,7 +53,9 @@ public class Member {
     @Column(name = "salt")
     private String salt;
 
+    @NotNull
     @Column(name = "isVerified")
+    @ColumnDefault(value = "FALSE")
     private boolean verified = false;
 
     // Empty constructor

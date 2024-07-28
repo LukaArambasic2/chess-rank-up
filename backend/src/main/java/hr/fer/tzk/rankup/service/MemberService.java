@@ -14,7 +14,6 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    private final SectionMemberRepository sectionMemberRepository;
 
     @Autowired
     public MemberService(MemberRepository memberRepository, SectionMemberRepository sectionMemberRepository) {
@@ -38,12 +37,12 @@ public class MemberService {
         return memberRepository.findByEmail(email);
     }
 
-    public void createMember(Member member) {
-        memberRepository.save(member);
+    public Member createMember(Member member) {
+        return memberRepository.save(member);
     }
 
-    public void updateMember(Member member) {
-        memberRepository.save(member);
+    public Member updateMember(Member member) {
+        return memberRepository.save(member);
     }
 
     public void deleteMemberById(Long id) {
