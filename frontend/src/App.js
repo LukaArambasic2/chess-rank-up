@@ -1,18 +1,27 @@
+// src/App.js
 import React from 'react';
+import { createBrowserRouter } from 'react-router-dom';
 import './App.css';
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import Aktivnost from './pages/activity/Aktivnost';
 import ExamplePage from './pages/examplePage/ExamplePage';
-import Registracija from './pages/Registracija';
-import Prijava from './pages/Prijava';
-import Reset from './pages/Reset';
+import OnlineLiga from './pages/leaderboard/OnlineLiga';
+import Prijava from './pages/login/Prijava';
 import Profil from './pages/Profil';
-import Aktivnost from './pages/Aktivnost';
-import Scoreboard from './pages/Scoreboard';
-import SBukupno from './pages/SBukupno';
-import SBsemestar from './pages/SBsemestar';
+import Registracija from './pages/registration/Registracija';
+import Reset from './pages/reset/Reset';
 import SBgodina from './pages/SBgodina';
-import OnlineLiga from './pages/OnlineLiga';
+import SBsemestar from './pages/SBsemestar';
+import SBukupno from './pages/SBukupno';
+import Scoreboard from './pages/scoreboard/Scoreboard';
 
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import HomePage from './pages/home/HomePage';
+
+const sections = [
+  { id: 'section1', name: 'Šahovska sekcija', heading: 'DOBRO DOŠLI', description: 'Igramo šah' },
+  { id: 'section2', name: 'Neka druga sekcija', heading: 'DOBRO DOŠLI', description: 'Igramo nešto drugo' },
+  // Add more sections as needed
+];
 
 function App() {
   
@@ -75,9 +84,12 @@ function App() {
 
 
   return (
-    <React.StrictMode>
-      <RouterProvider router={router} />
-    </React.StrictMode>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage sections={sections} />} />
+        <Route path="/scoreboard" element={<Scoreboard />} />
+      </Routes>
+    </Router>
   );
 }
 

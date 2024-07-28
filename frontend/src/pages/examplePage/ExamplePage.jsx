@@ -1,5 +1,4 @@
 import React from "react";
-import Example from "../../components/exampleFolder/Example";
 import { Link } from "react-router-dom";
 
 const ExamplePage = () => {
