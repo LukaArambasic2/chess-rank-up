@@ -21,7 +21,7 @@ import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql")
+//@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql")
 @ActiveProfiles("test")
 public class MemberControllerTest {
     @Autowired
@@ -100,7 +100,7 @@ public class MemberControllerTest {
 
     @Test
     void shouldCreateMember() {
-
+        // TODO: Add this
     }
 
 }

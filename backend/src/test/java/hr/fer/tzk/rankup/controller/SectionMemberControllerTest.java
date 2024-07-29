@@ -1,8 +1,6 @@
 package hr.fer.tzk.rankup.controller;
 
 import hr.fer.tzk.rankup.dto.SectionMemberGetDto;
-import hr.fer.tzk.rankup.dto.SectionMemberPostDto;
-import hr.fer.tzk.rankup.model.Section;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +21,7 @@ import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql")
+//@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql")
 @ActiveProfiles("test")
 public class SectionMemberControllerTest {
 
