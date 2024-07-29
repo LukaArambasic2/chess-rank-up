@@ -13,12 +13,16 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/csv")
-public class CsvController {
-    @Autowired
-    private CsvService csvService;
+@RequestMapping("/upload/csv")
+public class UploadCsvController {
+    private final CsvService csvService;
 
-    @PostMapping("/upload/lichess")
+    @Autowired
+    public UploadCsvController(CsvService csvService) {
+        this.csvService = csvService;
+    }
+
+    @PostMapping("/lichess")
     public ResponseEntity<String> uploadLichessCsv(@RequestParam("file") MultipartFile file,
                                             @RequestParam("eventName") String eventName,
                                             @RequestParam("defaultPoints") int defaultPoints) {

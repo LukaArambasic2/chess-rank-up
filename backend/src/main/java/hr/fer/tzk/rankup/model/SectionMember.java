@@ -2,6 +2,7 @@ package hr.fer.tzk.rankup.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.Objects;
 
@@ -18,11 +19,13 @@ public class SectionMember {
 
     @NotNull
     @Column(name = "isActive", nullable = false)
-    private Boolean isActive = true;
+    @ColumnDefault(value = "TRUE")
+    private boolean active = true;
 
     @NotNull
     @Column(name = "pointsAll", nullable = false)
-    private Integer pointsAll;
+    @ColumnDefault(value = "0")
+    private int pointsAll = 0;
 
     @NotNull
     @ManyToOne
@@ -43,8 +46,8 @@ public class SectionMember {
     public SectionMember() { }
 
     // Full args constructor
-    public SectionMember(Boolean isActive, Integer pointsAll, Member member, Section section, Rank rank) {
-        this.isActive = isActive;
+    public SectionMember(boolean active, int pointsAll, Member member, Section section, Rank rank) {
+        this.active = active;
         this.pointsAll = pointsAll;
         this.member = member;
         this.section = section;
@@ -55,19 +58,24 @@ public class SectionMember {
         return id;
     }
 
-    public Boolean getIsActive() {
-        return isActive;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    @NotNull
+    public boolean isActive() {
+        return active;
     }
 
-    public Integer getPointsAll() {
+    public void setActive(@NotNull boolean active) {
+        this.active = active;
+    }
+
+    public int getPointsAll() {
         return pointsAll;
     }
 
-    public void setPointsAll(Integer pointsAll) {
+    public void setPointsAll(int pointsAll) {
         this.pointsAll = pointsAll;
     }
 
@@ -99,7 +107,7 @@ public class SectionMember {
     public String toString() {
         return "SectionMember{" +
                 "id=" + id +
-                ", isActive=" + isActive +
+                ", active=" + active +
                 ", pointsAll=" + pointsAll +
                 ", member=" + member +
                 ", section=" + section +

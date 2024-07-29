@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS Member CASCADE;
+DROP TABLE IF EXISTS Verification CASCADE;
 DROP TABLE IF EXISTS Section CASCADE;
 DROP TABLE IF EXISTS Semester CASCADE;
 DROP TABLE IF EXISTS EventType CASCADE;
@@ -24,23 +25,31 @@ CREATE TABLE Member
   -- 128 bytes for actual hash (the biggest length is for 'argon2')
   -- 32 bytes for salt and 32 bytes for pepper
   -- bigger size is for future use
-  passwordHash VARCHAR(255), 
+  passwordHash VARCHAR(140), 
   
   salt VARCHAR(32),
-  -- TODO: Check for edge cases in default values
   isVerified BOOLEAN NOT NULL DEFAULT FALSE,
-  verifyCode VARCHAR(64),
-
   UNIQUE (jmbag),
   UNIQUE (email)
+);
+
+CREATE TABLE Verification 
+(
+  idVerification BIGSERIAL PRIMARY KEY,
+  url VARCHAR(80) NOT NULL,
+  expirationTime TIMESTAMP NOT NULL,
+  idMember BIGINT NOT NULL,
+  FOREIGN KEY (idMember) REFERENCES Member(idMember) ON DELETE CASCADE,
+  UNIQUE (url)
 );
 
 CREATE TABLE Section
 (
   idSection BIGSERIAL PRIMARY KEY,
   nameSection VARCHAR(30) NOT NULL,
-  descriptionSection VARCHAR(80) NOT NULL,
-  logo VARCHAR(80)
+  descriptionSection VARCHAR(80),
+  logo VARCHAR(80),
+  UNIQUE (nameSection)
 );
 
 -- TODO: in backend add constraint so no new semester can interfere with the interval: [dateFrom, dateTo]
@@ -53,6 +62,24 @@ CREATE TABLE Semester
   dateToSemester DATE,
   CONSTRAINT checkDates CHECK (dateToSemester IS NULL OR dateToSemester >= dateFromSemester)
 );
+
+-- CREATE OR REPLACE FUNCTION check_semester_overlap() RETURNS TRIGGER AS $$
+-- BEGIN
+--   IF EXISTS (
+--     SELECT 1
+--     FROM Semester
+--     WHERE idSemester <> NEW.idSemester
+--       AND daterange(dateFromSemester, dateToSemester, '[]') && daterange(NEW.dateFromSemester, NEW.dateToSemester, '[]')
+--   ) THEN
+--     RAISE EXCEPTION 'New semester interval overlaps with existing semester';
+-- END IF;
+-- RETURN NEW;
+-- END;
+-- $$ LANGUAGE plpgsql;
+--
+-- CREATE TRIGGER semester_overlap_trigger
+-- BEFORE INSERT OR UPDATE ON Semester
+-- FOR EACH ROW EXECUTE FUNCTION check_semester_overlap();
 
 CREATE TABLE EventType 
 (
@@ -67,11 +94,11 @@ CREATE TABLE Event
   nameEvent VARCHAR(30) NOT NULL,
   dateFromEvent DATE NOT NULL,
   dateToEvent DATE,
-  descriptionEvent VARCHAR(80) NOT NULL,
+  descriptionEvent VARCHAR(80),
   idSection BIGINT NOT NULL,
   idEventType BIGINT NOT NULL,
-  FOREIGN KEY (idSection) REFERENCES Section(idSection),
-  FOREIGN KEY (idEventType) REFERENCES EventType(idEventType)
+  FOREIGN KEY (idSection) REFERENCES Section(idSection) ON DELETE CASCADE,
+  FOREIGN KEY (idEventType) REFERENCES EventType(idEventType) ON DELETE CASCADE
 );
 
 CREATE TABLE Participation
@@ -80,8 +107,8 @@ CREATE TABLE Participation
   addPoints INT NOT NULL DEFAULT 0,
   idMember BIGINT NOT NULL,
   idEvent BIGINT NOT NULL,
-  FOREIGN KEY (idMember) REFERENCES Member(idMember),
-  FOREIGN KEY (idEvent) REFERENCES Event(idEvent),
+  FOREIGN KEY (idMember) REFERENCES Member(idMember) ON DELETE CASCADE,
+  FOREIGN KEY (idEvent) REFERENCES Event(idEvent) ON DELETE CASCADE,
   UNIQUE(idMember, idEvent)
 );
 
@@ -93,7 +120,7 @@ CREATE TABLE Rank
   pointsModifier INT NOT NULL DEFAULT 0,
   pointsRequired INT,  -- NULL if it is impossible to get that rank with the points alone  
   idSection BIGINT NOT NULL,
-  FOREIGN KEY (idSection) REFERENCES Section(idSection)
+  FOREIGN KEY (idSection) REFERENCES Section(idSection) ON DELETE CASCADE
 );
 
 CREATE TABLE Attribute
@@ -111,9 +138,9 @@ CREATE TABLE SectionSemester
   idSemester BIGINT NOT NULL,
   idSection BIGINT NOT NULL,
   idMember BIGINT NOT NULL,
-  FOREIGN KEY (idSemester) REFERENCES Semester(idSemester),
-  FOREIGN KEY (idSection) REFERENCES Section(idSection),
-  FOREIGN KEY (idMember) REFERENCES Member(idMember),
+  FOREIGN KEY (idSemester) REFERENCES Semester(idSemester) ON DELETE CASCADE,
+  FOREIGN KEY (idSection) REFERENCES Section(idSection) ON DELETE CASCADE,
+  FOREIGN KEY (idMember) REFERENCES Member(idMember) ON DELETE CASCADE,
   UNIQUE (idMember, idSemester, idSection)
 );
 
@@ -127,8 +154,8 @@ CREATE TABLE News
   images VARCHAR(80),
   idSection BIGINT NOT NULL,
   idAuthor BIGINT NOT NULL,
-  FOREIGN KEY (idSection) REFERENCES Section(idSection),
-  FOREIGN KEY (idAuthor) REFERENCES Member(idMember)
+  FOREIGN KEY (idSection) REFERENCES Section(idSection) ON DELETE CASCADE,
+  FOREIGN KEY (idAuthor) REFERENCES Member(idMember) ON DELETE CASCADE
 );
 
 CREATE TABLE SectionMember
@@ -139,9 +166,9 @@ CREATE TABLE SectionMember
   idMember BIGINT NOT NULL,
   idSection BIGINT NOT NULL,
   idRank BIGINT NOT NULL,
-  FOREIGN KEY (idMember) REFERENCES Member(idMember),
-  FOREIGN KEY (idSection) REFERENCES Section(idSection),
-  FOREIGN KEY (idRank) REFERENCES Rank(idRank),
+  FOREIGN KEY (idMember) REFERENCES Member(idMember) ON DELETE CASCADE,
+  FOREIGN KEY (idSection) REFERENCES Section(idSection) ON DELETE CASCADE,
+  FOREIGN KEY (idRank) REFERENCES Rank(idRank) ON DELETE CASCADE,
   UNIQUE (idMember, idSection)
 );
 
@@ -153,8 +180,8 @@ CREATE TABLE MemberInfo
   idSection BIGINT NOT NULL,
   idAttribute BIGINT NOT NULL,
   idMember BIGINT NOT NULL,
-  FOREIGN KEY (idSection) REFERENCES Section(idSection),
-  FOREIGN KEY (idAttribute) REFERENCES Attribute(idAttribute),
-  FOREIGN KEY (idMember) REFERENCES Member(idMember),
+  FOREIGN KEY (idSection) REFERENCES Section(idSection) ON DELETE CASCADE,
+  FOREIGN KEY (idAttribute) REFERENCES Attribute(idAttribute) ON DELETE CASCADE,
+  FOREIGN KEY (idMember) REFERENCES Member(idMember) ON DELETE CASCADE,
   UNIQUE (idSection, idMember, idAttribute)
 );

@@ -14,12 +14,10 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    private final SectionMemberRepository sectionMemberRepository;
 
     @Autowired
-    public MemberService(MemberRepository memberRepository, SectionMemberRepository sectionMemberRepository) {
+    public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
-        this.sectionMemberRepository = sectionMemberRepository;
     }
 
     public List<Member> findAllMembers() {
@@ -38,7 +36,23 @@ public class MemberService {
         return memberRepository.findByEmail(email);
     }
 
-    public void addMember(Member member) {
-        memberRepository.save(member);
+    public Member createMember(Member member) {
+        return memberRepository.save(member);
+    }
+
+    public Member updateMember(Member member) {
+        return memberRepository.save(member);
+    }
+
+    public void deleteMemberById(Long id) {
+        memberRepository.deleteById(id);
+    }
+
+    public void deleteMemberByJmbag(String jmbag) {
+        memberRepository.deleteByJmbag(jmbag);
+    }
+
+    public void deleteMemberByEmail(String email) {
+        memberRepository.deleteByEmail(email);
     }
 }

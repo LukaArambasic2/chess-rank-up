@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Section")
+@Table(name = "Section", uniqueConstraints = @UniqueConstraint(columnNames = "nameSection"))
 public class Section {
 
     @Id
@@ -20,7 +20,7 @@ public class Section {
     private String name;
 
     @Size(max = 80)
-    @Column(name = "descriptionSection", nullable = false)
+    @Column(name = "descriptionSection")
     private String description;
 
     @Size(max = 80)
@@ -31,6 +31,10 @@ public class Section {
 
     public Section(Long id) {
         this.id = id;
+    }
+
+    public Section(String name) {
+        this.name = name;
     }
 
     public Section(String name, String description, String logo) {

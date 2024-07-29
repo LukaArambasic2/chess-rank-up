@@ -7,7 +7,10 @@ import hr.fer.tzk.rankup.validation.ValidJmbag;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.ColumnDefault;
+
 import java.util.Objects;
 
 @Entity
@@ -50,11 +53,9 @@ public class Member {
     @Column(name = "salt")
     private String salt;
 
-    @Size(max = 64)
-    @Column(name = "verifyCode")
-    private String verificationCode;
-
+    @NotNull
     @Column(name = "isVerified")
+    @ColumnDefault(value = "FALSE")
     private boolean verified = false;
 
     // Empty constructor
@@ -97,7 +98,7 @@ public class Member {
     // Use case: Member is added after registration
     public Member(String firstName, String lastName, String jmbag, String email, String passwordHash, String salt) {
         if (!JmbagUtils.validateJmbag(jmbag)) {
-            throw new IllegalArgumentException("Invalid jmbag");
+            throw new IllegalArgumentException("Invalid JMBAG");
         } else if (!EmailUtils.validateEmail(email)) {
             throw new IllegalArgumentException("Invalid email");
         }
@@ -188,14 +189,6 @@ public class Member {
         this.salt = salt;
     }
 
-    public @Size(max = 64) String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCode(@Size(max = 64) String verificationCode) {
-        this.verificationCode = verificationCode;
-    }
-
     public boolean isVerified() {
         return verified;
     }
@@ -213,6 +206,7 @@ public class Member {
                 ", jmbag='" + jmbag + '\'' +
                 ", email='" + email + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
+                ", salt='" + salt + '\'' +
                 '}';
     }
 
