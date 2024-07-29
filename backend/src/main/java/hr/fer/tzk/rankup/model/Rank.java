@@ -8,7 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Rank")
+@Table(name = "MyRank")
 public class Rank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

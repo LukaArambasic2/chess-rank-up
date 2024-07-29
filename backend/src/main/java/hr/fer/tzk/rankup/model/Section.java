@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Section", uniqueConstraints = @UniqueConstraint(columnNames = "nameSection"))
+@Table(name = "MySection", uniqueConstraints = @UniqueConstraint(columnNames = "nameSection"))
 public class Section {
 
     @Id

@@ -1,12 +1,11 @@
 package hr.fer.tzk.rankup.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+@Entity
+@Table(name = "MyAttribute")
 public class Attribute {
 
     @Id
@@ -16,21 +15,21 @@ public class Attribute {
 
     @NotBlank
     @Size(max = 30)
-    @Column(nullable = false)
+    @Column(name = "nameAttribute", nullable = false)
     private String name;
 
     @NotBlank
     @Size(max = 20)
-    @Column(nullable = false)
+    @Column(name = "datType", nullable = false)
     private String dataType;
+
+    public Attribute() { }
 
     public Attribute(Long id, String name, String dataType) {
         this.id = id;
         this.name = name;
         this.dataType = dataType;
     }
-
-    public Attribute() {}
 
     public Long getId() {
         return id;
