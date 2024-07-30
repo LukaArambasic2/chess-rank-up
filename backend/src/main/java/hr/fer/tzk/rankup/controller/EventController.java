@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -19,21 +20,28 @@ public class EventController {
         this.eventService = eventService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<Event>> findAllEvent() {
+        return eventService.findAll();
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity getEventById(@PathVariable Long id) {
-        Optional<Event> event = eventService.getEventById(id);
-        if (event.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(event.get());
+    public ResponseEntity findEventById(@PathVariable Long id) {
+        return eventService.findEventById(id);
     }
 
     @PostMapping()
     public ResponseEntity createEvent(@RequestBody EventDTO eventDTO) {
-        if (eventService.createEvent(eventDTO)) {
-            return new ResponseEntity(HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
+        return eventService.createEvent(eventDTO);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity updateEvent(@PathVariable Long id, @RequestBody EventDTO eventDTO) {
+        return eventService.updateEvent(id, eventDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteEvent(@PathVariable Long id) {
+        return eventService.deleteEvent(id);
     }
 }

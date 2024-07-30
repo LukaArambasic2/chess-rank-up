@@ -1,13 +1,10 @@
 package hr.fer.tzk.rankup.dto;
 
-import hr.fer.tzk.rankup.model.Section;
-
 import java.time.LocalDate;
 
 public class EventDTO {
     private String name;
-    private LocalDate dateFrom;
-    private LocalDate dateTo;
+    private LocalDate date;
     private String description;
     private Long idSection;
     private Long idEventType;
@@ -15,10 +12,9 @@ public class EventDTO {
     public EventDTO() {
     }
 
-    public EventDTO(String name, LocalDate dateFrom, LocalDate dateTo, String description, Long idSection, Long idEventType) {
+    public EventDTO(String name, LocalDate date, String description, Long idSection, Long idEventType) {
         this.name = name;
-        this.dateFrom = dateFrom;
-        this.dateTo = dateTo;
+        this.date = date;
         this.description = description;
         this.idSection = idSection;
         this.idEventType = idEventType;
@@ -32,20 +28,12 @@ public class EventDTO {
         this.name = name;
     }
 
-    public LocalDate getDateFrom() {
-        return dateFrom;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateFrom(LocalDate dateFrom) {
-        this.dateFrom = dateFrom;
-    }
-
-    public LocalDate getDateTo() {
-        return dateTo;
-    }
-
-    public void setDateTo(LocalDate dateTo) {
-        this.dateTo = dateTo;
+    public void setDateFrom(LocalDate date) {
+        this.date = date;
     }
 
     public String getDescription() {
