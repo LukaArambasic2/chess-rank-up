@@ -6,12 +6,9 @@ import Aktivnost from './pages/activity/Aktivnost';
 import ExamplePage from './pages/examplePage/ExamplePage';
 import OnlineLiga from './pages/leaderboard/OnlineLiga';
 import Prijava from './pages/login/Prijava';
-import Profil from './pages/Profil';
+import Profil from './pages/profile/Profil';
 import Registracija from './pages/registration/Registracija';
 import Reset from './pages/reset/Reset';
-import SBgodina from './pages/SBgodina';
-import SBsemestar from './pages/SBsemestar';
-import SBukupno from './pages/SBukupno';
 import Scoreboard from './pages/scoreboard/Scoreboard';
 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
@@ -22,6 +19,7 @@ const sections = [
   { id: 'section2', name: 'Neka druga sekcija', heading: 'DOBRO DOŠLI', description: 'Igramo nešto drugo' },
   // Add more sections as needed
 ];
+
 
 function App() {
   
@@ -62,21 +60,6 @@ function App() {
     },
 
     {
-      path: "/scoreboard/semestar",
-      element: <SBsemestar />
-    },
-
-    {
-      path: "/scoreboard/godina",
-      element: <SBgodina />
-    },
-
-    {
-      path: "/scoreboard/ukupno",
-      element: <SBukupno />
-    },
-
-    {
       path: "/onlineLiga",
       element: <OnlineLiga />
     }
@@ -88,6 +71,12 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage sections={sections} />} />
         <Route path="/scoreboard" element={<Scoreboard />} />
+        <Route path="/prijava" element={<Prijava />} />
+        <Route path="/registracija" element={<Registracija />} />
+        <Route path="/onlineLiga" element={<OnlineLiga />} />
+        <Route path="/profil" element={<Profil />} />
+        <Route path="/profil/aktivnost" element={<Aktivnost />} />
+        <Route path="/resetiranjeLozinke" element={<Reset />} />
       </Routes>
     </Router>
   );

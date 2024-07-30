@@ -1,23 +1,27 @@
-.event{
+.event {
     display: flex;
     align-items: center;
-    position: absolute;
     width: 81vw;
     height: 5.5vh;
     padding: 0 2vw;
+    margin: 8px 0;
     border-radius: 10px;
     font-size: 4.1vw;
+    background-color: white;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1);
 }
 
-.maleni1{
-    width: 26vw;
+.maleni1 {
+    width: 27vw;
     margin: 0;
 }
-.maleni2{
-    width: 40vw;
+
+.maleni2 {
+    width: 39vw;
     margin: 0;
 }
-.maleni3{
+
+.maleni3 {
     width: 15vw;
     margin: 0;
     text-align: center;

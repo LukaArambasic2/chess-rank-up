@@ -1,25 +1,19 @@
-.bodycontainer{
+.bodycontainer {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    background-color: white;
+    align-items: center;
     height: 100vh;
-    width: 100wv;
-    margin: 0;
-    padding: 0;
+    width: 100vw;
 }
 
-.bold{
-    position: absolute;
+.bold {
     font-size: 30px;
     font-weight: 600;
-    top: 8.38vh;
+    margin-top: 7vh;
+    margin-bottom: 1vh;
 }
 
-.dab{
-    position: absolute;
-    top: 15vh;
+.dab {
     display: flex;
     width: 81vw;
     padding: 0 2vw;
@@ -28,23 +22,60 @@
     font-weight: 600;
     font-size: 4.36vw;
     border-radius: 3px;
+    margin-bottom: 0.1vh;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.maleni1{
+.dab select {
+    font-size: 1.5vw; /* Adjust as needed */
+    padding: 5px;
+}
+
+.sortiranje{
+    width: 83vw;
+    display: flex;
+    justify-content: left;
+    margin-top: 0;
+}
+
+.eventi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 81vw;
+    margin-bottom: 2vh;
+}
+
+.event {
+    display: flex;
+    align-items: center;
+    width: 81vw;
+    height: 5.5vh;
+    padding: 0 2vw;
+    margin-bottom: 10px; /* Razmak između događaja */
+    border-radius: 10px;
+    font-size: 4.1vw;
+    background-color: white;
+}
+
+.maleni1 {
     width: 26vw;
     margin: 0;
 }
-.maleni2{
+
+.maleni2 {
     width: 40vw;
     margin: 0;
 }
-.maleni3{
+
+.maleni3 {
     width: 15vw;
     margin: 0;
     text-align: center;
 }
 
-.nazad{
+.nazad {
     position: absolute;
     height: 4vh;
     top: 4vh;

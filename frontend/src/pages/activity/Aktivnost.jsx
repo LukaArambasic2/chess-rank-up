@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import Event from '../../components/event/Event';
-import nazad from '../images/nazad.png';
+import nazad from '../../images/nazad.png';
 import './Aktivnost.css';
 
 
