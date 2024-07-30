@@ -1,7 +1,6 @@
 package hr.fer.tzk.rankup.security;
 
 import hr.fer.tzk.rankup.dto.MemberLoginDto;
-import hr.fer.tzk.rankup.dto.MemberRegisterDto;
 import hr.fer.tzk.rankup.model.Member;
 import hr.fer.tzk.rankup.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql")
+//@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql")
 @ActiveProfiles("test")
 public class Argon2idHasherTest {
 

@@ -58,6 +58,7 @@ public class SectionMemberController {
 
     @GetMapping("/profile/{idMember}")
     public ResponseEntity<SectionMemberProfileDto> findMemberProfileById(@PathVariable Long idSection, @PathVariable Long idMember) {
+        //Optional<SectionMemberProfileDto> sectionMemberProfileDtoOpt = sectionMemberService.findSectionMemberProfileBySectionId(idSection, idMember);
         return null;
     }
 //    @PostMapping
