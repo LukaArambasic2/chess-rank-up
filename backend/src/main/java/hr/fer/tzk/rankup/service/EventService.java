@@ -7,7 +7,6 @@ import hr.fer.tzk.rankup.model.Section;
 import hr.fer.tzk.rankup.repository.EventRepository;
 import hr.fer.tzk.rankup.repository.EventTypeRepository;
 import hr.fer.tzk.rankup.repository.SectionRepository;
-import org.hibernate.engine.spi.Resolution;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -55,16 +54,18 @@ public class EventService {
                     eventDTO.getDate() == null ||
                     eventDTO.getDescription() == null || eventDTO.getDescription().isBlank()
             ) {
-//            Event event = new Event(eventDTO.getName(), eventDTO.getDate(), eventDTO.getDescription(), section.get(), eventType.get());
-//            Event savedEvent = eventRepository.save(event);
+                Event event = new Event(eventDTO.getName(), eventDTO.getDate(), eventDTO.getDescription(), section.get(), eventType.get());
+                Event savedEvent = eventRepository.save(event);
 
-//            URI location = ServletUriComponentsBuilder
-//                    .fromCurrentRequest()
-//                    .path("/{id}")
-//                    .buildAndExpand(savedEvent.getId())
-//                    .toUri();
-//
-//            return ResponseEntity.created(location).build();
+                URI location = ServletUriComponentsBuilder
+                        .fromCurrentRequest()
+                        .path("/{id}")
+                        .buildAndExpand(savedEvent.getId())
+                        .toUri();
+
+                return ResponseEntity.created(location).build();
+            } else {
+                return ResponseEntity.badRequest().body("Svi atributi moraju biti popunjeni");
             }
         }
     }
@@ -78,7 +79,7 @@ public class EventService {
                 Event newEvent = eventRepository.findById(id).get();
                 newEvent.setName(eventDTO.getName());
                 newEvent.setDescription(eventDTO.getDescription());
-//                    newEvent.setDate(eventDTO.getDate());
+                newEvent.setDate(eventDTO.getDate());
                 if (sectionRepository.existsById(eventDTO.getIdSection())) {
                     newEvent.setSection(sectionRepository.findById(eventDTO.getIdSection()).get());
                 } else {

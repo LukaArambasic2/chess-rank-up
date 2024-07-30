@@ -73,7 +73,7 @@ public class Event {
         return date;
     }
 
-    public void setDateTo(@NotBlank LocalDate date) {
+    public void setDate(@NotBlank LocalDate date) {
         this.date = date;
     }
 
