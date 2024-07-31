@@ -1,0 +1,20 @@
+button{
+    background-color: #7F61BA;
+    color: white;
+    border-color: #EEF1FF;
+    border: solid 2px;
+    padding-inline: 25px;
+    padding-block: 5px;
+    font-size: large;
+    font-weight: bold;
+    border-radius: 8px;
+    
+}
+
+button:disabled{
+    padding-inline: 16px;
+    padding-block: 5px;
+    background-color: #EEF1FF;
+    color: #7F61BA;
+    font-weight: normal;
+}
