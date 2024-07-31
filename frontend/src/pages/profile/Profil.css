@@ -90,7 +90,7 @@
 
 .kockica{
     width: 36vw;
-    height: 18.25vh;
+    height: 19vh;
     border-radius: 28px;
     box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
 }
@@ -140,7 +140,7 @@
 
 .slikica{
     position: absolute;
-    bottom: 12vw;
+    bottom: 2vh;
     width: 50vw;
 }
 

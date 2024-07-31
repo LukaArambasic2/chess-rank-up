@@ -1,32 +1,8 @@
-.up2{
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    top:0;
-    background-color: #7F61BA;
-    width: 100vw; 
-    height: 28vh; 
-    border-radius: 0 0 30px 30px;
-    z-index: 1;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-
-}
-
-.sbb{
-    text-align: center;
-    position: absolute;
-    font-size: 19px;
-    color: white;
-    font-weight: 700;
-    top: 1.5vh;
-}
-
 .jedan{
     position: absolute;
     left: 35.9vw;
-    top: 6vh;
-    height: 15.38vh;
+    top: 10vh;
+    height: 15.88vh;
     width: 28.1vw;
     background-color: white;
     border-radius: 20px;
@@ -36,6 +12,7 @@
     justify-content: center;
     align-items: var(15.38vh);
     margin: 0;
+    z-index: 3;
 }
 
 .pomocniJedan{
@@ -44,7 +21,7 @@
     align-items: center;
     position: absolute;
     left: 35.9vw;
-    top: 19.38vh;
+    top: 23.88vh;
     height: 4vh;
     width: 28.1vw;
 }
@@ -52,8 +29,8 @@
 .dva{
     position: absolute;
     left: 3.9vw;
-    top: 10vh;
-    height: 15.38vh;
+    top: 14vh;
+    height: 15.88vh;
     width: 28.1vw;
     background-color: white;
     border-radius: 20px;
@@ -61,6 +38,7 @@
     display: flex;
     justify-content: center;
     margin: 0;
+    z-index: 3;
 }
 
 .pomocniDva{
@@ -69,7 +47,7 @@
     align-items: center;
     position: absolute;
     left: 3.9vw;
-    top: 23.38vh;
+    top: 27.88vh;
     height: 4vh;
     width: 28.1vw;
     z-index: 4;
@@ -78,8 +56,8 @@
 .tri{
     position: absolute;
     right: 3.9vw;
-    top: 10vh;
-    height: 15.38vh;
+    top: 14vh;
+    height: 15.88vh;
     width: 28.1vw;
     background-color: white;
     border-radius: 20px;
@@ -87,6 +65,7 @@
     display: flex;
     justify-content: center;
     margin: 0;
+    z-index: 3;
 }
 
 .pomocniTri{
@@ -95,7 +74,7 @@
     align-items: center;
     position: absolute;
     right: 3.9vw;
-    top: 23.38vh;
+    top: 27.88vh;
     height: 4vh;
     width: 28.1vw;
     z-index: 4;
@@ -147,4 +126,17 @@
     font-weight: 700;
     font-size: 20px;
     color: white
+}
+
+.ip{
+    font-weight: 800;
+    font-size: 17px;
+    margin-bottom: 0;
+}
+
+.brbod{
+    font-size: 3vh;
+    color: #7F61BA;
+    font-weight: 700;
+    margin-top: 1vh;
 }

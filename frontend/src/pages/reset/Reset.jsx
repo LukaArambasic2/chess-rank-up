@@ -1,8 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import'./Reset.css';
 
 const Reset = () => {
+    const navigate = useNavigate(); 
+
+    const handleSubmit = (event) => {
+        event.preventDefault(); 
+         navigate("/prijava");
+    };
+
     return (
         <>
            <div className="container">
@@ -11,7 +19,7 @@ const Reset = () => {
                 </div>
 
                 <div className="forma">
-                    <form action="">
+                    <form onSubmit={handleSubmit}>
                         <div class="ib">
                             <input type="password" placeholder="Unesite novu lozinku" required/>
                         </div>
@@ -23,7 +31,7 @@ const Reset = () => {
                         <div className="cvet"></div>
 
                         <div className="gumb">
-                        <Link to="/prijava"><button type="submit" class="btn">SPREMI</button></Link>
+                            <button type="submit" class="btn">SPREMI</button>
                         </div>
 
                     </form> 

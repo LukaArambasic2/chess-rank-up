@@ -1,7 +1,7 @@
 .mjesto{
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    position: absolute;
     width: 92vw;
     height: 5.5vh;
     padding: 0 2vw;

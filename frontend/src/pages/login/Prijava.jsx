@@ -1,7 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Prijava = () => {
+    const navigate = useNavigate(); 
+
+    const handleSubmit = (event) => {
+        event.preventDefault(); 
+        navigate("/homeILKAJVEC");
+    };
+    
     return (
         <>
            <div className="container">
@@ -10,7 +18,7 @@ const Prijava = () => {
                 </div>
 
                 <div className="forma">
-                    <form action="">
+                    <form onSubmit={handleSubmit}>
                         <div class="ib">
                             <input type="text" placeholder="Email" required/>
                         </div>

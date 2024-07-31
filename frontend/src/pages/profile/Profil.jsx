@@ -1,10 +1,21 @@
 import React from "react";
 import'./Profil.css';
-import Curved from "./Curved";
-import JMBAG from '../images/jmbag.jpg';
+import Curved from "../Curved";
+import JMBAG from '../../images/jmbag.jpg';
 import { Link } from "react-router-dom";
 
-const Profil = ({member}) => {
+const Profil = () => {
+    const member = {
+        firstName: "Ime",
+        lastName: "Prezime",
+        pointsInSemestar: 10,
+        pointsAll: 25
+    };
+
+    const rank = {
+        name: "figura",
+    }
+
     return (
         <>
         <div className="container">
@@ -20,7 +31,7 @@ const Profil = ({member}) => {
 
             <div className="beli"> 
 
-                <p className="ime">Ime Prezime</p>
+                <p className="ime">{member.firstName} {member.lastName}</p>
 
                 <div className="kockice">
                     <div className="kockica" id="lijevi">
@@ -38,7 +49,7 @@ const Profil = ({member}) => {
                 <div className="atributi">
                     <p className="atribut">Lichess account <br /> <span className="vrijednost">username123</span></p>
 
-                    <p className="atribut">Rank <br /> <span className="vrijednost">figura</span></p>
+                    <p className="atribut">Rank <br /> <span className="vrijednost">{rank.name}</span></p>
                 </div>
 
                 <Link to="/profil/aktivnost">
