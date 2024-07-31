@@ -39,11 +39,11 @@ public class EventTypeService {
             return ResponseEntity.badRequest().body("Bodovi ne smiju biti negativni");
         }
 
-        EventType eventType = eventTypeRepository.save(newEventType);
+        newEventType = eventTypeRepository.save(newEventType);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(eventType.getId())
+                .buildAndExpand(newEventType.getId())
                 .toUri();
 
         return ResponseEntity.created(location).build();
@@ -57,12 +57,11 @@ public class EventTypeService {
             return ResponseEntity.badRequest().body("Bodovi ne smiju biti negativni");
         }
 
-        Optional<EventType> eventType = eventTypeRepository.findById(id);
-        if (eventType.isPresent()) {
-            EventType eventTypeForSave = eventType.get();
-            eventTypeForSave.setName(newEventType.getName());
-            eventTypeForSave.setDefaultPoints(newEventType.getDefaultPoints());
-            eventTypeRepository.save(eventTypeForSave);
+        if (eventTypeRepository.existsById(id)) {
+            EventType eventType = eventTypeRepository.findById(id).get();
+            eventType.setName(newEventType.getName());
+            eventType.setDefaultPoints(newEventType.getDefaultPoints());
+            eventTypeRepository.save(eventType);
 
             return ResponseEntity.noContent().build();
         }
@@ -74,7 +73,6 @@ public class EventTypeService {
         Optional<EventType> eventType = eventTypeRepository.findById(id);
         if (eventType.isPresent()) {
             eventTypeRepository.deleteById(id);
-
             return ResponseEntity.noContent().build();
         }
 

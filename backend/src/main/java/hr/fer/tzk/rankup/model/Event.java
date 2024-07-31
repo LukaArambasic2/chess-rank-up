@@ -3,6 +3,7 @@ package hr.fer.tzk.rankup.model;
 import java.time.LocalDate;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -18,7 +19,7 @@ public class Event {
     @Column(name = "nameEvent", nullable = false)
     private String name;
 
-    @NotBlank
+    @NotNull
     @Temporal(TemporalType.DATE)
     @Column(name = "dateEvent", nullable = false)
     private LocalDate date;
@@ -69,11 +70,11 @@ public class Event {
         this.name = name;
     }
 
-    public @NotBlank LocalDate getDate() {
+    public @NotNull LocalDate getDate() {
         return date;
     }
 
-    public void setDate(@NotBlank LocalDate date) {
+    public void setDate(@NotNull LocalDate date) {
         this.date = date;
     }
 

@@ -47,27 +47,27 @@ public class EventService {
         Optional<Section> section = sectionRepository.findById(eventDTO.getIdSection());
         Optional<EventType> eventType = eventTypeRepository.findById(eventDTO.getIdEventType());
 
-        if (section.isEmpty() && eventType.isEmpty()) {
+        if (section.isEmpty() || eventType.isEmpty()) {
             return ResponseEntity.badRequest().body("Nepostojeća sekcija ili tip eventa");
-        } else {
-            if (eventDTO.getName() == null || eventDTO.getName().isBlank() ||
-                    eventDTO.getDate() == null ||
-                    eventDTO.getDescription() == null || eventDTO.getDescription().isBlank()
-            ) {
-                Event event = new Event(eventDTO.getName(), eventDTO.getDate(), eventDTO.getDescription(), section.get(), eventType.get());
-                Event savedEvent = eventRepository.save(event);
-
-                URI location = ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/{id}")
-                        .buildAndExpand(savedEvent.getId())
-                        .toUri();
-
-                return ResponseEntity.created(location).build();
-            } else {
-                return ResponseEntity.badRequest().body("Svi atributi moraju biti popunjeni");
-            }
         }
+
+        if (eventDTO.getName() == null || eventDTO.getName().isBlank() ||
+                eventDTO.getDate() == null ||
+                eventDTO.getDescription() == null || eventDTO.getDescription().isBlank()
+        ) {
+            return ResponseEntity.badRequest().body("Svi atributi moraju biti popunjeni");
+        }
+
+        Event newEvent = new Event(eventDTO.getName(), eventDTO.getDate(), eventDTO.getDescription(), section.get(), eventType.get());
+        newEvent = eventRepository.save(newEvent);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(newEvent.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
     public ResponseEntity updateEvent(Long id, EventDTO eventDTO) {
@@ -75,33 +75,28 @@ public class EventService {
                 eventDTO.getDate() == null ||
                 eventDTO.getDescription() == null || eventDTO.getDescription().isBlank()
         ) {
-            if (eventRepository.existsById(id)) {
-                Event newEvent = eventRepository.findById(id).get();
-                newEvent.setName(eventDTO.getName());
-                newEvent.setDescription(eventDTO.getDescription());
-                newEvent.setDate(eventDTO.getDate());
-                if (sectionRepository.existsById(eventDTO.getIdSection())) {
-                    newEvent.setSection(sectionRepository.findById(eventDTO.getIdSection()).get());
-                } else {
-                    return ResponseEntity.badRequest().body("Nepostojeća sekcija");
-                }
-                if (eventTypeRepository.existsById(eventDTO.getIdEventType())) {
-                    newEvent.setEventType(eventTypeRepository.findById(eventDTO.getIdEventType()).get());
-                } else {
-                    return ResponseEntity.badRequest().body("Nepostojeći tip eventa");
-                }
-                Event event = eventRepository.save(newEvent);
-
-                URI location = ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/{id}")
-                        .buildAndExpand(event.getId())
-                        .toUri();
-
-                return ResponseEntity.created(location).build();
-            }
+            return ResponseEntity.badRequest().body("Svi atributi moraju biti popunjeni");
         }
-        return ResponseEntity.badRequest().body("Svi atributi moraju biti popunjeni");
+
+        if (eventRepository.existsById(id)) {
+            if (!sectionRepository.existsById(eventDTO.getIdSection()) ||
+                    !eventTypeRepository.existsById(eventDTO.getIdEventType())
+            ) {
+                return ResponseEntity.badRequest().body("Nepostojeća sekcija ili tip eventa");
+            }
+
+            Event newEvent = eventRepository.findById(id).get();
+            newEvent.setName(eventDTO.getName());
+            newEvent.setDescription(eventDTO.getDescription());
+            newEvent.setDate(eventDTO.getDate());
+            newEvent.setSection(sectionRepository.findById(eventDTO.getIdSection()).get());
+            newEvent.setEventType(eventTypeRepository.findById(eventDTO.getIdEventType()).get());
+            eventRepository.save(newEvent);
+
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     public ResponseEntity deleteEvent(Long id) {
