@@ -7,4 +7,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SectionRepository extends JpaRepository<Section, Long> {
 
+    Optional<Section> findByName(String name);
+
+    List<Section> findByDescriptionContaining(String keyword);
+
+    List<Section> findByLogo(String logo);
 }
