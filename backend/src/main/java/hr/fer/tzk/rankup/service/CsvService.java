@@ -26,7 +26,7 @@ public class CsvService {
     private EventService eventService;
 
     public void convertLichessCsvToDb(InputStream csvInputStream, String eventName, int defaultPoints) throws IOException {
-        Optional<Section> chessSectionOpt = sectionService.getSectionById(1L);
+        Optional<Section> chessSectionOpt = sectionService.findSectionById(1L);
         if (chessSectionOpt.isEmpty()) {
             throw new IOException("Section not found");
         }

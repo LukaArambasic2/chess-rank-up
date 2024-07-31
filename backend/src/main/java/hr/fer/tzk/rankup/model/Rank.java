@@ -3,10 +3,12 @@ package hr.fer.tzk.rankup.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.ColumnDefault;
+
 import java.util.Objects;
 
 @Entity
-@Table(name = "Rank")
+@Table(name = "MyRank")
 public class Rank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +25,8 @@ public class Rank {
     private String image;
 
     @Column(name = "pointsModifier", nullable = false)
-    private int pointsModifier;
+    @ColumnDefault(value = "0")
+    private int pointsModifier = 0;
 
     @Column(name = "pointsRequired")
     private int pointsRequired;
@@ -32,7 +35,7 @@ public class Rank {
     @JoinColumn(name = "idSection", nullable = false)
     private Section section;
 
-    public Rank() {}
+    public Rank() { }
 
     public Rank(String name, String image, int pointsModifier, int pointsRequired, Section section) {
         this.name = name;

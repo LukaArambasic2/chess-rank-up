@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+@Entity
+@Table(name = "MemberInfo", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"idSection", "idMember", "idAttribute"}),
+})
 public class MemberInfo {
 
     @Id
@@ -28,7 +32,7 @@ public class MemberInfo {
     @JoinColumn(name = "idMember", nullable = false)
     private Member member;
 
-    public MemberInfo() {}
+    public MemberInfo() { }
 
     public MemberInfo(Long id, String stringValue, Section section, Attribute attribute, Member member) {
         this.id = id;
@@ -88,6 +92,4 @@ public class MemberInfo {
                 ", member=" + member +
                 '}';
     }
-
-
 }

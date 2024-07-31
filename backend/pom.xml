@@ -69,6 +69,7 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- For QR code generation and reading -->
 		<!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
 		<dependency>
 			<groupId>com.google.zxing</groupId>
@@ -76,6 +77,7 @@
 			<version>3.5.3</version>
 		</dependency>
 
+		<!-- For QR code generation and reading -->
 		<!-- https://mvnrepository.com/artifact/com.google.zxing/javase -->
 		<dependency>
 			<groupId>com.google.zxing</groupId>
@@ -91,6 +93,26 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<!-- For SMTP server and email verification -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<!-- For Argon2id hasher -->
+		<dependency>
+			<groupId>de.mkammerer</groupId>
+			<artifactId>argon2-jvm</artifactId>
+			<version>2.11</version>
+		</dependency>
+
+		<!-- For BCrypt hasher -->
+		<dependency>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.4</version>
 		</dependency>
 	</dependencies>
 

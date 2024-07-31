@@ -13,9 +13,7 @@ public class Participation {
     private Long idParticipation;
 
     @NotBlank
-    private Long addPoints; //ovo nema min, ako sam dobro skuzila
-
-    //NISAM SIGURNA ZA MANY TO ONE!!! CHECK
+    private int addPoints;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idMember", nullable = false)
@@ -27,7 +25,7 @@ public class Participation {
 
     public Participation() {}
 
-    public Participation(Long idParticipation, Long addPoints, Member idMember, Event idEvent) {
+    public Participation(Long idParticipation, int addPoints, Member idMember, Event idEvent) {
         this.idParticipation = idParticipation;
         this.addPoints = addPoints;
         this.idMember = idMember;
@@ -42,11 +40,11 @@ public class Participation {
         this.idParticipation = idParticipation;
     }
 
-    public @NotBlank Long getAddPoints() {
+    public @NotBlank int getAddPoints() {
         return addPoints;
     }
 
-    public void setAddPoints(@NotBlank Long addPoints) {
+    public void setAddPoints(@NotBlank int addPoints) {
         this.addPoints = addPoints;
     }
 

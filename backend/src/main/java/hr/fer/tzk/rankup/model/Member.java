@@ -5,12 +5,16 @@ import hr.fer.tzk.rankup.utils.JmbagUtils;
 import hr.fer.tzk.rankup.validation.ValidEmail;
 import hr.fer.tzk.rankup.validation.ValidJmbag;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.ColumnDefault;
+
 import java.util.Objects;
 
 @Entity
-@Table(name = "Member", uniqueConstraints = {
+@Table(name = "MyMember", uniqueConstraints = {
         @UniqueConstraint(columnNames = "jmbag"),
         @UniqueConstraint(columnNames = "email")
 })
@@ -49,6 +53,11 @@ public class Member {
     @Column(name = "salt")
     private String salt;
 
+    @NotNull
+    @Column(name = "isVerified")
+    @ColumnDefault(value = "FALSE")
+    private boolean verified = false;
+
     // Empty constructor
     public Member() {}
 
@@ -60,6 +69,7 @@ public class Member {
         this.firstName = firstName;
         this.lastName = lastName;
         this.jmbag = jmbag;
+        this.verified = false;
     }
 
     // Use case: Member is added by the section leader into the database with email specified
@@ -81,13 +91,14 @@ public class Member {
         this.lastName = lastName;
         this.jmbag = jmbag;
         this.email = email;
+        this.verified = false;
     }
 
     // General full args constructor
     // Use case: Member is added after registration
     public Member(String firstName, String lastName, String jmbag, String email, String passwordHash, String salt) {
         if (!JmbagUtils.validateJmbag(jmbag)) {
-            throw new IllegalArgumentException("Invalid jmbag");
+            throw new IllegalArgumentException("Invalid JMBAG");
         } else if (!EmailUtils.validateEmail(email)) {
             throw new IllegalArgumentException("Invalid email");
         }
@@ -102,10 +113,15 @@ public class Member {
         this.email = email;
         this.passwordHash = passwordHash;
         this.salt = salt;
+        this.verified = false;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public @NotBlank @Size(max = 30) String getFirstName() {
@@ -173,6 +189,14 @@ public class Member {
         this.salt = salt;
     }
 
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
     @Override
     public String toString() {
         return "Member{" +
@@ -182,6 +206,7 @@ public class Member {
                 ", jmbag='" + jmbag + '\'' +
                 ", email='" + email + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
+                ", salt='" + salt + '\'' +
                 '}';
     }
 
