@@ -15,14 +15,10 @@ import java.util.Optional;
 
 @Service
 public class CsvService {
-    /*
+
     @Autowired
     private MemberRepository memberRepository;
-    @Autowired
-    private EventRepository eventRepository;
-    @Autowired
-    private ParticipationRepository participationRepository;
-     */
+
     @Autowired
     private SectionService sectionService;
 
@@ -42,31 +38,16 @@ public class CsvService {
         }
         Event event = eventOpt.get();
 
-        //TODO: Check with Luka if event needs to be created if not found
-
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(csvInputStream))) {
             String line;
-                    /*
-                    .orElseGet(() -> {
-                        Event newEvent = new Event();
-                        newEvent.setName(eventName);
-                        newEvent.setDefaultPoints(defaultPoints);
-                        newEvent.setDateFrom(LocalDate.now());
-                        newEvent.setDateTo(LocalDate.now());
-                        newEvent.setDescription("Lichess Tournament");
-                        newEvent.setSection(chessSection);
-                        return eventRepository.save(newEvent);
-                    });
-                    */
-
 
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
                 Integer rank = Integer.valueOf(data[0]);
                 String lichessUsername = data[2];
-                Integer points = Integer.valueOf(data[4]); //TODO: Check with Luka
+                Integer points = Integer.valueOf(data[4]);
 
-                /*
+
                 Member member = memberRepository.findByLichessUsername(lichessUsername).orElse(null);
                 if (member != null) {
                     Participation participation = new Participation();
@@ -76,7 +57,6 @@ public class CsvService {
 
                     participationRepository.save(participation);
                 }
-                 */
             }
         }
     }
