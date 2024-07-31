@@ -8,7 +8,11 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EventRepository {
+public interface EventRepository extends JpaRepository<Event, Long> {
 
     Optional<Event> findByName(String name);
+
+    List<Event> findByIdSection(Long idSection);
+
+    List<Event> findByDateBetween(java.time.LocalDate startDate, java.time.LocalDate endDate);
 }
