@@ -1,6 +1,7 @@
 package hr.fer.tzk.rankup.service;
 
 import hr.fer.tzk.rankup.dto.SectionDto;
+import hr.fer.tzk.rankup.form.SectionForm;
 import hr.fer.tzk.rankup.model.Section;
 import hr.fer.tzk.rankup.repository.SectionRepository;
 import org.springframework.beans.BeanUtils;
@@ -47,11 +48,11 @@ public class SectionService {
         sectionRepository.delete(section);
     }
 
-    public Section updateSectionById(Long id, SectionDto sectionDto) {
+    public Section updateSectionById(Long id, SectionForm form) {
         Section section = sectionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Section with id " + id + " not found"));
 
-        BeanUtils.copyProperties(sectionDto, section, "id");
+        BeanUtils.copyProperties(form, section, "id");
         return sectionRepository.save(section);
     }
 

@@ -1,7 +1,5 @@
 package hr.fer.tzk.rankup.controller;
 
-import hr.fer.tzk.rankup.dto.MemberLoginDto;
-import hr.fer.tzk.rankup.dto.MemberRegisterDto;
 import hr.fer.tzk.rankup.model.Member;
 import hr.fer.tzk.rankup.security.Argon2idHasher;
 import hr.fer.tzk.rankup.security.PasswordHasher;
@@ -14,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.util.Optional;
 

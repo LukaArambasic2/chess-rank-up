@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SectionDto {
+public class DetailedMemberDto {
     private Long id;
-    private String name;
-    private String descriptionUrl;
-    private String logoUrl;
+    private String firstName;
+    private String lastName;
+    private String jmbag;
+    private String email;
 }

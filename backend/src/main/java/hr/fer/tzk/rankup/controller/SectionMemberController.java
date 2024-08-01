@@ -1,12 +1,10 @@
 package hr.fer.tzk.rankup.controller;
 
-import hr.fer.tzk.rankup.dto.SectionMemberGetDto;
-import hr.fer.tzk.rankup.dto.SectionMemberPostDto;
-import hr.fer.tzk.rankup.dto.SectionMemberProfileDto;
-import hr.fer.tzk.rankup.model.Section;
+import hr.fer.tzk.rankup.dto.SectionMemberDto;
+import hr.fer.tzk.rankup.form.SectionMemberForm;
+import hr.fer.tzk.rankup.mapper.SectionMemberMapper;
 import hr.fer.tzk.rankup.model.SectionMember;
 import hr.fer.tzk.rankup.service.SectionMemberService;
-import hr.fer.tzk.rankup.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/sections/{idSection}/members")
+@RequestMapping("/api/sections/{idSection}/members")
 public class SectionMemberController {
 
     private final SectionMemberService sectionMemberService;
@@ -33,12 +31,16 @@ public class SectionMemberController {
      * @return ResponseEntity containing a list of SectionMemberGetDto objects and an HTTP OK status.
      */
     @GetMapping
-    public ResponseEntity<List<SectionMemberGetDto>> findAllSectionMembers(@PathVariable Long idSection) {
-        return ResponseEntity.ok(sectionMemberService.findAllSectionMembersBySectionId(idSection));
+    public ResponseEntity<List<SectionMemberDto>> findAllSectionMembers(@PathVariable Long idSection) {
+        List<SectionMember> members = sectionMemberService.findAllSectionMembersByIdSection(idSection);
+        List<SectionMemberDto> membersDto = members.stream()
+                .map(SectionMemberMapper::toDto)
+                .toList();
+        return ResponseEntity.ok(membersDto);
     }
 
     /**
-     * Handles GET request to retrieve specific section member by sectionId.
+     * Handles GET request to retrieve specific section member by section ID.
      *
      * @roles ADMIN
      * @param idSection the ID of the section to which the member belongs.
@@ -47,23 +49,20 @@ public class SectionMemberController {
      *         or an HTTP Not Found status if the member does not exist.
      */
     @GetMapping("/{idMember}")
-    public ResponseEntity<SectionMemberGetDto> findSectionMemberById(@PathVariable Long idSection, @PathVariable Long idMember) {
-        Optional<SectionMemberGetDto> sectionMemberOpt = sectionMemberService.findSectionMemberBySectionId(idSection, idMember);
-        if (sectionMemberOpt.isEmpty()) {
+    public ResponseEntity<SectionMemberDto> findSectionMemberById(@PathVariable Long idSection, @PathVariable Long idMember) {
+        Optional<SectionMember> memberOpt = sectionMemberService.findSectionMemberByIdSection(idMember, idSection);
+        if (memberOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        SectionMemberGetDto sectionMember = sectionMemberOpt.get();
-        return ResponseEntity.ok(sectionMember);
+
+        SectionMember member = memberOpt.get();
+        SectionMemberDto memberDto = SectionMemberMapper.toDto(member);
+        return ResponseEntity.ok(memberDto);
     }
 
-    @GetMapping("/profile/{idMember}")
-    public ResponseEntity<SectionMemberProfileDto> findMemberProfileById(@PathVariable Long idSection, @PathVariable Long idMember) {
-        //Optional<SectionMemberProfileDto> sectionMemberProfileDtoOpt = sectionMemberService.findSectionMemberProfileBySectionId(idSection, idMember);
+    // TODO
+    @PostMapping
+    public ResponseEntity<SectionMemberDto> createSectionMember(@PathVariable Long idSection, @RequestBody SectionMemberForm member) {
         return null;
     }
-//    @PostMapping
-//    public ResponseEntity<SectionMemberPostDto> createSectionMember(@PathVariable Long idSection, @RequestBody SectionMemberPostDto) {
-//
-//    }
-
 }
