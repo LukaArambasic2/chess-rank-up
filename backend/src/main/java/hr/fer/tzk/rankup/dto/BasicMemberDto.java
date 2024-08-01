@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SectionDto {
-    private Long id;
-    private String name;
-    private String descriptionUrl;
-    private String logoUrl;
+public class BasicMemberDto {
+    private String firstName;
+    private String lastName;
+    private String jmbag;
 }

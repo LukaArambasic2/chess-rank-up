@@ -1,8 +1,9 @@
 package hr.fer.tzk.rankup.controller;
 
 import hr.fer.tzk.rankup.dto.SectionDto;
+import hr.fer.tzk.rankup.form.SectionForm;
+import hr.fer.tzk.rankup.mapper.SectionMapper;
 import hr.fer.tzk.rankup.model.Section;
-import hr.fer.tzk.rankup.model.SectionMember;
 import hr.fer.tzk.rankup.service.SectionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/sections")
+@RequestMapping("/api/sections")
 public class SectionController {
     private final SectionService sectionService;
 
@@ -28,9 +29,12 @@ public class SectionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Section>> findAllSections() {
+    public ResponseEntity<List<SectionDto>> findAllSections() {
         List<Section> sections = sectionService.findAllSections();
-        return ResponseEntity.ok(sections);
+        List<SectionDto> sectionDtos = sections.stream()
+                .map(SectionMapper::toDto)
+                .toList();
+        return ResponseEntity.ok(sectionDtos);
     }
 
     @GetMapping("/{idSection}")
@@ -40,39 +44,28 @@ public class SectionController {
             return ResponseEntity.notFound().build();
         }
         Section section = sectionOpt.get();
-        SectionDto sectionDto = new SectionDto(section.getId(), section.getName());
+        SectionDto sectionDto = SectionMapper.toDto(section);
         return ResponseEntity.ok(sectionDto);
     }
 
     @PostMapping
-    public ResponseEntity<SectionDto> createSection(@RequestBody SectionDto sectionDto) {
-        if (sectionDto.getName() == null || sectionDto.getName().isBlank()) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        if (sectionDto.getName().length() > 30) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        Section newSection = new Section(sectionDto.getName());
+    public ResponseEntity<SectionDto> createSection(@Valid @RequestBody SectionForm sectionForm) {
+        // TODO: This should create files for description and url instead of how its currently working.
+        Section newSection = SectionMapper.fromForm(sectionForm);
         Optional<Section> storedSectionOpt = sectionService.findSectionByName(newSection.getName());
         if (storedSectionOpt.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
+        Section createdSection = sectionService.createSection(newSection);
 
-        try {
-            Section createdSection = sectionService.createSection(newSection);
-            SectionDto createdSectionDto = new SectionDto(createdSection.getId(), createdSection.getName());
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
-                    .path("/{id}")
-                    .buildAndExpand(createdSection.getId())
-                    .toUri();
+        SectionDto createdSectionDto = SectionMapper.toDto(createdSection);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(createdSection.getId())
+                .toUri();
 
-            return ResponseEntity.created(location).body(createdSectionDto);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.created(location).body(createdSectionDto);
     }
 
     @DeleteMapping("/{idSection}")
@@ -86,14 +79,14 @@ public class SectionController {
     }
 
     @PutMapping("/{idSection}")
-    public ResponseEntity<SectionDto> updateSection(@PathVariable Long idSection, @RequestBody SectionDto sectionDto) {
+    public ResponseEntity<SectionDto> updateSection(@PathVariable Long idSection, @Valid @RequestBody SectionForm form) {
         Optional<Section> sectionOpt = sectionService.findSectionById(idSection);
         if (sectionOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        Section updatedSection = sectionService.updateSectionById(idSection, sectionDto);
-        SectionDto updatedSectionDto = new SectionDto(updatedSection.getId(), updatedSection.getName(), updatedSection.getDescription(), updatedSection.getLogo());
+        Section updatedSection = sectionService.updateSectionById(idSection, form);
+        SectionDto updatedSectionDto = SectionMapper.toDto(updatedSection);
         return ResponseEntity.ok(updatedSectionDto);
     }
 
@@ -101,7 +94,7 @@ public class SectionController {
     public ResponseEntity<SectionDto> patchSection(@PathVariable Long idSection, @RequestBody Map<String, Object> updates) {
         try {
             Section patchedSection = sectionService.patchSection(idSection, updates);
-            SectionDto patchedSectionDto = new SectionDto(patchedSection.getId(), patchedSection.getName(), patchedSection.getDescription(), patchedSection.getLogo());
+            SectionDto patchedSectionDto = SectionMapper.toDto(patchedSection);
             return ResponseEntity.ok(patchedSectionDto);
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.notFound().build();

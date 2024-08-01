@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SectionDto {
-    private Long id;
-    private String name;
-    private String descriptionUrl;
-    private String logoUrl;
+public class ActivityPageDto {
+    private String firstName;
+    private String lastName;
+    private List<ProfileEventDto> events;
 }

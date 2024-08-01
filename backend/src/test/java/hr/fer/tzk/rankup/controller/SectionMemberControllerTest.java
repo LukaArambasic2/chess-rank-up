@@ -1,6 +1,7 @@
 package hr.fer.tzk.rankup.controller;
 
 import hr.fer.tzk.rankup.dto.SectionMemberGetDto;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

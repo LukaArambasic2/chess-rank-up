@@ -12,11 +12,10 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-public class QRCodeUtils {
+public class QrCodeUtils {
     /**
      * Generates a QR code image from the provided text and returns it as a BufferedImage. <br>
      * The final image will be of size <b>width x height</b>. <br><br>
@@ -81,7 +80,7 @@ public class QRCodeUtils {
         int height = 1000;
 
         try {
-            BufferedImage qrCodeImage = QRCodeUtils.generateQRCode(text, errorCorrectionLevel, width, height);
+            BufferedImage qrCodeImage = QrCodeUtils.generateQRCode(text, errorCorrectionLevel, width, height);
             System.out.println("QR Code generated successfully.");
 
             // Optionally, save the image to a file for verification
@@ -89,7 +88,7 @@ public class QRCodeUtils {
             ImageIO.write(qrCodeImage, "png", outputfile);
 
             // Read the QR code from the BufferedImage
-            String decodedText = QRCodeUtils.readQrCode(qrCodeImage);
+            String decodedText = QrCodeUtils.readQrCode(qrCodeImage);
             System.out.println("Decoded text from QR code: " + decodedText);
         } catch (WriterException | IOException e) {
             System.err.println("Error while generating or reading QR Code: " + e.getMessage());

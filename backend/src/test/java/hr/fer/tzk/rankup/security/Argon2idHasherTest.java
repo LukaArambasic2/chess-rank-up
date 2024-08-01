@@ -1,6 +1,5 @@
 package hr.fer.tzk.rankup.security;
 
-import hr.fer.tzk.rankup.dto.MemberLoginDto;
 import hr.fer.tzk.rankup.model.Member;
 import hr.fer.tzk.rankup.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.Optional;

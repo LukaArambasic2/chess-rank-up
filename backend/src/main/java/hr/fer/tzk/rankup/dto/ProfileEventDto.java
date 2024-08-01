@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SectionDto {
-    private Long id;
+public class ProfileEventDto {
+    private LocalDate date;
     private String name;
-    private String descriptionUrl;
-    private String logoUrl;
+    private int points;
 }

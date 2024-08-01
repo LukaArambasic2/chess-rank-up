@@ -1,0 +1,18 @@
+Fix generalInfo.
+
+Add endpoints to Postman.
+
+
+Today's TODO:
+
+Split all Dto into Dto and Form.
+
+Use Lombok for everything.
+
+Add checking for Forms and remove it from models.
+
+Fix all tests.
+
+Create all Scoreboard and Leaderboard endpoints.
+
+Finish QRCode and Rank icon endpoints.

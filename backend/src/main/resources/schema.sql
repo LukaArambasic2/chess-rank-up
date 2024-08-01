@@ -49,6 +49,7 @@ CREATE TABLE MySection
     nameSection VARCHAR(30) NOT NULL,
     descriptionSection VARCHAR(80),
     logo VARCHAR(80),
+    isOpen BOOLEAN NOT NULL DEFAULT TRUE,
     UNIQUE (nameSection)
 );
 

@@ -1,7 +1,7 @@
 package hr.fer.tzk.rankup.service;
 
-import hr.fer.tzk.rankup.dto.MemberLoginDto;
-import hr.fer.tzk.rankup.dto.MemberRegisterDto;
+import hr.fer.tzk.rankup.form.LoginForm;
+import hr.fer.tzk.rankup.form.RegisterForm;
 import hr.fer.tzk.rankup.model.Member;
 import hr.fer.tzk.rankup.security.PasswordHasher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,84 +24,20 @@ public class AuthService {
         this.memberService = memberService;
     }
 
-    private boolean isValidPassword(String password) {
-        final String PASSWORD_REGEX = "^[A-Za-z0-9!?._-]+$";
-        final int MIN_PASSWORD_LENGTH = 8;
-        final int MAX_PASSWORD_LENGTH = 30;
-        return password.length() >= MIN_PASSWORD_LENGTH && password.length() <= MAX_PASSWORD_LENGTH && password.matches(PASSWORD_REGEX);
-    }
-
-    private String checkForAllAttrsLogin(MemberLoginDto memberLogin) {
-        if (memberLogin.getEmail() == null || memberLogin.getEmail().isBlank() ||
-                memberLogin.getPassword() == null || memberLogin.getPassword().isBlank() ||
-                !isValidPassword(memberLogin.getPassword())) {
-            return "Invalid email or password";
-        }
-        return null;
-    }
-
-    private String checkForAllAttrsRegister(MemberRegisterDto memberRegister) {
-        if (memberRegister.getFirstName() == null || memberRegister.getFirstName().isBlank()) {
-            return "Missing first name";
-        }
-
-        if (memberRegister.getFirstName().length() > 30) {
-            return "First name must be 30 characters or less";
-        }
-
-        if (memberRegister.getLastName() == null || memberRegister.getLastName().isBlank()) {
-            return "Missing last name";
-        }
-
-        if (memberRegister.getLastName().length() > 30) {
-            return "Last name must be 30 characters or less";
-        }
-
-        if (memberRegister.getJmbag() == null || memberRegister.getJmbag().isBlank()) {
-            return "Missing JMBAG";
-        }
-
-        if (memberRegister.getEmail() == null || memberRegister.getEmail().isBlank()) {
-            return "Missing email";
-        }
-
-        if (memberRegister.getPassword() == null || memberRegister.getPassword().isBlank()) {
-            return "Missing password";
-        }
-
-        if (memberRegister.getRepeatPassword() == null || memberRegister.getRepeatPassword().isBlank()) {
-            return "Missing repeat password";
-        }
-
-        if (!memberRegister.getPassword().equals(memberRegister.getRepeatPassword())) {
-            return "Passwords do not match";
-        }
-
-        if (!isValidPassword(memberRegister.getPassword())) {
-            return "Password can contain only: uppercase and lowercase letters, numbers and special characters '.', '?', '!', '_' and '-'";
-        }
-        return null;
-    }
-
-    private String checkForConflictRegister(MemberRegisterDto memberRegister) {
-        Optional<Member> memberByEmailOpt = memberService.findMemberByEmail(memberRegister.getEmail());
+    private String checkForConflictRegister(RegisterForm form) {
+        Optional<Member> memberByEmailOpt = memberService.findMemberByEmail(form.getEmail());
         if (memberByEmailOpt.isPresent()) {
             return "Email already in use";
         }
-        Optional<Member> memberByJmbagOpt = memberService.findMemberByJmbag(memberRegister.getJmbag());
+        Optional<Member> memberByJmbagOpt = memberService.findMemberByJmbag(form.getJmbag());
         if (memberByJmbagOpt.isPresent()) {
             return "JMBAG already in use";
         }
         return null;
     }
 
-    public AbstractMap.SimpleEntry<HttpStatus, String> login(MemberLoginDto memberLogin) {
-        String checkAllAttrsRes = checkForAllAttrsLogin(memberLogin);
-        if (checkAllAttrsRes != null) {
-            return new AbstractMap.SimpleEntry<>(HttpStatus.BAD_REQUEST, checkAllAttrsRes);
-        }
-
-        Optional<Member> memberOpt = memberService.findMemberByEmail(memberLogin.getEmail());
+    public AbstractMap.SimpleEntry<HttpStatus, String> login(LoginForm login) {
+        Optional<Member> memberOpt = memberService.findMemberByEmail(login.getEmail());
         if (memberOpt.isEmpty()) {
             return new AbstractMap.SimpleEntry<>(HttpStatus.BAD_REQUEST, "Invalid email or password");
         }
@@ -110,7 +46,7 @@ public class AuthService {
         String storedHash = member.getPasswordHash();
         String salt = member.getSalt();
 
-        if (!passwordHasher.checkPassword(memberLogin.getPassword(), salt, storedHash)) {
+        if (!passwordHasher.checkPassword(login.getPassword(), salt, storedHash)) {
             return new AbstractMap.SimpleEntry<>(HttpStatus.BAD_REQUEST, "Invalid email or password");
         }
 
@@ -121,23 +57,18 @@ public class AuthService {
         return new AbstractMap.SimpleEntry<>(HttpStatus.OK, null);
     }
 
-    public AbstractMap.SimpleEntry<HttpStatus, String> register(MemberRegisterDto memberRegister) {
-        String checkAllAttrsRes = checkForAllAttrsRegister(memberRegister);
-        if (checkAllAttrsRes != null) {
-            return new AbstractMap.SimpleEntry<>(HttpStatus.BAD_REQUEST, checkAllAttrsRes);
-        }
-
-        String checkForConflictRes = checkForConflictRegister(memberRegister);
+    public AbstractMap.SimpleEntry<HttpStatus, String> register(RegisterForm form) {
+        String checkForConflictRes = checkForConflictRegister(form);
         if (checkForConflictRes != null) {
             return new AbstractMap.SimpleEntry<>(HttpStatus.CONFLICT, checkForConflictRes);
         }
 
         String salt = passwordHasher.generateSalt();
-        String passwordHash = passwordHasher.hashPassword(memberRegister.getPassword(), salt);
+        String passwordHash = passwordHasher.hashPassword(form.getPassword(), salt);
 
         Member newMember;
         try {
-            newMember = new Member(memberRegister.getFirstName(), memberRegister.getLastName(), memberRegister.getJmbag(), memberRegister.getEmail(), passwordHash, salt);
+            newMember = new Member(form.getFirstName(), form.getLastName(), form.getJmbag(), form.getEmail(), passwordHash, salt);
             memberService.createMember(newMember);
         } catch (IllegalArgumentException exception) {
             return new AbstractMap.SimpleEntry<>(HttpStatus.BAD_REQUEST, exception.getMessage());
