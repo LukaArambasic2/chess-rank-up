@@ -10,8 +10,8 @@ import java.lang.annotation.*;
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidJmbag {
-    // Error message if JMBAG is incorrect
-    String message() default "Incorrect JMBAG";
+    // Error message if JMBAG is valid
+    String message() default "Invalid JMBAG";
 
     // No group for this annotation
     // It works by itself and itself only
