@@ -9,4 +9,8 @@ import java.util.Optional;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
     Optional<Event> findByName(String name);
+
+    List<Event> findByIdSection(Long idSection);
+
+    List<Event> findByDateBetween(java.time.LocalDate startDate, java.time.LocalDate endDate);
 }
