@@ -17,11 +17,13 @@ public class AuthService {
 
     private final PasswordHasher passwordHasher;
     private final MemberService memberService;
+    private final VerificationService verificationService;
 
     @Autowired
-    public AuthService(@Qualifier("argon2idHasher") PasswordHasher passwordHasher, MemberService memberService) {
+    public AuthService(@Qualifier("argon2idHasher") PasswordHasher passwordHasher, MemberService memberService, VerificationService verificationService) {
         this.passwordHasher = passwordHasher;
         this.memberService = memberService;
+        this.verificationService = verificationService;
     }
 
     private String checkForConflictRegister(RegisterForm form) {
@@ -69,7 +71,8 @@ public class AuthService {
         Member newMember;
         try {
             newMember = new Member(form.getFirstName(), form.getLastName(), form.getJmbag(), form.getEmail(), passwordHash, salt);
-            memberService.createMember(newMember);
+            newMember = memberService.createMember(newMember);
+            verificationService.sendForVerification(newMember);
         } catch (IllegalArgumentException exception) {
             return new AbstractMap.SimpleEntry<>(HttpStatus.BAD_REQUEST, exception.getMessage());
         }
