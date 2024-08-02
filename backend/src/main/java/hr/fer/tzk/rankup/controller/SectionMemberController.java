@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/sections/{idSection}/members")
+@RequestMapping("/sections/{idSection}/members")
 public class SectionMemberController {
 
     private final SectionMemberService sectionMemberService;

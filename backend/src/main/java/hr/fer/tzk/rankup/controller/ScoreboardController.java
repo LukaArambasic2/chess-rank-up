@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/sections/{idSection}/scoreboard")
+@RequestMapping("/sections/{idSection}/scoreboard")
 public class ScoreboardController {
 
     private final ScoreboardService scoreboardService;

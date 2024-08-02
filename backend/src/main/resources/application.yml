@@ -27,3 +27,6 @@ spring:
             enable: true
       protocol: smtp
       test-connection: false
+server:
+  servlet:
+    context-path: /api

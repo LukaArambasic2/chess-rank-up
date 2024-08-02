@@ -5,7 +5,6 @@ import hr.fer.tzk.rankup.form.EventDatesForm;
 import hr.fer.tzk.rankup.form.EventForm;
 import hr.fer.tzk.rankup.service.EventService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
