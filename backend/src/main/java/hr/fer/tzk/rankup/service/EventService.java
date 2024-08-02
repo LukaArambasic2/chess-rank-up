@@ -1,6 +1,7 @@
 package hr.fer.tzk.rankup.service;
 
 import hr.fer.tzk.rankup.dto.EventDTO;
+import hr.fer.tzk.rankup.form.EventDatesForm;
 import hr.fer.tzk.rankup.form.EventForm;
 import hr.fer.tzk.rankup.mapper.EventMapper;
 import hr.fer.tzk.rankup.model.Event;
@@ -114,5 +115,16 @@ public class EventService {
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    public ResponseEntity<Object> getAllEventBetweenDates(EventDatesForm eventDatesForm) {
+        // TODO: možda da ne bacim grešku, nego samo zamijenim datume i vratim listu?
+        if (eventDatesForm.getDateFrom().isAfter(eventDatesForm.getDateTo())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Datum od mora biti prije datuma do!");
+        }
+        List<Event> eventList = eventRepository.findAllByDateBetweenOrderByDate(eventDatesForm.getDateFrom(), eventDatesForm.getDateTo());
+        List<EventDTO> eventDTOList = eventList.stream().map(EventMapper::toEventDTO).toList();
+
+        return ResponseEntity.status(HttpStatus.OK).body(eventDTOList);
     }
 }
