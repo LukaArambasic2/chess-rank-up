@@ -25,9 +25,12 @@ public class VerificationService {
     }
 
     public void sendForVerification(Member member) {
-        String verificationCode = RandomStringUtils.randomAlphanumeric(VERIFICATION_CODE_LENGTH);
+        String url = RandomStringUtils.randomAlphanumeric(VERIFICATION_CODE_LENGTH);
         LocalDateTime expDateTime = LocalDateTime.now().plusDays(7L);
-        Verification verification = new Verification(verificationCode, expDateTime, member);
+        Verification verification = new Verification();
+        verification.setUrl(url);
+        verification.setExpirationTime(expDateTime);
+        verification.setMember(member);
 
         verificationRepository.save(verification);
         sendVerificationEmail(member, verification);

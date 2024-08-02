@@ -1,23 +1,17 @@
 package hr.fer.tzk.rankup.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.util.Objects;
-
 @Entity
-@Table(name = "SectionMember", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"idMember", "idSection"})
-})
+@Table(name = "SectionMember", uniqueConstraints = {@UniqueConstraint(columnNames = {"idMember", "idSection"})})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class SectionMember {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idSectionMember")
@@ -42,5 +36,4 @@ public class SectionMember {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idRank", nullable = false)
     private Rank rank;
-
 }

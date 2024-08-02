@@ -70,7 +70,14 @@ public class AuthService {
 
         Member newMember;
         try {
-            newMember = new Member(form.getFirstName(), form.getLastName(), form.getJmbag(), form.getEmail(), passwordHash, salt);
+            newMember = new Member();
+            newMember.setFirstName(form.getFirstName());
+            newMember.setLastName(form.getLastName());
+            newMember.setJmbag(form.getJmbag());
+            newMember.setEmail(form.getEmail());
+            newMember.setPasswordHash(passwordHash);
+            newMember.setSalt(salt);
+
             newMember = memberService.createMember(newMember);
             verificationService.sendForVerification(newMember);
         } catch (IllegalArgumentException exception) {
