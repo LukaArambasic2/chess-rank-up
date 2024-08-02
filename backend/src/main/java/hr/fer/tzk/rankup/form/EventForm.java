@@ -13,14 +13,14 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EventForm {
-    @NotBlank(message = "Svi atributi moraju biti popunjeni")
+    @NotBlank(message = "Ime eventa ne smije biti prazno!")
     @Size(max = 30)
     private String name;
 
-    @NotNull(message = "Svi atributi moraju biti popunjeni")
+    @NotNull(message = "Unesite datum eventa!")
     private LocalDate date; // TODO: validator za datum
 
-    @NotBlank(message = "Svi atributi moraju biti popunjeni")
+    @NotBlank(message = "Opis eventa ne smije biti prazan!")
     @Size(max = 80)
     private String description;
 

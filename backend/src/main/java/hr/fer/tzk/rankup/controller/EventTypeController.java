@@ -1,7 +1,9 @@
 package hr.fer.tzk.rankup.controller;
 
-import hr.fer.tzk.rankup.model.EventType;
+import hr.fer.tzk.rankup.dto.EventTypeDTO;
+import hr.fer.tzk.rankup.form.EventTypeForm;
 import hr.fer.tzk.rankup.service.EventTypeService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,28 +19,27 @@ public class EventTypeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EventType>> getAllEventType() {
+    public ResponseEntity<List<EventTypeDTO>> getAllEventType() {
         return eventTypeService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity findEventTypeById(@PathVariable Long id) {
+    public ResponseEntity<EventTypeDTO> findEventTypeById(@PathVariable Long id) {
         return eventTypeService.findEventTypeById(id);
     }
 
     @PostMapping
-    public ResponseEntity createEventType(@RequestBody EventType eventType) {
-        return eventTypeService.createEventType(eventType);
+    public ResponseEntity<Void> createEventType(@RequestBody @Valid EventTypeForm eventTypeForm) {
+        return eventTypeService.createEventType(eventTypeForm);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateEventType(@PathVariable Long id, @RequestBody EventType eventType) {
-        System.out.println("Prije ulaska u service");
-        return eventTypeService.updateEventType(id, eventType);
+    public ResponseEntity<Void> updateEventType(@PathVariable Long id, @RequestBody @Valid EventTypeForm eventTypeForm) {
+        return eventTypeService.updateEventType(id, eventTypeForm);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteEventType(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteEventType(@PathVariable Long id) {
         return eventTypeService.deleteEventType(id);
     }
 }
