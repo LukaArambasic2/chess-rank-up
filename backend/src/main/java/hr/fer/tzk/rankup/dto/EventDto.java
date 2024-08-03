@@ -4,10 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventTypeDTO {
+public class EventDto {
     private String name;
-    private int defaultPoints;
+    private LocalDate date;
+    private String description;
+    private String eventTypeName;
 }

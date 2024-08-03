@@ -12,9 +12,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class EventDatesForm {
 
-    @NotNull(message = "Unesite oba datuma!")
+    @NotNull(message = "Start date is missing")
     private LocalDate dateFrom;
 
-    @NotNull(message = "Unesite oba datuma!")
+    @NotNull(message = "End date is missing ")
     private LocalDate dateTo;
 }

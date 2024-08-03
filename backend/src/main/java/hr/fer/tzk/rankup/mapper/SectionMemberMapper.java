@@ -10,6 +10,7 @@ public class SectionMemberMapper {
         if (sectionMember == null) {
             return null;
         }
+        
         SectionMemberDto dto = new SectionMemberDto();
         dto.setFirstName(sectionMember.getMember().getFirstName());
         dto.setLastName(sectionMember.getMember().getLastName());
@@ -18,6 +19,7 @@ public class SectionMemberMapper {
         dto.setActive(sectionMember.isActive());
         dto.setPointsTotal(sectionMember.getPointsAll());
         dto.setRank(sectionMember.getRank().getName());
+        
         return dto;
     }
 

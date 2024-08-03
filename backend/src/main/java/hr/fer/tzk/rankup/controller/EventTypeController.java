@@ -1,31 +1,47 @@
 package hr.fer.tzk.rankup.controller;
 
-import hr.fer.tzk.rankup.dto.EventTypeDTO;
+import hr.fer.tzk.rankup.dto.EventTypeDto;
 import hr.fer.tzk.rankup.form.EventTypeForm;
+import hr.fer.tzk.rankup.mapper.EventTypeMapper;
+import hr.fer.tzk.rankup.model.EventType;
 import hr.fer.tzk.rankup.service.EventTypeService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/event-type")
 public class EventTypeController {
-    private EventTypeService eventTypeService;
+    private final EventTypeService eventTypeService;
 
+    @Autowired
     public EventTypeController(EventTypeService eventTypeService) {
         this.eventTypeService = eventTypeService;
     }
 
     @GetMapping
-    public ResponseEntity<List<EventTypeDTO>> getAllEventType() {
-        return eventTypeService.findAll();
+    public ResponseEntity<List<EventTypeDto>> getAllEventType() {
+        List<EventTypeDto> eventTypes = eventTypeService.findAll()
+                .stream()
+                .map(EventTypeMapper::toDto)
+                .toList();
+        return ResponseEntity.status(HttpStatus.OK).body(eventTypes);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EventTypeDTO> findEventTypeById(@PathVariable Long id) {
-        return eventTypeService.findEventTypeById(id);
+    public ResponseEntity<EventTypeDto> findEventTypeById(@PathVariable Long id) {
+        Optional<EventType> eventTypeOpt = eventTypeService.findEventTypeById(id);
+        if (eventTypeOpt.isPresent()) {
+            EventTypeDto eventTypeDTO = EventTypeMapper.toDto(eventTypeOpt.get());
+            return ResponseEntity.status(HttpStatus.OK).body(eventTypeDTO);
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
