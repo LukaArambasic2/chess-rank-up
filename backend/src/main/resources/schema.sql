@@ -319,7 +319,7 @@ CREATE TABLE News
     title VARCHAR(80) NOT NULL,
     dateCreated DATE NOT NULL,
     dateEdited DATE,
-    content VARCHAR(80) NOT NULL,
+    myContent VARCHAR(80) NOT NULL,
     images VARCHAR(80),
     idSection BIGINT NOT NULL,
     idAuthor BIGINT NOT NULL,
