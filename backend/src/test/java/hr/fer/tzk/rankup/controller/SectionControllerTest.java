@@ -20,6 +20,7 @@ import static org.springframework.test.annotation.DirtiesContext.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
@@ -33,12 +34,15 @@ public class SectionControllerTest {
     @Test
     void shouldReturnAllSections() {
         ResponseEntity<List<SectionDto>> response = restTemplate.exchange(
-                "/sections",
+                "/api/sections",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<SectionDto>>() {});
 
-        SectionDto section = new SectionDto(1L, "Chess");
+        SectionDto section = new SectionDto();
+        section.setId(1L);
+        section.setName("Chess");
+
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         List<SectionDto> sections = response.getBody();
@@ -49,7 +53,7 @@ public class SectionControllerTest {
 
     @Test
     void shouldReturnSectionsOneByOne() {
-        ResponseEntity<SectionDto> response1 = restTemplate.getForEntity("/sections/1", SectionDto.class);
+        ResponseEntity<SectionDto> response1 = restTemplate.getForEntity("/api/sections/1", SectionDto.class);
         assertThat(response1.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         SectionDto section1 = response1.getBody();
@@ -57,7 +61,7 @@ public class SectionControllerTest {
         assertThat(section1.getId()).isEqualTo(1L);
         assertThat(section1.getName()).isEqualTo("Chess");
 
-        ResponseEntity<SectionDto> response2 = restTemplate.getForEntity("/sections/2", SectionDto.class);
+        ResponseEntity<SectionDto> response2 = restTemplate.getForEntity("/api/sections/2", SectionDto.class);
         assertThat(response2.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         SectionDto section2 = response2.getBody();
@@ -68,7 +72,7 @@ public class SectionControllerTest {
 
     @Test
     void shouldNotFindSection() {
-        ResponseEntity<SectionDto> response = restTemplate.getForEntity("/sections/100", SectionDto.class);
+        ResponseEntity<SectionDto> response = restTemplate.getForEntity("/api/sections/100", SectionDto.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         SectionDto section = response.getBody();
         assertNull(section);
@@ -77,8 +81,9 @@ public class SectionControllerTest {
     @Test
     @DirtiesContext
     void shouldCreateSection() {
-        SectionDto newSection = new SectionDto("Powerlifting");
-        ResponseEntity<SectionDto> response = restTemplate.postForEntity("/sections", newSection, SectionDto.class);
+        SectionDto newSection = new SectionDto();
+        newSection.setName("Powerlifting");
+        ResponseEntity<SectionDto> response = restTemplate.postForEntity("/api/sections", newSection, SectionDto.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
         SectionDto createdSection = response.getBody();
@@ -87,7 +92,7 @@ public class SectionControllerTest {
         URI locationUri = response.getHeaders().getLocation();
         assertThat(locationUri).isNotNull();
 
-        String expectedPath = "/sections/" + createdSection.getId();
+        String expectedPath = "/api/sections/" + createdSection.getId();
         String actualPath = locationUri.getPath();
 
         assertThat(actualPath).isEqualTo(expectedPath);
@@ -97,30 +102,32 @@ public class SectionControllerTest {
     @Test
     @DirtiesContext
     void shouldNotCreateSection() {
-        SectionDto newSection = new SectionDto("Chess");
-        ResponseEntity<String> response = restTemplate.postForEntity("/sections", newSection, String.class);
+        SectionDto newSection = new SectionDto();
+        newSection.setName("Chess");
+        ResponseEntity<String> response = restTemplate.postForEntity("/api/sections", newSection, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
     }
 
     @Test
     @DirtiesContext
     void shouldDeleteSection() {
-        ResponseEntity<Void> response = restTemplate.exchange("/sections/1", HttpMethod.DELETE, null, Void.class);
+        ResponseEntity<Void> response = restTemplate.exchange("/api/sections/1", HttpMethod.DELETE, null, Void.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     }
 
     @Test
     @DirtiesContext
     void shouldNotDeleteSection() {
-        ResponseEntity<Void> response = restTemplate.exchange("/sections/0", HttpMethod.DELETE, null, Void.class);
+        ResponseEntity<Void> response = restTemplate.exchange("/api/sections/0", HttpMethod.DELETE, null, Void.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     @Test
     @DirtiesContext
     void shouldUpdateSection() {
-        SectionDto newSection = new SectionDto("Powerlifting");
-        ResponseEntity<SectionDto> response = restTemplate.exchange("/sections/1", HttpMethod.PUT, new HttpEntity<>(newSection), SectionDto.class);
+        SectionDto newSection = new SectionDto();
+        newSection.setName("Powerlifting");
+        ResponseEntity<SectionDto> response = restTemplate.exchange("/api/sections/1", HttpMethod.PUT, new HttpEntity<>(newSection), SectionDto.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         SectionDto section = response.getBody();
@@ -132,23 +139,25 @@ public class SectionControllerTest {
     @Test
     @DirtiesContext
     void shouldNotUpdateSection() {
-        SectionDto newSection = new SectionDto("Powerlifting");
-        ResponseEntity<SectionDto> response = restTemplate.exchange("/sections/0", HttpMethod.PUT, new HttpEntity<>(newSection), SectionDto.class);
+        SectionDto newSection = new SectionDto();
+        newSection.setName("Powerlifting");
+        ResponseEntity<SectionDto> response = restTemplate.exchange("/api/sections/0", HttpMethod.PUT, new HttpEntity<>(newSection), SectionDto.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         assertNull(response.getBody());
     }
 
+    // Patching doesn't work yet.
 //    @Test
 //    @DirtiesContext
 //    void shouldPatchSection() {
 //        Map<String, Object> updates = Map.of(
 //                "name", "Updated Name",
-//                "description", "Updated Description",
-//                "logo", "Updated Logo"
+//                "description", "/static/description.txt",
+//                "logo", "/static/description.txt"
 //        );
 //
 //        ResponseEntity<SectionDto> response = restTemplate.exchange(
-//                "/sections/1",
+//                "/api/sections/1",
 //                HttpMethod.PATCH,
 //                new HttpEntity<>(updates),
 //                SectionDto.class
@@ -160,9 +169,8 @@ public class SectionControllerTest {
 //        assertNotNull(section);
 //        assertThat(section.getId()).isEqualTo(1L);
 //        assertThat(section.getName()).isEqualTo("Updated Name");
-//        assertThat(section.getDescription()).isEqualTo("Updated Description");
-//        assertThat(section.getLogo()).isEqualTo("Updated Logo");
-//
+//        assertThat(section.getDescriptionUrl()).isEqualTo("/static/description.txt");
+//        assertThat(section.getLogoUrl()).isEqualTo("/static/description.txt");
 //    }
 
 //    @Test
