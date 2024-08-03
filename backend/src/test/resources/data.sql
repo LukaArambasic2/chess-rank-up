@@ -33,7 +33,6 @@ INSERT INTO SectionMember (idMember, idSection, idRank) VALUES (9, 1, 2);
 INSERT INTO SectionMember (idMember, idSection, idRank) VALUES (10, 1, 3);
 
 -- Add types of events
-INSERT INTO EventType (nameEventType, defaultPoints) VALUES ('Ostalo', 1);
 INSERT INTO EventType (nameEventType, defaultPoints) VALUES ('Sekcija', 1);
 INSERT INTO EventType (nameEventType, defaultPoints) VALUES ('Online turnir', 1);
 INSERT INTO EventType (nameEventType, defaultPoints) VALUES ('Uzivo turnir', 2);

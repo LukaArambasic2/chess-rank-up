@@ -354,3 +354,6 @@ CREATE TABLE MemberInfo
     FOREIGN KEY (idMember) REFERENCES MyMember(idMember) ON DELETE CASCADE,
     UNIQUE (idSection, idMember, idAttribute)
 );
+
+-- Insert default event type
+INSERT INTO EventType (nameEventType, defaultPoints) VALUES ('Ostalo', 1);
