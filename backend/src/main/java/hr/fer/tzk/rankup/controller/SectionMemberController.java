@@ -5,10 +5,14 @@ import hr.fer.tzk.rankup.form.SectionMemberForm;
 import hr.fer.tzk.rankup.mapper.SectionMemberMapper;
 import hr.fer.tzk.rankup.model.SectionMember;
 import hr.fer.tzk.rankup.service.SectionMemberService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,9 +64,29 @@ public class SectionMemberController {
         return ResponseEntity.ok(memberDto);
     }
 
-    // TODO
+    /**
+     * Creates a new section member.
+     *
+     * @roles ADMIN
+     * @param idSection the ID of the section to which the member will be added.
+     * @param member the form containing the member's details.
+     * @return ResponseEntity containing the created SectionMemberDto object and an HTTP CREATED status,
+     *         or an HTTP Not Found status if the member could not be created.
+     */
     @PostMapping
-    public ResponseEntity<SectionMemberDto> createSectionMember(@PathVariable Long idSection, @RequestBody SectionMemberForm member) {
-        return null;
+    public ResponseEntity<SectionMemberDto> createSectionMember(@PathVariable Long idSection, @Valid @RequestBody SectionMemberForm member) {
+        Optional<SectionMember> newMemberOpt = sectionMemberService.createSectionMemberFromJmbagAndRank(idSection, member.getJmbag(), member.getRankName());
+        if (newMemberOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        SectionMember newMember = newMemberOpt.get();
+        SectionMemberDto newMemberDto = SectionMemberMapper.toDto(newMember);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(newMember.getId())
+                .toUri();
+        return ResponseEntity.status(HttpStatus.CREATED).location(location).body(newMemberDto);
+
     }
 }

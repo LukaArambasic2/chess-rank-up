@@ -1,155 +1,88 @@
 # Backend API Documentation
 
-## AuthController Endpoints
+All endpoints start with `/api`.
 
-### /auth/login
+## Section endpoints
 
-#### Description
-
-This endpoint is used for logging in a member. It checks the provided credentials and returns a response indicating whether the login was successful or not.
-
-#### Method
-
-`POST`
-
-#### Request Body
-
-The request body should be a JSON object of type `MemberLoginDto` with the following fields:
-
--   `email`: The email of the member (String).
--   `password`: The password of the member (String).
-
-Example:
-
-```json
-{
-    "email": "jj56789@fer.hr",
-    "password": "pass1"
-}
-```
-
-#### Expected Validations
-
-1. **Email and Password not null/empty**: Both fields must be provided and must not be empty.
-2. **Password Format**: The password must be between 8 and 30 characters long and can contain only uppercase and lowercase letters, numbers, and the special characters '.', '?', '!', '\_', and '-'.
-
-#### Response
-
--   **200 OK**: The login was successful.
--   **400 Bad Request**: The request body is invalid, the email/password is incorrect, or the member is not verified. Possible error messages:
-    -   "Invalid email or password"
-
-#### Example Responses
-
--   **Successful Login**
-
-    ```json
-    {
-        "status": 200,
-        "message": "Login successful"
-    }
-    ```
-
--   **Invalid Email/Password**
-    ```json
-    {
-        "status": 400,
-        "message": "Invalid email or password"
-    }
-    ```
-
-### /auth/register
+### `GET` /sections
 
 #### Description
 
-This endpoint is used for registering a new member. It validates the provided data and creates a new member in the system if all validations pass.
+Retrieves all sections.
 
-#### Method
+### `GET` /sections/{idSection}
 
-`POST`
+#### Description
 
-#### Request Body
-
-The request body should be a JSON object of type `MemberRegisterDto` with the following fields:
-
--   `firstName`: The first name of the member (String).
--   `lastName`: The last name of the member (String).
--   `jmbag`: The JMBAG of the member (String).
--   `email`: The email of the member (String).
--   `password`: The password of the member (String).
--   `repeatPassword`: The repeated password of the member (String).
-
-Example:
-
-```json
-{
-    "firstName": "Josko",
-    "lastName": "Jovanovic",
-    "jmbag": "0036540383",
-    "email": "jj54038@fer.hr",
-    "password": "pass1",
-    "repeatPassword": "pass1"
-}
-```
-
-#### Expected Validations
-
-1. **First Name, Last Name, JMBAG, Email, Password, and Repeat Password not null/empty**: All fields must be provided and must not be empty.
-2. **Passwords Match**: The `password` and `repeatPassword` must be the same.
-3. **Password Format**: The password must be between 8 and 30 characters long and can contain only uppercase and lowercase letters, numbers, and the special characters '.', '?', '!', '\_', and '-'.
-4. **Email Uniqueness**: The provided email must not already be in use.
-5. **JMBAG Uniqueness**: The provided JMBAG must not already be in use.
+Retrieves a specific section if it exists.
 
 #### Response
 
--   **200 OK**: The registration was successful.
--   **400 Bad Request**: The request body is invalid or some fields do not satisfy the validation criteria. Possible error messages:
-    -   "Missing first name"
-    -   "Missing last name"
-    -   "Missing JMBAG"
-    -   "Missing email"
-    -   "Missing password"
-    -   "Missing repeat password"
-    -   "Passwords do not match"
-    -   "Password can contain only: uppercase and lowercase letters, numbers and special characters '.', '?', '!', '\_' and '-'"
-    -   "Invalid email or password"
--   **409 Conflict**: The email or JMBAG is already in use. Possible error messages:
-    -   "Email already in use"
-    -   "JMBAG already in use"
+OK (200) - Section Found
 
-#### Example Responses
+NOT FOUND (404) - Section Not Found
 
--   **Successful Registration**
+### `POST` /sections
 
-    ```json
-    {
-        "status": 200,
-        "message": "Registration successful"
-    }
-    ```
+#### Description
 
--   **Email Already in Use**
+Creates a new section.
 
-    ```json
-    {
-        "status": 409,
-        "message": "Email already in use"
-    }
-    ```
+### Data
 
--   **Passwords Do Not Match**
+```json
+{
+  "name": "Section Name"
+}
+```
 
-    ```json
-    {
-        "status": 400,
-        "message": "Passwords do not match"
-    }
-    ```
+## News endpoints
 
--   **Invalid Password Format**
-    ```json
-    {
-        "status": 400,
-        "message": "Password can contain only: uppercase and lowercase letters, numbers and special characters '.', '?', '!', '_' and '-'"
-    }
-    ```
+## Calendar endpoints
+
+## Profile Endpoints
+
+## Scoreboard Endpoints
+
+### `GET` /sections/{idSection}/scoreboard/total
+
+#### Description
+
+Retrieves the points for members in a specific section for the last semester.
+
+### `GET` /sections/{idSection}/scoreboard/semester
+
+#### Description
+
+Retrieves the points for members in a specific section for the last semester.
+
+### `GET` /sections/{idSection}/scoreboard/year
+
+#### Description
+
+Retrieves the points for members in a specific section for the current year. <br>
+If current semester is in the Winter then only the points for the Winter semester are returned. <br>
+If current semester is in the Summer then the points for both the Winter and Summer semesters are returned.
+
+### Example Response
+
+All endpoints return the same response structure:
+
+```json
+[
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "points": 15
+  },
+  {
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "points": 10
+  }
+]
+```
+
+## Leaderboard Endpoints
+
+## Admin Page Endpoints

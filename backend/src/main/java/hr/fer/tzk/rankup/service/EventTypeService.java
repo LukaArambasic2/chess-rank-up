@@ -1,8 +1,9 @@
 package hr.fer.tzk.rankup.service;
 
-import hr.fer.tzk.rankup.dto.EventTypeDTO;
+import hr.fer.tzk.rankup.dto.EventTypeDto;
 import hr.fer.tzk.rankup.form.EventTypeForm;
 import hr.fer.tzk.rankup.mapper.EventTypeMapper;
+import hr.fer.tzk.rankup.model.Event;
 import hr.fer.tzk.rankup.model.EventType;
 import hr.fer.tzk.rankup.repository.EventTypeRepository;
 import org.springframework.http.HttpStatus;
@@ -22,24 +23,16 @@ public class EventTypeService {
         this.eventTypeRepository = eventTypeRepository;
     }
 
-    public ResponseEntity<List<EventTypeDTO>> findAll() {
-        List<EventType> eventList = eventTypeRepository.findAll();
-        List<EventTypeDTO> eventTypeDTOList = eventList.stream().map(EventTypeMapper::toEventDTO).toList();
-        return ResponseEntity.status(HttpStatus.OK).body(eventTypeDTOList);
+    public List<EventType> findAll() {
+        return eventTypeRepository.findAll();
     }
 
-    public ResponseEntity<EventTypeDTO> findEventTypeById(Long id) {
-        Optional<EventType> eventType = eventTypeRepository.findById(id);
-        if (eventType.isPresent()) {
-            EventTypeDTO eventTypeDTO = EventTypeMapper.toEventDTO(eventType.get());
-            return ResponseEntity.status(HttpStatus.OK).body(eventTypeDTO);
-        }
-
-        return ResponseEntity.notFound().build();
+    public Optional<EventType> findEventTypeById(Long id) {
+        return eventTypeRepository.findById(id);
     }
 
     public ResponseEntity<Void> createEventType(EventTypeForm eventTypeForm) {
-        EventType eventType = EventTypeMapper.fromEventForm(eventTypeForm);
+        EventType eventType = EventTypeMapper.fromForm(eventTypeForm);
 
         eventType = eventTypeRepository.save(eventType);
         URI location = ServletUriComponentsBuilder

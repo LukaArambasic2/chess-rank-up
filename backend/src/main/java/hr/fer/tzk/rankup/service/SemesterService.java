@@ -44,21 +44,10 @@ public class SemesterService {
         return semesters.isEmpty() ? Optional.empty() : Optional.of(semesters.get(0));
     }
 
-    public List<Semester> findSemestersByYearPattern(String yearPattern) {
-        return semesterRepository.findSemestersBySpecificPatterns(yearPattern);
-    }
-
-    public List<Semester> findSemestersForCurrentOrPreviousYear() {
-        int currentYear = LocalDate.now().getYear();
-        String currentYearPattern = String.valueOf(currentYear - 2000);
-
-        List<Semester> semesters = findSemestersByYearPattern(currentYearPattern);
-
-        if (semesters.isEmpty()) {
-            String previousYearPattern = String.valueOf(currentYear - 1 - 2000);
-            semesters = findSemestersByYearPattern(previousYearPattern);
-        }
-
-        return semesters;
+    public List<Semester> findLatestNSemesters(int n) {
+        List<Semester> semesters = semesterRepository.findAllSemestersOrderedByDateToDesc();
+        return semesters.stream()
+                .limit(n)
+                .toList();
     }
 }

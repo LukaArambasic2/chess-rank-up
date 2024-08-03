@@ -27,7 +27,7 @@ public class News {
     @Column(name = "dateEdited")
     private LocalDate dateEdited;
 
-    @Column(name = "content", length = 80, nullable = false)
+    @Column(name = "myContent", length = 80, nullable = false)
     private String content;
 
     @Column(name = "images", length = 80)

@@ -1,5 +1,6 @@
 package hr.fer.tzk.rankup.security;
 
+import hr.fer.tzk.rankup.form.LoginForm;
 import hr.fer.tzk.rankup.model.Member;
 import hr.fer.tzk.rankup.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
@@ -28,19 +29,19 @@ public class Argon2idHasherTest {
 
     @Test
     void testMemberPasswordVerification() {
-        MemberLoginDto member1 = new MemberLoginDto("jj56789@fer.hr", "password1");
-        MemberLoginDto member2 = new MemberLoginDto("pp53838@fer.hr", "password2");
-        MemberLoginDto member3 = new MemberLoginDto("jj53890@pmf.hr", "password3");
+        LoginForm loginInfo1 = new LoginForm("jj56789@fer.hr", "password1");
+        LoginForm loginInfo2 = new LoginForm("pp53838@fer.hr", "password2");
+        LoginForm loginInfo3 = new LoginForm("jj53890@pmf.hr", "password3");
 
         // Verify password for each member
-        verifyMemberPassword(member1);
-        verifyMemberPassword(member2);
-        verifyMemberPassword(member3);
+        verifyMemberPassword(loginInfo1);
+        verifyMemberPassword(loginInfo2);
+        verifyMemberPassword(loginInfo3);
     }
 
-    void verifyMemberPassword(MemberLoginDto member) {
-        String email = member.getEmail();
-        String password = member.getPassword();
+    void verifyMemberPassword(LoginForm loginInfo) {
+        String email = loginInfo.getEmail();
+        String password = loginInfo.getPassword();
         Optional<Member> storedMemberOpt = memberRepository.findByEmail(email);
         assertThat(storedMemberOpt).isPresent();
 

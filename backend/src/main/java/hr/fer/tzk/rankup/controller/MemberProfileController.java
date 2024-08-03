@@ -1,13 +1,10 @@
 package hr.fer.tzk.rankup.controller;
 
 import hr.fer.tzk.rankup.dto.ActivityPageDto;
-import hr.fer.tzk.rankup.dto.ProfileEventDto;
 import hr.fer.tzk.rankup.dto.ProfileGeneralInfoDto;
-import hr.fer.tzk.rankup.model.Member;
 import hr.fer.tzk.rankup.model.SectionMember;
 import hr.fer.tzk.rankup.service.DownloadImageService;
 import hr.fer.tzk.rankup.service.MemberProfileService;
-import hr.fer.tzk.rankup.service.MemberService;
 import hr.fer.tzk.rankup.service.SectionMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -22,14 +19,12 @@ public class MemberProfileController {
 
     private final MemberProfileService profileService;
     private final DownloadImageService downloadImageService;
-    private final MemberService memberService;
     private final SectionMemberService sectionMemberService;
 
     @Autowired
-    public MemberProfileController(MemberProfileService profileService, DownloadImageService downloadImageService, MemberService memberService, SectionMemberService sectionMemberService) {
+    public MemberProfileController(MemberProfileService profileService, DownloadImageService downloadImageService, SectionMemberService sectionMemberService) {
         this.profileService = profileService;
         this.downloadImageService = downloadImageService;
-        this.memberService = memberService;
         this.sectionMemberService = sectionMemberService;
     }
 

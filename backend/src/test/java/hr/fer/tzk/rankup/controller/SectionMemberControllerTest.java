@@ -1,7 +1,6 @@
 package hr.fer.tzk.rankup.controller;
 
-import hr.fer.tzk.rankup.dto.SectionMemberGetDto;
-
+import hr.fer.tzk.rankup.dto.SectionMemberDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,99 +31,80 @@ public class SectionMemberControllerTest {
     @Test
     void shouldReturnAllSectionMembers() {
         // Chess section
-        ResponseEntity<List<SectionMemberGetDto>> chessResponse = restTemplate.exchange(
-                "/sections/1/members",
+        ResponseEntity<List<SectionMemberDto>> chessResponse = restTemplate.exchange(
+                "/api/sections/1/members",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<SectionMemberGetDto>>() {});
+                new ParameterizedTypeReference<List<SectionMemberDto>>() {});
         assertNotNull(chessResponse.getBody());
 
-        List<SectionMemberGetDto> chessMembers = chessResponse.getBody();
-        assertThat(chessMembers.size()).isEqualTo(3);
-
-        chessMembers = chessMembers.stream()
-                .sorted(Comparator.comparing(SectionMemberGetDto::getId))
-                .toList();
-
-        SectionMemberGetDto chessMember1 = chessMembers.get(0);
-        SectionMemberGetDto chessMember2 = chessMembers.get(1);
-        SectionMemberGetDto chessMember3 = chessMembers.get(2);
-        assertThat(chessMember1.getId()).isEqualTo(1L);
-        assertThat(chessMember2.getId()).isEqualTo(3L);
-        assertThat(chessMember3.getId()).isEqualTo(4L);
+        List<SectionMemberDto> chessMembers = chessResponse.getBody();
+        assertThat(chessMembers.size()).isEqualTo(7);
 
         // Biking section
-        ResponseEntity<List<SectionMemberGetDto>> bikingResponse = restTemplate.exchange(
-                "/sections/2/members",
+        ResponseEntity<List<SectionMemberDto>> bikingResponse = restTemplate.exchange(
+                "/api/sections/2/members",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<SectionMemberGetDto>>() {});
+                new ParameterizedTypeReference<List<SectionMemberDto>>() {});
         assertNotNull(bikingResponse.getBody());
 
-        List<SectionMemberGetDto> bikingMembers = bikingResponse.getBody();
-        assertThat(bikingMembers.size()).isEqualTo(2);
-        bikingMembers = bikingMembers.stream()
-                .sorted(Comparator.comparing(SectionMemberGetDto::getId))
-                .toList();
-
-        SectionMemberGetDto bikingMember1 = bikingMembers.get(0);
-        SectionMemberGetDto bikingMember2 = bikingMembers.get(1);
-        assertThat(bikingMember1.getId()).isEqualTo(2L);
-        assertThat(bikingMember2.getId()).isEqualTo(5L);
+        List<SectionMemberDto> bikingMembers = bikingResponse.getBody();
+        assertThat(bikingMembers.size()).isEqualTo(3);
 
         // Section that doesn't exist
-        ResponseEntity<List<SectionMemberGetDto>> nonExistentSectionResponse = restTemplate.exchange(
-                "/sections/0/members",
+        ResponseEntity<List<SectionMemberDto>> nonExistentSectionResponse = restTemplate.exchange(
+                "/api/sections/0/members",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<SectionMemberGetDto>>() {});
+                new ParameterizedTypeReference<List<SectionMemberDto>>() {});
         assertNotNull(nonExistentSectionResponse.getBody());
-        List<SectionMemberGetDto> nonExistentSectionMembers = nonExistentSectionResponse.getBody();
+        List<SectionMemberDto> nonExistentSectionMembers = nonExistentSectionResponse.getBody();
         assertThat(nonExistentSectionMembers.size()).isEqualTo(0);
     }
 
     @Test
     void shouldReturnMemberOfSection() {
         // One chess member
-        ResponseEntity<SectionMemberGetDto> chessResponse = restTemplate.getForEntity("/sections/1/members/1", SectionMemberGetDto.class);
+        ResponseEntity<SectionMemberDto> chessResponse = restTemplate.getForEntity("/api/sections/1/members/1", SectionMemberDto.class);
         assertThat(chessResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        SectionMemberGetDto chessMember = chessResponse.getBody();
+        SectionMemberDto chessMember = chessResponse.getBody();
         assertNotNull(chessMember);
 
-        SectionMemberGetDto expectedChessMember = new SectionMemberGetDto(1L, "Hrvoje", "Horvat", "0006040945", null, true, 0, "Pijun");
+        SectionMemberDto expectedChessMember = new SectionMemberDto("Hrvoje", "Horvat", "0006040945", null, true, 4, "Pijun");
         assertThat(chessMember).isEqualTo(expectedChessMember);
 
         // One biking member
-        ResponseEntity<SectionMemberGetDto> bikingResponse = restTemplate.getForEntity("/sections/2/members/5", SectionMemberGetDto.class);
+        ResponseEntity<SectionMemberDto> bikingResponse = restTemplate.getForEntity("/api/sections/2/members/5", SectionMemberDto.class);
         assertThat(bikingResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        SectionMemberGetDto bikingMember = bikingResponse.getBody();
+        SectionMemberDto bikingMember = bikingResponse.getBody();
         assertNotNull(bikingMember);
 
-        SectionMemberGetDto expectedBikingMember = new SectionMemberGetDto(5L, "Jura", "Juric", "0036540976", "jj53890@pmf.hr", true, 0, "Pijun");
+        SectionMemberDto expectedBikingMember = new SectionMemberDto("Jura", "Juric", "0036540976", "jj53890@pmf.hr", true, 0, "Pijun");
         assertThat(bikingMember).isEqualTo(expectedBikingMember);
     }
 
     @Test
     void shouldNotReturnMemberOfSection() {
         // Non-existent chess member
-        ResponseEntity<SectionMemberGetDto> chessResponse = restTemplate.getForEntity("/sections/1/members/99", SectionMemberGetDto.class);
+        ResponseEntity<SectionMemberDto> chessResponse = restTemplate.getForEntity("/api/sections/1/members/99", SectionMemberDto.class);
         assertThat(chessResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 
         // Non-existent biking member
-        ResponseEntity<SectionMemberGetDto> bikingResponse = restTemplate.getForEntity("/sections/2/members/99", SectionMemberGetDto.class);
+        ResponseEntity<SectionMemberDto> bikingResponse = restTemplate.getForEntity("/api/sections/2/members/99", SectionMemberDto.class);
         assertThat(bikingResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     @Test
     void shouldCreateMemberOfSection() {
-
+        // TODO: Add this
     }
 
     @Test
     void shouldNotCreateMemberOfSection() {
-
+        // TODO: Add this
     }
 
 }

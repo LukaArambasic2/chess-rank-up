@@ -1,26 +1,26 @@
 package hr.fer.tzk.rankup.mapper;
 
-import hr.fer.tzk.rankup.dto.EventTypeDTO;
+import hr.fer.tzk.rankup.dto.EventTypeDto;
 import hr.fer.tzk.rankup.form.EventTypeForm;
 import hr.fer.tzk.rankup.model.EventType;
 
 public class EventTypeMapper {
-    public static EventTypeDTO toEventDTO(EventType eventType) {
+    public static EventTypeDto toDto(EventType eventType) {
         if (eventType == null) {
             return null;
         }
 
-        EventTypeDTO eventTypeDTO = new EventTypeDTO();
-        eventTypeDTO.setName(eventType.getName());
-        eventTypeDTO.setDefaultPoints(eventType.getDefaultPoints());
+        EventTypeDto dto = new EventTypeDto();
+        dto.setName(eventType.getName());
+        dto.setDefaultPoints(eventType.getDefaultPoints());
 
-        return eventTypeDTO;
+        return dto;
     }
 
-    public static EventType fromEventForm(EventTypeForm eventTypeForm) {
+    public static EventType fromForm(EventTypeForm form) {
         EventType eventType = new EventType();
-        eventType.setName(eventTypeForm.getName());
-        eventType.setDefaultPoints(eventTypeForm.getDefaultPoints());
+        eventType.setName(form.getName());
+        eventType.setDefaultPoints(form.getDefaultPoints());
 
         return eventType;
     }
