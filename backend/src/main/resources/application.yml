@@ -25,3 +25,7 @@ spring:
           auth: true
           starttls:
             enabled: true
+
+#server:
+#  servlet:
+#    context-path: /api
