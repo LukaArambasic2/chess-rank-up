@@ -17,10 +17,10 @@ public class Member {
     @Column(name = "idMember")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "firstName", nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(name = "lastName", nullable = false)
     private String lastName;
 
     @Column(name = "jmbag", nullable = false, unique = true)

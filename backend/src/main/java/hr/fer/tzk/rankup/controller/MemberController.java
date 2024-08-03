@@ -57,7 +57,10 @@ public class MemberController {
 
         Member newMember;
         try {
-            newMember = new Member(member.getFirstName(), member.getLastName(), member.getJmbag());
+            newMember = new Member();
+            newMember.setFirstName(member.getFirstName());
+            newMember.setLastName(member.getLastName());
+            newMember.setJmbag(member.getJmbag());
         } catch (IllegalArgumentException exception) {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
