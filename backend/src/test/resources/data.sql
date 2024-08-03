@@ -8,18 +8,6 @@ INSERT INTO Semester (nameSemester, dateFromSemester, dateToSemester) VALUES ('2
 INSERT INTO Semester (nameSemester, dateFromSemester, dateToSemester) VALUES ('23/24 ZS', '2023-10-1', '2024-2-1');
 INSERT INTO Semester (nameSemester, dateFromSemester, dateToSemester) VALUES ('23/24 LJS', '2024-2-20', '2024-7-1');
 
--- Adding ranks
-INSERT INTO MyRank (nameRank, idSection) VALUES ('Pijun', 1);
-INSERT INTO MyRank (nameRank, idSection) VALUES ('Konj', 1);
-INSERT INTO MyRank (nameRank, idSection) VALUES ('Lovac', 1);
-INSERT INTO MyRank (nameRank, idSection) VALUES ('Top', 1);
-INSERT INTO MyRank (nameRank, idSection) VALUES ('Kraljica', 1);
-INSERT INTO MyRank (nameRank, idSection) VALUES ('Kralj', 1);
-
-INSERT INTO MyRank (nameRank, idSection) VALUES ('Pijun', 2);
-INSERT INTO MyRank (nameRank, idSection) VALUES ('Kraljica', 2);
-INSERT INTO MyRank (nameRank, idSection) VALUES ('Kralj', 2);
-
 -- Adding members, some may be logged in
 INSERT INTO MyMember (firstName, lastName, jmbag) VALUES ('Hrvoje', 'Horvat', '0006040945');
 INSERT INTO MyMember (firstName, lastName, jmbag) VALUES ('Ivan', 'Ivanovic', '0036533665');
@@ -32,55 +20,17 @@ INSERT INTO MyMember (firstName, lastName, jmbag, email, isVerified, passwordHas
 INSERT INTO MyMember (firstName, lastName, jmbag, email, isVerified, passwordHash, salt) VALUES ('Lea', 'Leakovic', '0036533670', 'lea.leakovic@fer.hr', true, '{argon2id}$argon2id$v=19$m=65536,t=2,p=1$mdCRlrJdg5iotfsI43A+Tw$Vg9C2zbN7ppUA+wNzWSljfAPqdHgktb1zsW3E3cM8Vk', '/4pPIj/3ujPj/8/M5TubHLd7Ri9YsmFV'); -- password = "password3"
 INSERT INTO MyMember (firstName, lastName, jmbag, email, isVerified, passwordHash, salt) VALUES ('Marija', 'Marinovic', '0036538245', 'marija.marinovic@fer.hr', true, '{argon2id}$argon2id$v=19$m=65536,t=2,p=1$mdCRlrJdg5iotfsI43A+Tw$Vg9C2zbN7ppUA+wNzWSljfAPqdHgktb1zsW3E3cM8Vk', '/4pPIj/3ujPj/8/M5TubHLd7Ri9YsmFV'); -- password = "password3"
 
--- Adding section semesters
-
--- Semester 22/23 ZS
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 1, 1, 1, 1);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 1, 3, 1, 1);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 1, 4, 1, 1);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 1, 7, 1, 1);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 0, 8, 1, 1);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 0, 9, 1, 1);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 0, 10, 1, 1);
-
--- Semester 22/23 LJS
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 0, 1, 1, 2);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 1, 3, 1, 2);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 1, 4, 1, 2);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 1, 7, 1, 2);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 1, 8, 1, 2);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 1, 9, 1, 2);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 0, 10, 1, 2);
-
--- Semester 23/24 ZS
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 0, 1, 1, 3);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 0, 3, 1, 3);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 0, 4, 1, 3);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 1, 7, 1, 3);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 1, 8, 1, 3);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 1, 9, 1, 3);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 0, 10, 1, 3);
-
--- Semester 23/24 LJS
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 3, 1, 1, 4);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 11, 3, 1, 4);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 8, 4, 1, 4);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 6, 7, 1, 4);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 5, 8, 1, 4);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 5, 9, 1, 4);
-INSERT INTO SectionSemester (threshold, points, idMember, idSection, idSemester) VALUES (12, 7, 10, 1, 4);
-
 -- Adding members of sections
-INSERT INTO SectionMember (idMember, idSection, idRank, pointsAll) VALUES (1, 1, 1, 4);
-INSERT INTO SectionMember (idMember, idSection, idRank, pointsAll) VALUES (2, 2, 1, 0);
-INSERT INTO SectionMember (idMember, idSection, idRank, pointsAll) VALUES (3, 1, 1, 13);
-INSERT INTO SectionMember (idMember, idSection, idRank, pointsAll) VALUES (4, 1, 1, 10);
-INSERT INTO SectionMember (idMember, idSection, idRank, pointsAll) VALUES (5, 2, 1, 0);
-INSERT INTO SectionMember (idMember, idSection, idRank, pointsAll) VALUES (6, 2, 2, 0);
-INSERT INTO SectionMember (idMember, idSection, idRank, pointsAll) VALUES (7, 1, 2, 9);
-INSERT INTO SectionMember (idMember, idSection, idRank, pointsAll) VALUES (8, 1, 2, 7);
-INSERT INTO SectionMember (idMember, idSection, idRank, pointsAll) VALUES (9, 1, 2, 7);
-INSERT INTO SectionMember (idMember, idSection, idRank, pointsAll) VALUES (10, 1, 3, 7);
+INSERT INTO SectionMember (idMember, idSection, idRank) VALUES (1, 1, 1);
+INSERT INTO SectionMember (idMember, idSection, idRank) VALUES (2, 2, 1);
+INSERT INTO SectionMember (idMember, idSection, idRank) VALUES (3, 1, 1);
+INSERT INTO SectionMember (idMember, idSection, idRank) VALUES (4, 1, 1);
+INSERT INTO SectionMember (idMember, idSection, idRank) VALUES (5, 2, 1);
+INSERT INTO SectionMember (idMember, idSection, idRank) VALUES (6, 2, 2);
+INSERT INTO SectionMember (idMember, idSection, idRank) VALUES (7, 1, 2);
+INSERT INTO SectionMember (idMember, idSection, idRank) VALUES (8, 1, 2);
+INSERT INTO SectionMember (idMember, idSection, idRank) VALUES (9, 1, 2);
+INSERT INTO SectionMember (idMember, idSection, idRank) VALUES (10, 1, 3);
 
 -- Add types of events
 INSERT INTO EventType (nameEventType, defaultPoints) VALUES ('Ostalo', 1);
