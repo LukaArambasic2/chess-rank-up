@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "EventType")
@@ -20,5 +21,6 @@ public class EventType {
     private String name;
 
     @Column(name = "defaultPoints")
-    private int defaultPoints;
+    @ColumnDefault(value = "0")
+    private int defaultPoints = 0;
 }
