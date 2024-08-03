@@ -45,14 +45,15 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<Event> createEvent(@PathVariable Long idSection, @Valid @RequestBody EventForm eventForm) {
+    public ResponseEntity<EventDto> createEvent(@PathVariable Long idSection, @Valid @RequestBody EventForm eventForm) {
         Event newEvent = eventService.createEvent(idSection, eventForm);
+        EventDto newEventDto = EventMapper.toDto(newEvent);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(newEvent.getId())
                 .toUri();
-        return ResponseEntity.status(HttpStatus.CREATED).location(location).build();
+        return ResponseEntity.status(HttpStatus.CREATED).location(location).body(newEventDto);
     }
 
     @PutMapping("/{idEvent}")
