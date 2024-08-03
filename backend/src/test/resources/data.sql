@@ -6,7 +6,7 @@ INSERT INTO MySection (nameSection) VALUES ('Biking');
 INSERT INTO Semester (nameSemester, dateFromSemester, dateToSemester) VALUES ('22/23 ZS', '2022-10-1', '2023-2-1');
 INSERT INTO Semester (nameSemester, dateFromSemester, dateToSemester) VALUES ('22/23 LJS', '2023-2-20', '2023-7-1');
 INSERT INTO Semester (nameSemester, dateFromSemester, dateToSemester) VALUES ('23/24 ZS', '2023-10-1', '2024-2-1');
-INSERT INTO Semester (nameSemester, dateFromSemester, dateToSemester) VALUES ('23/24 ZS', '2024-2-20', '2024-7-1');
+INSERT INTO Semester (nameSemester, dateFromSemester, dateToSemester) VALUES ('23/24 LJS', '2024-2-20', '2024-7-1');
 
 -- Adding ranks
 INSERT INTO MyRank (nameRank, idSection) VALUES ('Pijun', 1);
