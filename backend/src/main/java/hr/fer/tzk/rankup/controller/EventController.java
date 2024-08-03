@@ -1,19 +1,18 @@
 package hr.fer.tzk.rankup.controller;
 
 import hr.fer.tzk.rankup.dto.EventDTO;
-import hr.fer.tzk.rankup.model.Event;
+import hr.fer.tzk.rankup.form.EventDatesForm;
+import hr.fer.tzk.rankup.form.EventForm;
 import hr.fer.tzk.rankup.service.EventService;
-import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/event")
 public class EventController {
-
     private EventService eventService;
 
     public EventController(EventService eventService) {
@@ -21,27 +20,32 @@ public class EventController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Event>> findAllEvent() {
+    public ResponseEntity<List<EventDTO>> findAllEvent() {
         return eventService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity findEventById(@PathVariable Long id) {
+    public ResponseEntity<EventDTO> findEventById(@PathVariable Long id) {
         return eventService.findEventById(id);
     }
 
     @PostMapping()
-    public ResponseEntity createEvent(@RequestBody EventDTO eventDTO) {
-        return eventService.createEvent(eventDTO);
+    public ResponseEntity<String> createEvent(@RequestBody @Valid EventForm eventForm) {
+        return eventService.createEvent(eventForm);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateEvent(@PathVariable Long id, @RequestBody EventDTO eventDTO) {
-        return eventService.updateEvent(id, eventDTO);
+    public ResponseEntity updateEvent(@PathVariable Long id, @RequestBody @Valid EventForm eventForm) {
+        return eventService.updateEvent(id, eventForm);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteEvent(@PathVariable Long id) {
         return eventService.deleteEvent(id);
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<Object> getAllEventBetweenDates(@RequestBody @Valid EventDatesForm eventDatesForm) {
+        return eventService.getAllEventBetweenDates(eventDatesForm);
     }
 }

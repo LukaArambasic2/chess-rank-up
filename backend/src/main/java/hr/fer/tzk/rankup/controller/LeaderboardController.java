@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/sections/leaderboard")
+@RequestMapping("/sections/leaderboard")
 public class LeaderboardController {
 
     private final LeaderboardService leaderboardService;

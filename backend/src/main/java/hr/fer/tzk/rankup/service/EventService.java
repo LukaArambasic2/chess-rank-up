@@ -1,12 +1,16 @@
 package hr.fer.tzk.rankup.service;
 
 import hr.fer.tzk.rankup.dto.EventDTO;
+import hr.fer.tzk.rankup.form.EventDatesForm;
+import hr.fer.tzk.rankup.form.EventForm;
+import hr.fer.tzk.rankup.mapper.EventMapper;
 import hr.fer.tzk.rankup.model.Event;
 import hr.fer.tzk.rankup.model.EventType;
 import hr.fer.tzk.rankup.model.Section;
 import hr.fer.tzk.rankup.repository.EventRepository;
 import hr.fer.tzk.rankup.repository.EventTypeRepository;
 import hr.fer.tzk.rankup.repository.SectionRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,9 +21,9 @@ import java.util.Optional;
 
 @Service
 public class EventService {
-    private EventRepository eventRepository;
-    private SectionRepository sectionRepository;
-    private EventTypeRepository eventTypeRepository;
+    private final EventRepository eventRepository;
+    private final SectionRepository sectionRepository;
+    private final EventTypeRepository eventTypeRepository;
 
     public EventService(EventRepository eventRepository, SectionRepository sectionRepository, EventTypeRepository eventTypeRepository) {
         this.eventRepository = eventRepository;
@@ -27,38 +31,35 @@ public class EventService {
         this.eventTypeRepository = eventTypeRepository;
     }
 
-    public ResponseEntity<List<Event>> findAll() {
-        return ResponseEntity.ok(eventRepository.findAll());
+    public ResponseEntity<List<EventDTO>> findAll() {
+        List<Event> eventList = eventRepository.findAll();
+        List<EventDTO> eventDTOList = eventList.stream().map(EventMapper::toEventDTO).toList();
+        return ResponseEntity.status(HttpStatus.OK).body(eventDTOList);
     }
 
     public Optional<Event> findByName(String name) {
         return eventRepository.findByName(name);
     }
 
-    public ResponseEntity findEventById(Long id) {
+    public ResponseEntity<EventDTO> findEventById(Long id) {
         Optional<Event> event = eventRepository.findById(id);
         if (event.isPresent()) {
-            return ResponseEntity.ok(event.get());
+            EventDTO eventDTO = EventMapper.toEventDTO(event.get());
+            return ResponseEntity.status(HttpStatus.OK).body(eventDTO);
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    public ResponseEntity createEvent(EventDTO eventDTO) {
-        Optional<Section> section = sectionRepository.findById(eventDTO.getIdSection());
-        Optional<EventType> eventType = eventTypeRepository.findById(eventDTO.getIdEventType());
+    public ResponseEntity<String> createEvent(EventForm eventForm) {
+        Optional<Section> section = sectionRepository.findById(eventForm.getIdSection());
+        Optional<EventType> eventType = eventTypeRepository.findById(eventForm.getIdEventType());
 
-        if (section.isEmpty() || eventType.isEmpty()) {
-            return ResponseEntity.badRequest().body("Nepostojeća sekcija ili tip eventa");
+        String checkEmptyData = checkSectionAndEventType(section, eventType);
+        if (checkEmptyData.length() > 1) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(checkEmptyData);
         }
 
-        if (eventDTO.getName() == null || eventDTO.getName().isBlank() ||
-                eventDTO.getDate() == null ||
-                eventDTO.getDescription() == null || eventDTO.getDescription().isBlank()
-        ) {
-            return ResponseEntity.badRequest().body("Svi atributi moraju biti popunjeni");
-        }
-
-        Event newEvent = new Event(eventDTO.getName(), eventDTO.getDate(), eventDTO.getDescription(), section.get(), eventType.get());
+        Event newEvent = EventMapper.fromEventForm(eventForm, section.get(), eventType.get());
         newEvent = eventRepository.save(newEvent);
 
         URI location = ServletUriComponentsBuilder
@@ -67,45 +68,63 @@ public class EventService {
                 .buildAndExpand(newEvent.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.status(HttpStatus.CREATED).location(location).build();
     }
 
-    public ResponseEntity updateEvent(Long id, EventDTO eventDTO) {
-        if (eventDTO.getName() == null || eventDTO.getName().isBlank() ||
-                eventDTO.getDate() == null ||
-                eventDTO.getDescription() == null || eventDTO.getDescription().isBlank()
-        ) {
-            return ResponseEntity.badRequest().body("Svi atributi moraju biti popunjeni");
-        }
+    public ResponseEntity<String> updateEvent(Long id, EventForm eventForm) {
+        Optional<Section> section = sectionRepository.findById(eventForm.getIdSection());
+        Optional<EventType> eventType = eventTypeRepository.findById(eventForm.getIdEventType());
 
         if (eventRepository.existsById(id)) {
-            if (!sectionRepository.existsById(eventDTO.getIdSection()) ||
-                    !eventTypeRepository.existsById(eventDTO.getIdEventType())
-            ) {
-                return ResponseEntity.badRequest().body("Nepostojeća sekcija ili tip eventa");
+            String checkEmptyData = checkSectionAndEventType(section, eventType);
+            if (checkEmptyData.length() > 1) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(checkEmptyData);
             }
 
-            Event newEvent = eventRepository.findById(id).get();
-            newEvent.setName(eventDTO.getName());
-            newEvent.setDescription(eventDTO.getDescription());
-            newEvent.setDate(eventDTO.getDate());
-            newEvent.setSection(sectionRepository.findById(eventDTO.getIdSection()).get());
-            newEvent.setEventType(eventTypeRepository.findById(eventDTO.getIdEventType()).get());
-            eventRepository.save(newEvent);
+            Event event = eventRepository.findById(id).get();
+            event.setName(eventForm.getName());
+            event.setDate(eventForm.getDate());
+            event.setDescription(eventForm.getDescription());
+            event.setSection(section.get());
+            event.setEventType(eventType.get());
 
-            return ResponseEntity.noContent().build();
+            eventRepository.save(event);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
-    public ResponseEntity deleteEvent(Long id) {
+    private String checkSectionAndEventType(Optional<Section> section, Optional<EventType> eventType) {
+        if (section.isEmpty()) {
+            return "Nepostojeća sekcija!";
+        }
+
+        if (eventType.isEmpty()) {
+            return "Nepostojeći tip eventa!";
+        }
+
+        return "";
+    }
+
+    public ResponseEntity<Void> deleteEvent(Long id) {
         Optional<Event> event = eventRepository.findById(id);
         if (event.isPresent()) {
             eventRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
 
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    public ResponseEntity<Object> getAllEventBetweenDates(EventDatesForm eventDatesForm) {
+        // TODO: možda da ne bacim grešku, nego samo zamijenim datume i vratim listu?
+        if (eventDatesForm.getDateFrom().isAfter(eventDatesForm.getDateTo())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Datum od mora biti prije datuma do!");
+        }
+        List<Event> eventList = eventRepository.findAllByDateBetweenOrderByDate(eventDatesForm.getDateFrom(), eventDatesForm.getDateTo());
+        List<EventDTO> eventDTOList = eventList.stream().map(EventMapper::toEventDTO).toList();
+
+        return ResponseEntity.status(HttpStatus.OK).body(eventDTOList);
     }
 }

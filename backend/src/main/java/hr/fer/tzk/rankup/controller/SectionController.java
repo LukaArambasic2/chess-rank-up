@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/sections")
+@RequestMapping("/sections")
 public class SectionController {
     private final SectionService sectionService;
 

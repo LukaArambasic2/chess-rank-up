@@ -1,7 +1,11 @@
 package hr.fer.tzk.rankup.service;
 
+import hr.fer.tzk.rankup.dto.EventTypeDTO;
+import hr.fer.tzk.rankup.form.EventTypeForm;
+import hr.fer.tzk.rankup.mapper.EventTypeMapper;
 import hr.fer.tzk.rankup.model.EventType;
 import hr.fer.tzk.rankup.repository.EventTypeRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,64 +22,55 @@ public class EventTypeService {
         this.eventTypeRepository = eventTypeRepository;
     }
 
-    public ResponseEntity<List<EventType>> findAll() {
-        return ResponseEntity.ok(eventTypeRepository.findAll());
+    public ResponseEntity<List<EventTypeDTO>> findAll() {
+        List<EventType> eventList = eventTypeRepository.findAll();
+        List<EventTypeDTO> eventTypeDTOList = eventList.stream().map(EventTypeMapper::toEventDTO).toList();
+        return ResponseEntity.status(HttpStatus.OK).body(eventTypeDTOList);
     }
 
-    public ResponseEntity findEventTypeById(Long id) {
+    public ResponseEntity<EventTypeDTO> findEventTypeById(Long id) {
         Optional<EventType> eventType = eventTypeRepository.findById(id);
         if (eventType.isPresent()) {
-            return ResponseEntity.ok(eventType.get());
+            EventTypeDTO eventTypeDTO = EventTypeMapper.toEventDTO(eventType.get());
+            return ResponseEntity.status(HttpStatus.OK).body(eventTypeDTO);
         }
 
         return ResponseEntity.notFound().build();
     }
 
-    public ResponseEntity createEventType(EventType newEventType) {
-        if (newEventType.getName() == null || newEventType.getName().isBlank()) {
-            return ResponseEntity.badRequest().body("Ime ne smije biti prazno");
-        }
-        if (newEventType.getDefaultPoints() < 0) {
-            return ResponseEntity.badRequest().body("Bodovi ne smiju biti negativni");
-        }
+    public ResponseEntity<Void> createEventType(EventTypeForm eventTypeForm) {
+        EventType eventType = EventTypeMapper.fromEventForm(eventTypeForm);
 
-        newEventType = eventTypeRepository.save(newEventType);
+        eventType = eventTypeRepository.save(eventType);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(newEventType.getId())
+                .buildAndExpand(eventType.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.status(HttpStatus.CREATED).location(location).build();
     }
 
-    public ResponseEntity updateEventType(Long id, EventType newEventType) {
-        if (newEventType.getName() == null || newEventType.getName().isBlank()) {
-            return ResponseEntity.badRequest().body("Ime ne smije biti prazno");
-        }
-        if (newEventType.getDefaultPoints() < 0) {
-            return ResponseEntity.badRequest().body("Bodovi ne smiju biti negativni");
-        }
-
+    public ResponseEntity<Void> updateEventType(Long id, EventTypeForm eventTypeForm) {
         if (eventTypeRepository.existsById(id)) {
             EventType eventType = eventTypeRepository.findById(id).get();
-            eventType.setName(newEventType.getName());
-            eventType.setDefaultPoints(newEventType.getDefaultPoints());
+            eventType.setName(eventTypeForm.getName());
+            eventType.setDefaultPoints(eventTypeForm.getDefaultPoints());
             eventTypeRepository.save(eventType);
 
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
 
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    public ResponseEntity deleteEventType(Long id) {
+    public ResponseEntity<Void> deleteEventType(Long id) {
         Optional<EventType> eventType = eventTypeRepository.findById(id);
         if (eventType.isPresent()) {
             eventTypeRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
 
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }

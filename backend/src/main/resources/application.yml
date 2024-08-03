@@ -24,4 +24,9 @@ spring:
         smtp:
           auth: true
           starttls:
-            enabled: true
+            enable: true
+      protocol: smtp
+      test-connection: false
+server:
+  servlet:
+    context-path: /api
