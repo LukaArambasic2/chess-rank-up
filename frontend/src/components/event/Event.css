@@ -1,0 +1,24 @@
+.event{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    width: 81vw;
+    height: 5.5vh;
+    padding: 0 2vw;
+    border-radius: 10px;
+    font-size: 4.1vw;
+}
+
+.maleni1{
+    width: 26vw;
+    margin: 0;
+}
+.maleni2{
+    width: 40vw;
+    margin: 0;
+}
+.maleni3{
+    width: 15vw;
+    margin: 0;
+    text-align: center;
+}
