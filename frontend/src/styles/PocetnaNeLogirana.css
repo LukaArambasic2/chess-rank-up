@@ -1,0 +1,118 @@
+/* src/styles/NewPage.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #EEF1FF;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.new-page {
+    background-color: #EEF1FF;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    background-color: #7F61BA;
+    height: 33vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-bottom-left-radius: 25px; 
+    border-bottom-right-radius: 25px; 
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.custom-button {
+    background-color: white;
+    color: #7F61BA;
+    border: none;
+    border-radius: 25px;
+    padding: 15px 30px;
+    margin: 0 10px;
+    font-size: 1.2em;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-button:hover {
+    background-color: #f0f0f0;
+}
+
+.header-text {
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+}
+
+.below-header-button {
+    margin-top: 40px;
+}
+
+.cards-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: white;
+    width: 90%;
+    border-radius: 25px; 
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-button {
+    background-color: #EEF1FF;
+    color: #7F61BA;
+    border: none;
+    border-radius: 25px;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.card-button.top-button {
+    width: 90%; 
+    font-size: 1.5em; 
+    padding: 20px 30px; 
+}
+
+.card-button.bottom-button {
+    width: 45%; 
+    font-size: 1.2em; 
+    padding: 15px 20px; 
+}
+
+.bottom-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
