@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/sections/{idSection}")
+@RequestMapping(" /sections/{idSection}")
 public class ReviewController {
 
     private final ReviewService reviewService;

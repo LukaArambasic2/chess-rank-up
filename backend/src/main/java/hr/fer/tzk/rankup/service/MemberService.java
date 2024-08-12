@@ -16,7 +16,6 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-
     @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
@@ -56,6 +55,10 @@ public class MemberService {
 
     public void deleteMemberByEmail(String email) {
         memberRepository.deleteByEmail(email);
+    }
+
+    public boolean isJmbagInUse(String jmbag) {
+        return memberRepository.findByJmbag(jmbag).isPresent();
     }
 
     public Member updateMemberFromBasic(Long idMember, BasicMemberDto member) {

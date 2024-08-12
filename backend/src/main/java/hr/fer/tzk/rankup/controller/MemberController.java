@@ -50,31 +50,19 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity<String> createMember(@Valid @RequestBody BasicMemberForm member) throws URISyntaxException {
-        Optional<Member> memberWithSameJmbag = memberService.findMemberByJmbag(member.getJmbag());
-        if (memberWithSameJmbag.isPresent()) {
+        if (memberService.isJmbagInUse(member.getJmbag())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("JMBAG already in use");
         }
 
-        Member newMember;
         try {
-            newMember = new Member();
-            newMember.setFirstName(member.getFirstName());
-            newMember.setLastName(member.getLastName());
-            newMember.setJmbag(member.getJmbag());
+            Member newMember = memberService.createMember(MemberMapper.fromForm(member));
+            URI location = new URI("/api/members/" + newMember.getId());
+            return ResponseEntity.created(location).build();
         } catch (IllegalArgumentException exception) {
             return ResponseEntity.badRequest().body(exception.getMessage());
-        }
-        memberService.createMember(newMember);
-
-        Optional<Member> createdMemberOpt = memberService.findMemberByJmbag(member.getJmbag());
-        if (createdMemberOpt.isEmpty()) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating member");
         }
-
-        Long createdMemberId = createdMemberOpt.get().getId();
-        URI location = new URI("/api/members/" + createdMemberId);
-
-        return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{idMember}")
@@ -84,17 +72,10 @@ public class MemberController {
             return ResponseEntity.notFound().build();
         }
 
-//        Member existingMember = memberOpt.get();
         Optional<Member> memberWithSameJmbag = memberService.findMemberByJmbag(member.getJmbag());
         if (memberWithSameJmbag.isPresent() && !memberWithSameJmbag.get().getId().equals(idMember)) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("JMBAG already in use");
         }
-
-//        existingMember.setFirstName(member.getFirstName());
-//        existingMember.setLastName(member.getLastName());
-//        existingMember.setJmbag(member.getJmbag());
-//
-//        memberService.updateMember(existingMember);
         memberService.updateMemberFromBasic(idMember, MemberMapper.fromFormToDto(member));
         return ResponseEntity.ok().build();
     }

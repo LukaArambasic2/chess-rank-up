@@ -22,6 +22,19 @@ public class MemberMapper {
         return dto;
     }
 
+    public static Member fromForm(BasicMemberForm form) {
+        if (form == null) {
+            return null;
+        }
+
+        Member member = new Member();
+        member.setFirstName(form.getFirstName());
+        member.setLastName(form.getLastName());
+        member.setJmbag(form.getJmbag());
+
+        return member;
+    }
+
     public static BasicMemberDto toBasicDto(Member member) {
         if (member == null) {
             return null;
