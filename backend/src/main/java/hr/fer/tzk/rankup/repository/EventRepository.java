@@ -12,5 +12,11 @@ import java.util.Optional;
 public interface EventRepository extends JpaRepository<Event, Long> {
     Optional<Event> findByName(String name);
 
-    List<Event> findAllByDateBetweenOrderByDate(LocalDate dateFrom, LocalDate dateTo);
+    List<Event> findAllByDateBetweenAndSection_IdOrderByDate(LocalDate dateFrom, LocalDate dateTo, Long idSection);
+
+    List<Event> findAllBySection_Id(Long idSection);
+
+    List<Event> findAllBySection_IdAndEventType_Id(Long idSection, Long idEventType);
+
+    Optional<Event> findByIdAndSection_Id(Long idEvent, Long idSection);
 }

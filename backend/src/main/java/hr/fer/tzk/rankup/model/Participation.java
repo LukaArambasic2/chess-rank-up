@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "Participation")
@@ -15,7 +16,9 @@ public class Participation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idParticipation;
 
-    private int addPoints;
+    @Column(name = "addPoints")
+    @ColumnDefault(value = "0")
+    private int addPoints = 0;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idMember", nullable = false)

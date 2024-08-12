@@ -1,7 +1,6 @@
 package hr.fer.tzk.rankup.mapper;
 
 import hr.fer.tzk.rankup.dto.ScoreboardDto;
-import hr.fer.tzk.rankup.model.Section;
 import hr.fer.tzk.rankup.model.SectionSemester;
 
 public class SectionSemesterMapper {

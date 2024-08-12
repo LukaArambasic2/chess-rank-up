@@ -18,7 +18,4 @@ public interface SemesterRepository extends JpaRepository<Semester, Long> {
 
     @Query("SELECT s FROM Semester s ORDER BY s.dateTo DESC")
     List<Semester> findAllSemestersOrderedByDateToDesc();
-
-    @Query("SELECT s FROM Semester s WHERE s.name LIKE CONCAT(:yearPattern, '%ZS') OR s.name LIKE CONCAT('%/', :yearPattern, '%LJS')")
-    List<Semester> findSemestersBySpecificPatterns(@Param("yearPattern") String yearPattern);
 }

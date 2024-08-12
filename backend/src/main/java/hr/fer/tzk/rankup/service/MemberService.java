@@ -1,9 +1,11 @@
 package hr.fer.tzk.rankup.service;
 
+import hr.fer.tzk.rankup.dto.BasicMemberDto;
 import hr.fer.tzk.rankup.model.Member;
 import hr.fer.tzk.rankup.repository.MemberRepository;
 import hr.fer.tzk.rankup.repository.SectionMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +15,6 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-
 
     @Autowired
     public MemberService(MemberRepository memberRepository) {
@@ -54,5 +55,23 @@ public class MemberService {
 
     public void deleteMemberByEmail(String email) {
         memberRepository.deleteByEmail(email);
+    }
+
+    public boolean isJmbagInUse(String jmbag) {
+        return memberRepository.findByJmbag(jmbag).isPresent();
+    }
+
+    public Member updateMemberFromBasic(Long idMember, BasicMemberDto member) {
+        Optional<Member> memberOpt = findMemberById(idMember);
+        if (memberOpt.isEmpty()) {
+            return null;
+        }
+
+        Member existingMember = memberOpt.get();
+        existingMember.setFirstName(member.getFirstName());
+        existingMember.setLastName(member.getLastName());
+        existingMember.setJmbag(member.getJmbag());
+
+        return updateMember(existingMember);
     }
 }

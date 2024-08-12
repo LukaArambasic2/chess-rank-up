@@ -16,7 +16,7 @@ public class MemberInfo {
     @Column(name = "idInfo")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "stringValue", nullable = false)
     private String stringValue;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
