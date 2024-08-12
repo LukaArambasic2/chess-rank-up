@@ -2,14 +2,17 @@ package hr.fer.tzk.rankup.controller;
 
 
 import hr.fer.tzk.rankup.dto.NewsDto;
+import hr.fer.tzk.rankup.form.NewsForm;
+import hr.fer.tzk.rankup.model.News;
 import hr.fer.tzk.rankup.service.NewsService;
+import jakarta.validation.Valid;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -40,5 +43,17 @@ public class NewsController {
     @GetMapping("/{id}")
     public ResponseEntity<NewsDto> findById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(newsService.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<NewsDto> createNews(@RequestBody @Valid NewsForm newsForm) throws BadRequestException {
+        News news = newsService.createNews(newsForm);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(news.getId())
+                .toUri();
+
+        return ResponseEntity.status(HttpStatus.CREATED).location(location).build();
     }
 }
