@@ -1,7 +1,6 @@
 package hr.fer.tzk.rankup.service;
 
 import hr.fer.tzk.rankup.dto.NewsDto;
-import hr.fer.tzk.rankup.exceptions.NonExistingEntityException;
 import hr.fer.tzk.rankup.form.NewsForm;
 import hr.fer.tzk.rankup.mapper.NewsMapper;
 import hr.fer.tzk.rankup.model.Member;
@@ -10,7 +9,9 @@ import hr.fer.tzk.rankup.model.Section;
 import hr.fer.tzk.rankup.repository.MemberRepository;
 import hr.fer.tzk.rankup.repository.NewsRepository;
 import hr.fer.tzk.rankup.repository.SectionRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -41,16 +42,16 @@ public class NewsService {
 
     public NewsDto findById(Long id) {
         return newsRepository.findById(id).map(NewsMapper::toDto).orElseThrow(
-                () -> new NonExistingEntityException("Nepostojeća obavijest s ID: " + id)
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nepostojeća obavijest s ID: " + id)
         );
     }
 
     public News createNews(NewsForm newsForm) {
         Section section = sectionRepository.findById(newsForm.getIdSection()).orElseThrow(
-                () -> new NonExistingEntityException("Nepostojeća sekcija s ID: " + newsForm.getIdSection())
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nepostojeća sekcija s ID: " + newsForm.getIdSection())
         );
         Member member = memberRepository.findById(newsForm.getIdMember()).orElseThrow(
-                () -> new NonExistingEntityException("Nepostojeća sekcija s ID: " + newsForm.getIdMember())
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nepostojeća sekcija s ID: " + newsForm.getIdMember())
         );
 
         News news = NewsMapper.fromForm(newsForm, section, member);
@@ -61,13 +62,13 @@ public class NewsService {
 
     public News updateNews(Long id, NewsForm newsForm) {
         newsRepository.findById(id).orElseThrow(
-                () -> new NonExistingEntityException("Nepostojeća obavijest s ID: " + id)
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nepostojeća obavijest s ID: " + id)
         );
         Section section = sectionRepository.findById(newsForm.getIdSection()).orElseThrow(
-                () -> new NonExistingEntityException("Nepostojeća sekcija s ID: " + newsForm.getIdSection())
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nepostojeća sekcija s ID: " + newsForm.getIdSection())
         );
         Member member = memberRepository.findById(newsForm.getIdMember()).orElseThrow(
-                () -> new NonExistingEntityException("Nepostojeća sekcija s ID: " + newsForm.getIdMember())
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nepostojeća sekcija s ID: " + newsForm.getIdMember())
         );
         News news = NewsMapper.fromForm(newsForm, section, member);
         news.setId(id);
