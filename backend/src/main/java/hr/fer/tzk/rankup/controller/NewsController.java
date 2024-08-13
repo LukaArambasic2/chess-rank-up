@@ -3,6 +3,7 @@ package hr.fer.tzk.rankup.controller;
 
 import hr.fer.tzk.rankup.dto.NewsDto;
 import hr.fer.tzk.rankup.form.NewsForm;
+import hr.fer.tzk.rankup.mapper.NewsMapper;
 import hr.fer.tzk.rankup.model.News;
 import hr.fer.tzk.rankup.service.NewsService;
 import jakarta.validation.Valid;
@@ -54,5 +55,12 @@ public class NewsController {
                 .toUri();
 
         return ResponseEntity.status(HttpStatus.CREATED).location(location).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<NewsDto> updateNews(@PathVariable Long id, @RequestBody @Valid NewsForm newsForm) {
+        News news = newsService.updateNews(id, newsForm);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(NewsMapper.toDto(news));
     }
 }

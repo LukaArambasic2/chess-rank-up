@@ -12,8 +12,8 @@ import hr.fer.tzk.rankup.repository.NewsRepository;
 import hr.fer.tzk.rankup.repository.SectionRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class NewsService {
@@ -46,26 +46,34 @@ public class NewsService {
     }
 
     public News createNews(NewsForm newsForm) {
-        Optional<Section> section = sectionRepository.findById(newsForm.getIdSection());
-        Optional<Member> member = memberRepository.findById(newsForm.getIdMember());
-        String checkData = checkSectionAndMember(section, member);
-        if (checkData.length() > 1) {
-            throw new NonExistingEntityException(checkData);
-        }
+        Section section = sectionRepository.findById(newsForm.getIdSection()).orElseThrow(
+                () -> new NonExistingEntityException("Nepostojeća sekcija s ID: " + newsForm.getIdSection())
+        );
+        Member member = memberRepository.findById(newsForm.getIdMember()).orElseThrow(
+                () -> new NonExistingEntityException("Nepostojeća sekcija s ID: " + newsForm.getIdMember())
+        );
 
-        News news = NewsMapper.fromForm(newsForm, section.get(), member.get());
+        News news = NewsMapper.fromForm(newsForm, section, member);
         news = newsRepository.save(news);
 
         return news;
     }
 
-    private String checkSectionAndMember(Optional<Section> section, Optional<Member> member) {
-        if (section.isEmpty()) {
-            return "Nepostojeća sekcija!";
-        }
-        if (member.isEmpty()) {
-            return "Nepostojeći korisnik";
-        }
-        return "";
+    public News updateNews(Long id, NewsForm newsForm) {
+        newsRepository.findById(id).orElseThrow(
+                () -> new NonExistingEntityException("Nepostojeća obavijest s ID: " + id)
+        );
+        Section section = sectionRepository.findById(newsForm.getIdSection()).orElseThrow(
+                () -> new NonExistingEntityException("Nepostojeća sekcija s ID: " + newsForm.getIdSection())
+        );
+        Member member = memberRepository.findById(newsForm.getIdMember()).orElseThrow(
+                () -> new NonExistingEntityException("Nepostojeća sekcija s ID: " + newsForm.getIdMember())
+        );
+        News news = NewsMapper.fromForm(newsForm, section, member);
+        news.setId(id);
+        news.setDateEdited(LocalDate.now());
+        news = newsRepository.save(news);
+
+        return news;
     }
 }
