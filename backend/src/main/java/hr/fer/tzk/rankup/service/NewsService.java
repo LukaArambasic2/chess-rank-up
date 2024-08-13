@@ -77,4 +77,12 @@ public class NewsService {
 
         return news;
     }
+
+    public void deleteNews(Long id) {
+        if (newsRepository.existsById(id)) {
+            newsRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nepostojeća obavijest s ID: " + id);
+        }
+    }
 }

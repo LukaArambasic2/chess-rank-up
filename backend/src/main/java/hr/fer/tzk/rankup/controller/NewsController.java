@@ -63,4 +63,10 @@ public class NewsController {
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(NewsMapper.toDto(news));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteNews(@PathVariable Long id) {
+        newsService.deleteNews(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
