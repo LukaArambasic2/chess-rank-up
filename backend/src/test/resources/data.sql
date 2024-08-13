@@ -90,8 +90,8 @@ INSERT INTO Participation (addPoints, idMember, idEvent) VALUES (0, 9, 7);
 INSERT INTO Participation (addPoints, idMember, idEvent) VALUES (5, 10, 7);
 
 -- Add news
-INSERT INTO News (title, dateCreated, dateEdited, content, images, idSection, idAuthor) VALUES ('Turnir u šahu', '2024-08-17', null, 'Turnir u šahu održat će se sutra', null, 1, 1);
-INSERT INTO News (title, dateCreated, dateEdited, content, images, idSection, idAuthor) VALUES ('Online turnir u šahu', '2023-09-07', null, 'Online turnir u šahu na platformi chess.com', null, 1, 2);
-INSERT INTO News (title, dateCreated, dateEdited, content, images, idSection, idAuthor) VALUES ('FER bike', '2020-11-07', null, 'Neformalna vožnja biciklima zaposlenika FERa', null, 2, 3);
-INSERT INTO News (title, dateCreated, dateEdited, content, images, idSection, idAuthor) VALUES ('Utrka biciklima', '2023-09-12', null, 'Utrka biciklima na 1000m', null, 2, 3);
-INSERT INTO News (title, dateCreated, dateEdited, content, images, idSection, idAuthor) VALUES ('Biciklijada', '2024-05-15', null, 'Rekreativno bicikliranje po Zagrebu', null, 2, 4);
+INSERT INTO News (title, dateCreated, dateEdited, myContent, images, idSection, idAuthor) VALUES ('Turnir u šahu', '2024-08-17', null, 'Turnir u šahu održat će se sutra', null, 1, 1);
+INSERT INTO News (title, dateCreated, dateEdited, myContent, images, idSection, idAuthor) VALUES ('Online turnir u šahu', '2023-09-07', null, 'Online turnir u šahu na platformi chess.com', null, 1, 2);
+INSERT INTO News (title, dateCreated, dateEdited, myContent, images, idSection, idAuthor) VALUES ('FER bike', '2020-11-07', null, 'Neformalna vožnja biciklima zaposlenika FERa', null, 2, 3);
+INSERT INTO News (title, dateCreated, dateEdited, myContent, images, idSection, idAuthor) VALUES ('Utrka biciklima', '2023-09-12', null, 'Utrka biciklima na 1000m', null, 2, 3);
+INSERT INTO News (title, dateCreated, dateEdited, myContent, images, idSection, idAuthor) VALUES ('Biciklijada', '2024-05-15', null, 'Rekreativno bicikliranje po Zagrebu', null, 2, 4);
