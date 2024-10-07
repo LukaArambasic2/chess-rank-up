@@ -6,17 +6,17 @@ import Aktivnost from './pages/activity/Aktivnost';
 import ExamplePage from './pages/examplePage/ExamplePage';
 import OnlineLiga from './pages/leaderboard/OnlineLiga';
 import Prijava from './pages/login/Prijava';
-import Profil from './pages/Profil';
 import Registracija from './pages/registration/Registracija';
 import Reset from './pages/reset/Reset';
-import SBgodina from './pages/SBgodina';
-import SBsemestar from './pages/SBsemestar';
-import SBukupno from './pages/SBukupno';
 import Scoreboard from './pages/scoreboard/Scoreboard';
 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Scoreboard from './components/Scoreboard';
 import HomePage from './pages/home/HomePage';
+import Profil from './pages/profile/Profil';
+import SBgodina from './pages/scoreboard/SBgodina';
+import SBsemestar from './pages/scoreboard/SBsemestar';
+import SBukupno from './pages/scoreboard/SBukupno';
 
 const sections = [
   { id: 'section1', name: 'Šahovska sekcija', heading: 'DOBRO DOŠLI', description: 'Igramo šah' },
