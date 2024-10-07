@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Mjesto from '../components/Mjesto';
 import'./SBukupno.css';
+import Mjesto from "../../components/ranking/Mjesto";
 
 const SBukupno = ({name}) => {
     

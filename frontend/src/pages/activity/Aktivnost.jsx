@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import Event from '../../components/event/Event';
-import nazad from '../images/nazad.png';
 import './Aktivnost.css';
 
 
@@ -28,7 +27,7 @@ const Aktivnost = () => {
     return (
         <>
             <div className='bodycontainer'>
-                <Link to="/profil"><img src={nazad} className="nazad" alt="nazad" /></Link>
+                <Link to="/profil"><img src={"/nazad.png"} className="nazad" alt="nazad" /></Link>
 
                 <div className='bold'>Ime Prezime</div>
 

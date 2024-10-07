@@ -1,8 +1,7 @@
 import React from "react";
 import'./Profil.css';
-import Curved from "./Curved";
-import JMBAG from '../images/jmbag.jpg';
 import { Link } from "react-router-dom";
+import Curved from "../Curved";
 
 const Profil = ({member}) => {
     return (
@@ -47,7 +46,7 @@ const Profil = ({member}) => {
                 </div>
                 </Link>
              
-                <img src={JMBAG} className="slikica" alt="JMBAG"/>
+                <img src={"/jmbag.jpg"} className="slikica" alt="JMBAG"/>
           
             </div>
 
