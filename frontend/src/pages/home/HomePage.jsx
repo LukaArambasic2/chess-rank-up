@@ -3,12 +3,16 @@
 import React, { useState } from 'react';
 // import HamburgerMenu from '../components/HamburgerMenu'; //
 import './HomePage.css';
+import TitleContainer from '../../components/titleContainer/TitleContainer';
+import Button from '../../components/button/Button';
 
 const HomePage = ({ sections }) => {
-  const [selectedSection, setSelectedSection] = useState(sections[0]);
+  const [selectedSection, setSelectedSection] = useState(null);
 
   const handleSectionClick = (section) => {
-    if (selectedSection.id === section.id) {
+    console.log(section);
+    
+    if (selectedSection!==null && selectedSection.id === section.id) {
       return;
     } else {
       setSelectedSection(section);
@@ -18,15 +22,10 @@ const HomePage = ({ sections }) => {
   return (
     <div className="home-page">
       {/* <HamburgerMenu /> */}
-      <div className="welcome-message">
-        <h1>{selectedSection.heading}</h1>
-        <p>{selectedSection.description}</p>
-      </div>
-      <div className="section-list">
+      <TitleContainer title={"Dobrodošli!"} description={"Izaberi sekciju"} />
+      <div className="buttonList">
         {sections.map((section) => (
-          <button key={section.id} onClick={() => handleSectionClick(section)}>
-            {section.name}
-          </button>
+          <Button key={section.id} item={section} onClick={handleSectionClick}/>
         ))}
       </div>
     </div>
