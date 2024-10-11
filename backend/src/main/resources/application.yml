@@ -1,33 +1,27 @@
 spring:
-    application:
-        name: tzk-rank-up
-
-    # H2 database for testing
-#    datasource:
-#        url: jdbc:h2:mem:testdb
-#        driver-class-name: org.h2.Driver
-#        username: sa
-#        password: password
-#    h2:
-#        console:
-#            enabled: true
-#            path: /h2-console
-#    jpa:
-#        hibernate:
-#            ddl-auto: update
-#        show-sql: true
-    datasource:
-        url: jdbc:postgresql://localhost:5432/rankupdb
-        username: postgres
-        password: postgres
-        driver-class-name: org.postgresql.Driver
-
-    jpa:
-        hibernate:
-            ddl-auto: update
-        show-sql: true
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.PostgreSQLDialect
-server:
-    port: 3000
+  application:
+    name: tzk-rank-up
+  profiles:
+    active: local
+  sql:
+    init:
+      schema-locations: classpath:schema.sql
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: email@example.com
+    password: password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enabled: true
