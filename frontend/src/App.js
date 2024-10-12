@@ -12,6 +12,8 @@ import HomePage from './pages/home/HomePage';
 import Profile from './pages/profile/Profile';
 import ScoreboardTotal from './pages/scoreboard/Scoreboard';
 import Registration from './pages/registration/Registration';
+import News from './pages/news/News';
+import Post from './pages/post/Post';
 
 const sections = [
   { id: 1, name: 'Šahovska sekcija', heading: 'DOBRO DOŠLI', description: 'Igramo šah' },
@@ -38,6 +40,8 @@ function App() {
         <Route path="/scoreboard/total" element={<ScoreboardTotal name={"Total"} description={"Svi bodovi ikad"}/>} />
         <Route path="/scoreboard/league" element={<ScoreboardTotal name={"Liga"} description={"Bodovi u Ligi"}/>} />
 
+        <Route path="/news" element={<News />} />
+        <Route path="/post" element={<Post />} />
       </Routes>
     </Router>
   );
