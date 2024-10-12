@@ -64,7 +64,7 @@ const ScoreboardTotal = ({name, description}) => {
                     {mjesta.map(mjesto => (
                         <RankOrder  mjesto={mjesto} />
                     ))}
-                </div>
+            </div>
         </>
     );
 }
