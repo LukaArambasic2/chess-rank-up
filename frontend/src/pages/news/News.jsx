@@ -21,8 +21,8 @@ const News = () => {
     ];
     
     
-    const handleClick = () => {
-        nav("/post")
+    const handleClick = ({item}) => {
+        nav(`/post/${item.id}`)
     }
 
     return (
