@@ -14,6 +14,8 @@ import ScoreboardTotal from './pages/scoreboard/Scoreboard';
 import Registration from './pages/registration/Registration';
 import News from './pages/news/News';
 import Post from './pages/post/Post';
+import About from './pages/about/About';
+import Section from './pages/section/Section';
 
 const sections = [
   { id: 1, name: 'Šahovska sekcija', heading: 'DOBRO DOŠLI', description: 'Igramo šah' },
@@ -42,6 +44,13 @@ function App() {
 
         <Route path="/news" element={<News />} />
         <Route path="/post" element={<Post />} />
+        
+        
+        <Route path="/about" element={<About />} />
+
+        <Route path="/section" element={<Section />} />
+
+
       </Routes>
     </Router>
   );
