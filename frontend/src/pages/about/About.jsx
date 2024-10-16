@@ -8,7 +8,7 @@ const About = () => {
 
     return (
         <div className="container">
-            <TitleContainer title={"O aplikaciji"} description={"Vidi o čemu je TzkRankUp i upoznaj članove tima!"} />
+            <TitleContainer title={"O aplikaciji"} description={"Upoznaj članove tima"} />
             <div className="aboutText">
                 <h2>Sport na FER-u</h2>
                 <article>

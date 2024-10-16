@@ -5,27 +5,29 @@ import React, { useState } from 'react';
 import './HomePage.css';
 import TitleContainer from '../../components/titleContainer/TitleContainer';
 import Button from '../../components/button/Button';
+import { useNavigate } from 'react-router-dom';
 
-const HomePage = ({ sections }) => {
+const HomePage = ({ linkList }) => {
   const [selectedSection, setSelectedSection] = useState(null);
+  const nav = useNavigate();
 
-  const handleSectionClick = (section) => {
-    console.log(section);
+  const handleSectionClick = (linkList) => {
+    console.log(linkList);
     
-    if (selectedSection!==null && selectedSection.id === section.id) {
+    nav(linkList.to);
+    if (selectedSection !== null && selectedSection.id === linkList.id) {
       return;
     } else {
-      setSelectedSection(section);
+      setSelectedSection(linkList)
     }
   };
 
   return (
-    <div className="home-page">
-      {/* <HamburgerMenu /> */}
-      <TitleContainer title={"Dobrodošli!"} description={"Izaberi sekciju"} />
+    <div className="container">
+      <TitleContainer title={"Dobrodošli!"} description={"Izaberi sekciju u koju se želite učlaniti"} />
       <div className="buttonList">
-        {sections.map((section) => (
-          <Button key={section.id} item={section} onClick={handleSectionClick}/>
+        {linkList.map((linkList) => (
+          <Button key={linkList.id} item={linkList} onClick={handleSectionClick}/>
         ))}
       </div>
     </div>

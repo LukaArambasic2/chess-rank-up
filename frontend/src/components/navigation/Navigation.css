@@ -1,5 +1,6 @@
 #navbarContainer {
     width: 100%;
+    z-index: 1000;
 }
 
 #navbarIcon{
@@ -9,13 +10,13 @@
 
 #navbarIcon2{
     position: absolute;
-    top: 2vh;
-    left: 5vw;
+    top: 6vh;
+    left: 6vw;
     color:black;
 }
 
 .openNavBar{
-    position: absolute;
+    position: fixed;
     display: flex;
     justify-content: center;
     justify-items: center;
@@ -24,8 +25,11 @@
     top:0px;
     left:0px;
     width: 100vw;
-    height: 100vh;
-    
+    height: 100vh;    
+}
+
+.no-scroll {
+    overflow: hidden;
 }
 
 #navbarList {
