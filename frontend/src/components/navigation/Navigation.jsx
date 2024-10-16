@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faHome, faUser, faInfoCircle, faNewspaper, faCalendar, faTrophy, faList, faQuestion} from "@fortawesome/free-solid-svg-icons";
@@ -12,7 +12,7 @@ const Navigation = () => {
     const navigate = useNavigate();
 
     const toggleMenu = () => {
-      setIsOpen(!isOpen);
+        setIsOpen(!isOpen);
     };
 
     const handleLogout = () => {
@@ -48,7 +48,6 @@ const Navigation = () => {
                             <li><Link to="/news"><FontAwesomeIcon icon={faNewspaper} /> Obavijesti</Link></li>
                             <li><Link to="/events"><FontAwesomeIcon icon={faCalendar} /> Događaji</Link></li>
                             <li><Link to="/scoreboard"><FontAwesomeIcon icon={faTrophy} /> Scoreboard</Link></li>
-                            <li><Link to="/league"><FontAwesomeIcon icon={faList} /> League</Link></li>
                             <li><Link to="/about"><FontAwesomeIcon icon={faQuestion} /> O aplikaciji</Link></li>
                             <li><button id='navbarButton' onClick={handleLogout}>Odjava</button></li>    
                         </ul>

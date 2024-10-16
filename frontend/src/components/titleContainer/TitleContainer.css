@@ -4,7 +4,7 @@
     color: white;
     max-width: 450px;
     width: 95vw;
-    height: 30vh;
+    min-height: 30vh;
     box-sizing: border-box;
     border-radius: 0px 0px 30px 30px;
     text-align: center;

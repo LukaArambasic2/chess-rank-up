@@ -15,18 +15,25 @@ import News from './pages/news/News';
 import Post from './pages/post/Post';
 import About from './pages/about/About';
 import Section from './pages/section/Section';
+import Join from './pages/join/Join';
 
 const sections = [
-  { id: 1, name: 'Šahovska sekcija', heading: 'DOBRO DOŠLI', description: 'Igramo šah' },
-  { id: 2, name: 'Neka druga sekcija', heading: 'DOBRO DOŠLI', description: 'Igramo nešto drugo' },
+  { id: 1, name: 'Šahovska sekcija', description: 'Igramo šah', to:"/profile" },
+  { id: 2, name: 'Neka druga sekcija', description: 'Igramo nešto drugo', to:"/profile" },
   // Add more sections as needed
 ];
+const homeForward = [
+  { id: 1, name: 'Moje sekcije', description: 'Sekcije u kojima si prijavljen', to: "/my-sections" },
+  { id: 2, name: 'Sve sekcije', description: 'Popis svih sekcija na FER-u', to: "/join" },
+]
 
 function App() {
   return (
-    <Router >
+    <Router>
       <Routes>
-        <Route path="/" element={<HomePage sections={sections} />} />
+        <Route path="/" element={<HomePage linkList={homeForward} />} />
+        <Route path="/my-sections" element={<HomePage linkList={sections} />} />
+        <Route path="/join" element={<Join />} />
         
         <Route path="/register" element={<Registration />} />
         <Route path="/login" element={<Login />} />
@@ -43,7 +50,6 @@ function App() {
 
         <Route path="/news" element={<News />} />
         <Route path="/post" element={<Post />} />
-        
         
         <Route path="/about" element={<About />} />
 

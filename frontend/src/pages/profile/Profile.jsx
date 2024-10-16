@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import './Profile.css';
 import Curved from "../Curved";
 import { Link } from "react-router-dom";
+import Navigation from "../../components/navigation/Navigation";
 
 const Profile = ({member}) => {
     const [attributes, setAttributes] = useState([
@@ -10,8 +11,10 @@ const Profile = ({member}) => {
     ]);
     
     return (
-        <>
         <div className="container">
+            <div style={{width:"100%", padding: "2vh 5vw 0 5vw", boxSizing:"border-box", zIndex:1000}}>
+                <Navigation />
+            </div>
             <div id="profile" >Profil</div>
             <div id="circles">
                 <div id="bigCircle" />
@@ -55,9 +58,6 @@ const Profile = ({member}) => {
             
 
         </div>
-
-
-        </>
     );
 }
 
