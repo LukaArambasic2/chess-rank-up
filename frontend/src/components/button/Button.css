@@ -1,16 +1,5 @@
 #customButton {
     padding: 50px;
-    font-size: 18px;
-    font-weight: bold;
-    text-shadow: 0px 1px 1px #00000040;
-    border: none;
-    background-color: white;
-    color: #7F61BA;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    box-shadow: 0px 4px 4px 0px #00000040;
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #customButton:hover {

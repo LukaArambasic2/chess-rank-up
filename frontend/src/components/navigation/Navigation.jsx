@@ -44,10 +44,9 @@ const Navigation = () => {
                         <ul id='navbarList'>
                             <li><Link to="/"><FontAwesomeIcon icon={faHome} /> Home</Link></li>
                             <li><Link to="/profile"><FontAwesomeIcon icon={faUser} /> Profil</Link></li>
-                            <li><Link to={`/section`}><FontAwesomeIcon icon={faInfoCircle} />O sekciji</Link></li>
+                            <li><Link to="/scoreboard"><FontAwesomeIcon icon={faTrophy} /> Scoreboard</Link></li>
                             <li><Link to="/news"><FontAwesomeIcon icon={faNewspaper} /> Obavijesti</Link></li>
                             <li><Link to="/events"><FontAwesomeIcon icon={faCalendar} /> Događaji</Link></li>
-                            <li><Link to="/scoreboard"><FontAwesomeIcon icon={faTrophy} /> Scoreboard</Link></li>
                             <li><Link to="/about"><FontAwesomeIcon icon={faQuestion} /> O aplikaciji</Link></li>
                             <li><button id='navbarButton' onClick={handleLogout}>Odjava</button></li>    
                         </ul>

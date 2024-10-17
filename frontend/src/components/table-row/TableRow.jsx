@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./Event.css";
+import "./TableRow.css";
 
-const Event = ({event}) => {
+const TableRow = ({event}) => {
     console.log("Event prop:", event);
 
     const getBackgroundColor = (id) => {
@@ -29,4 +29,4 @@ const Event = ({event}) => {
     );
 }
 
-export default Event;
+export default TableRow;
