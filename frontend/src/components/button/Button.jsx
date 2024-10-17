@@ -4,7 +4,7 @@ import "./Button.css";
 
 const Button = ({item, onClick}) => {
     return (
-        <button id="customButton" onClick={() => onClick(item)}>
+        <button id="customButton" className="listElement" onClick={() => onClick(item)}>
             {item.name}
         </button>
     )

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import Event from '../../components/event/Event';
+import TableRow from '../../components/table-row/TableRow';
 import './Activity.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft} from "@fortawesome/free-solid-svg-icons";
@@ -41,7 +41,7 @@ const Activity = () => {
                 </div>
 
                 {tests.map(test => (
-                    <Event event={test} />
+                    <TableRow event={test} />
                 ))}
             </div>
     );

@@ -17,6 +17,7 @@ import Post from './pages/post/Post';
 import About from './pages/about/About';
 import Section from './pages/section/Section';
 import Join from './pages/join/Join';
+import UpcomingEvents from './pages/upcoming/UpcomingEvents';
 
 const sections = [
   { id: 1, name: 'Šahovska sekcija', description: 'Igramo šah', to:"/profile" },
@@ -51,6 +52,7 @@ function App() {
 
         <Route path="/news" element={<News />} />
         <Route path="/post" element={<Post />} />
+        <Route path="/events" element={<UpcomingEvents />} />
         
         <Route path="/about" element={<About />} />
 

@@ -2,7 +2,7 @@ import React from "react";
 import "./News.css";
 import TitleContainer from "../../components/titleContainer/TitleContainer";
 import { useNavigate } from "react-router-dom";
-import DescriptiveComponent from "../../components/descriptive-component/DescriptiveComponent";
+import NewsButton from "../../components/button-news/NewsButton";
 
 const News = () => {
     const nav = useNavigate();
@@ -31,7 +31,7 @@ const News = () => {
 
             <div className="listContainer">
             {newsList.map(post => (
-                <DescriptiveComponent item={post} onClick={handleClick}/>
+                <NewsButton item={post} onClick={handleClick}/>
             ))}
             </div>
         </div>
