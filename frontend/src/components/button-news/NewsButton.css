@@ -3,6 +3,7 @@
     padding: 20px;
     width: 300px;
     background-color: white;
+    box-sizing: border-box;
 }
 
 #news-title {

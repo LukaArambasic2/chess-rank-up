@@ -1,0 +1,15 @@
+/* Customize react-calendar styles */
+.my-calendar {
+    max-width: 100%;
+    margin: auto;
+  }
+  
+.react-calendar__tile {
+  border-radius: 8px;
+  background: black;
+}
+
+.react-calendar__tile abbr {
+  display: none; /* This hides the default date */
+  font-size:medium;
+}
