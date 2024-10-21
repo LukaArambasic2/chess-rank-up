@@ -22,7 +22,7 @@ const News = () => {
     
     
     const handleClick = ({item}) => {
-        nav(`/post/${item.id}`)
+        nav(`/post`)
     }
 
     return (

@@ -23,7 +23,7 @@ const UpcomingEvents = () => {
       <div className="buttonList">
         <h3>Nadolazeći događaji:</h3>
         {events.map((event, index) => (
-          <NewsButton key={index} item={event} />
+          <NewsButton key={index} item={event} onClick={()=>{}} />
         ))}
       </div>
     </div>
