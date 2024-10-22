@@ -18,6 +18,10 @@ import Join from './pages/join/Join';
 import UpcomingEvents from './pages/upcoming/UpcomingEvents';
 import Post from './pages/post/Post';
 import Admin from './pages/admin/Admin';
+import AddPoints from './pages/admin/addPoints/AddPoints';
+import AddEvents from './pages/admin/addEvents/AddEvents';
+import AddNews from './pages/admin/addNews/AddNews';
+import AllUsers from './pages/admin/allUsers/AllUsers';
 
 const sections = [
   { id: 1, name: 'Šahovska sekcija', description: 'Igramo šah', to:"/profile" },
@@ -59,6 +63,10 @@ function App() {
         <Route path="/section" element={<Section />} />
 
         <Route path='/admin' element={<Admin />} />
+        <Route path='/admin/add-points' element={<AddPoints  />} />
+        <Route path='/admin/add-events' element={<AddEvents  />} />
+        <Route path='/admin/add-news' element={<AddNews  />} />
+        <Route path='/admin/all-users' element={<AllUsers  />} />
 
       </Routes>
     </Router>
