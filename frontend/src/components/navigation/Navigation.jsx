@@ -33,12 +33,12 @@ const Navigation = () => {
     return (
         <div id='navbarContainer'>
             <div id="navbarIcon" onClick={toggleMenu}>
-                <FontAwesomeIcon icon={faBars} size={18}/>
+                <FontAwesomeIcon icon={faBars} size={'lg'}/>
             </div>
             {isOpen && (
                 <div className='openNavBar'>
                     <div id="navbarIcon2" onClick={toggleMenu}>
-                        <FontAwesomeIcon icon={faTimes} size={18}/>
+                        <FontAwesomeIcon icon={faTimes} size={'lg'}/>
                     </div>
                     {isLoggedIn && (
                         <ul id='navbarList'>
