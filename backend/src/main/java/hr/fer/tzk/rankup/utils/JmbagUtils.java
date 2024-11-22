@@ -3,12 +3,14 @@ package hr.fer.tzk.rankup.utils;
 public class JmbagUtils {
 
     /**
-     * Checks if JMBAG is valid. <br> <br>
+     * Checks if JMBAG is valid.
      *
+     * <p>
      * For more details about how the algorithm actually works, read the source code.
+     * </p>
      *
      * @param jmbag JMBAG that will be validated.
-     * @return True if JMBAG is valid, False otherwise
+     * @return {@code true} if JMBAG is valid, {@code false} otherwise
      */
     public static boolean validateJmbag(String jmbag) {
         // Regex checks if all characters are digits

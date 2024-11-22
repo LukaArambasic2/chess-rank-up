@@ -1,0 +1,36 @@
+.AboutHeader{
+    display: inline-grid;
+    background-color: #7F61BA;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    color: white;
+    justify-items: center;
+    
+    padding-top:32px;
+    padding-bottom: 32px;
+    margin-bottom: 16px;
+    width:100vw;
+    
+}
+
+.aboutText{
+    padding-inline: 25px;
+}
+
+ul{
+    padding-left: 0px;
+}
+
+article{
+    padding-left: 16px;
+    font-size: 20px;
+}
+
+h2{
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+li{
+    font-size: 20px;
+}
