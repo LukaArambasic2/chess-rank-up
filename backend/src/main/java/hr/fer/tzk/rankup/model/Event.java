@@ -1,6 +1,9 @@
 package hr.fer.tzk.rankup.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,30 +11,35 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "MyEvent")
+@Table(name = "myevent")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idEvent")
+    @Column(name = "idevent")
     private Long id;
 
-    @Column(name = "nameEvent", nullable = false)
+    @NotBlank
+    @Size(max = 30)
+    @Column(name = "nameevent", nullable = false)
     private String name;
 
-    @Column(name = "dateEvent", nullable = false)
+    @NotNull
+    @Temporal(TemporalType.DATE)
+    @Column(name = "dateevent", nullable = false)
     private LocalDate date;
-
-    @Column(name = "descriptionEvent")
+    
+    @Size(max = 80)
+    @Column(name = "descriptionevent")
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "idSection", nullable = false)
+    @JoinColumn(name = "idsection", nullable = false)
     private Section section;
 
     @ManyToOne
-    @JoinColumn(name = "idEventType", nullable = false)
+    @JoinColumn(name = "ideventtype", nullable = false)
     private EventType eventType;
 }

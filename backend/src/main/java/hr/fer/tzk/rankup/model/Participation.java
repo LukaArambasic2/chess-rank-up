@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-@Table(name = "Participation")
+@Table(name = "participation")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,10 +21,10 @@ public class Participation {
     private int addPoints = 0;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idMember", nullable = false)
+    @JoinColumn(name = "idmember", nullable = false)
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idEvent", nullable = false)
+    @JoinColumn(name = "idevent", nullable = false)
     private Event event;
 }

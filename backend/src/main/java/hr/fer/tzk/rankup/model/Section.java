@@ -6,25 +6,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "MySection", uniqueConstraints = @UniqueConstraint(columnNames = "nameSection"))
+@Table(name = "mysection", uniqueConstraints = @UniqueConstraint(columnNames = "namesection"))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Section {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idSection")
+    @Column(name = "idsection")
     private Long id;
 
-    @Column(name = "nameSection", nullable = false)
+    @Column(name = "namesection", nullable = false)
     private String name;
 
-    @Column(name = "descriptionSection")
+    @Column(name = "descriptionsection")
     private String description;
 
     @Column(name = "logo")
     private String logo;
 
-    @Column(name = "isOpen")
+    @Column(name = "isopen")
     private boolean open = true;
 }
