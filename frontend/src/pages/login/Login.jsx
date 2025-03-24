@@ -7,8 +7,8 @@ const Login = () => {
         <div className="container">
             <TitleContainer title={"Prijava"} description={"Prijavi se!"} />
             <form className="forma" action="">
-                <input type="text" class="inputStyle" placeholder="Email" required/>
-                <input type="text" class="inputStyle" placeholder="Loznika" required/>
+                <input type="text" className="inputStyle" placeholder="Email" required/>
+                <input type="text" className="inputStyle" placeholder="Loznika" required/>
                 <input type="submit" id="submitButton" onClick={()=>{}} value="Prijavi se"/>
 
                 <div className="prijava-link">

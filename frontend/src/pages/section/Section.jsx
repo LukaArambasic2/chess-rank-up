@@ -51,7 +51,7 @@ const Section = () => {
                 { sectionDescription }
             </div>
             <div id="enroll-button-container">
-                <button id="enroll-button-green" onClick={()=>handleClick()} disabled={isJoined} style={isJoined?{backgroundColor:"lightgrey"}:{}}>
+                <button id="enroll-button-green" onClick={()=>handleClick()} disabled={!isJoined} style={isJoined?{backgroundColor:"lightgrey"}:{}}>
                     <p id="enroll-button-text">
                         {isJoined? "Already joined":"Join now"}
                     </p>
