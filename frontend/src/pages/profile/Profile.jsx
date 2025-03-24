@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import './Profile.css';
 import Curved from "../Curved";
 import { Link } from "react-router-dom";
 import Navigation from "../../components/navigation/Navigation";
+import apiClient from "../../apiClient";
+import axios from "axios";
 
 const Profile = ({member}) => {
     const [attributes, setAttributes] = useState([
         {attribute:"Lichess account", value:"username123"}, 
         {attribute:"Rank", value:"pijun"}, 
     ]);
+
+    useEffect(() => {
+        const response = axios.get('http://localhost:8080/api/sections')
+            .then(response => console.log(response.data))
+            .catch(error => console.error(error));
+        console.log(response);
+    }, []);
     
     return (
         <div className="container">

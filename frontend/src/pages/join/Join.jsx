@@ -2,19 +2,32 @@ import React, { useEffect, useState } from "react";
 import TitleContainer from "../../components/titleContainer/TitleContainer";
 import JoinButton from "../../components/button-join/JoinButton";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Join = () => {
-    const [sections, setSections] = useState([
+/*    const [sections, setSections] = useState([
         { id: 1, title: 'Chess Club', description: 'Click to see more...' },
         { id: 2, title: 'Music Band', description: 'Click to see more...' },
         { id: 3, title: 'Art Club', description: 'Click to see more...' },
         { id: 4, title: 'Football Team', description: 'Click to see more...' }
-    ]);
+    ]);*/
+    const [sections, setSections] = useState([]);
     const nav = useNavigate();
 
     useEffect(() => {
         // TODO: Add axios to fetch sections from an API
         // Example: axios.get('/api/sections').then(response => setSections(response.data));
+        async function fetchData() {
+            await axios.get("http://localhost:8080/api/sections")
+                .then(response => {
+                    console.log(response.data);
+                    setSections(response.data);
+                })
+                .catch(error => {
+                    console.log("Error happened: ", error);
+                })
+        }
+        fetchData();
     }, []);
 
     const handleSectionClick = (section) => {
