@@ -8,23 +8,23 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Verification", uniqueConstraints = {@UniqueConstraint(columnNames = "url")})
+@Table(name = "verification", uniqueConstraints = {@UniqueConstraint(columnNames = "url")})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Verification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idVerification")
+    @Column(name = "idverification")
     private Long id;
 
     @Column(name = "url", nullable = false)
     private String url;
 
-    @Column(name = "expirationTime", nullable = false)
+    @Column(name = "expirationtime", nullable = false)
     private LocalDateTime expirationTime;
 
     @ManyToOne
-    @JoinColumn(name = "idMember", nullable = false)
+    @JoinColumn(name = "idmember", nullable = false)
     private Member member;
 }

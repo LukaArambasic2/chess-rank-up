@@ -6,28 +6,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "MemberInfo", uniqueConstraints = {@UniqueConstraint(columnNames = {"idSection", "idMember", "idAttribute"}),})
+@Table(name = "memberinfo", uniqueConstraints = {@UniqueConstraint(columnNames = {"idsection", "idmember", "idattribute"}),})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idInfo")
+    @Column(name = "idinfo")
     private Long id;
 
-    @Column(name = "stringValue", nullable = false)
+    @Column(name = "stringvalue", nullable = false)
     private String stringValue;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idSection", nullable = false)
+    @JoinColumn(name = "idsection", nullable = false)
     private Section section;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idAttribute", nullable = false)
+    @JoinColumn(name = "idattribute", nullable = false)
     private Attribute attribute;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idMember", nullable = false)
+    @JoinColumn(name = "idmember", nullable = false)
     private Member member;
 }

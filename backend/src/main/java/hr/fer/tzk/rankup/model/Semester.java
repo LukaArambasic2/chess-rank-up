@@ -1,6 +1,7 @@
 package hr.fer.tzk.rankup.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,15 +16,18 @@ import java.time.LocalDate;
 public class Semester {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idSemester")
+    @Column(name = "idsemester")
     private Long id;
 
-    @Column(name = "nameSemester", nullable = false)
+    @Size(max = 30)
+    @Column(name = "namesemester", nullable = false)
     private String name;
 
-    @Column(name = "dateFromSemester", nullable = false)
+    @Temporal(TemporalType.DATE)
+    @Column(name = "datefromsemester", nullable = false)
     private LocalDate dateFrom;
 
-    @Column(name = "dateToSemester", nullable = false)
+    @Temporal(TemporalType.DATE)
+    @Column(name = "datetosemester", nullable = false)
     private LocalDate dateTo;
 }

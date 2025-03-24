@@ -1,26 +1,33 @@
 package hr.fer.tzk.rankup.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-@Table(name = "MyMember", uniqueConstraints = {@UniqueConstraint(columnNames = "jmbag"), @UniqueConstraint(columnNames = "email")})
+@Table(name = "mymember", uniqueConstraints = {@UniqueConstraint(columnNames = "jmbag"), @UniqueConstraint(columnNames = "email")})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idMember")
+    @Column(name = "idmember")
     private Long id;
 
-    @Column(name = "firstName", nullable = false)
+    @NotBlank
+    @Size(max = 30)
+    @Column(nullable = false, name="firstname")
     private String firstName;
 
-    @Column(name = "lastName", nullable = false)
+    @NotBlank
+    @Size(max = 30)
+    @Column(nullable = false, name = "lastname")
     private String lastName;
 
     @Column(name = "jmbag", nullable = false, unique = true)
@@ -29,13 +36,15 @@ public class Member {
     @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "passwordHash")
+    @Size(max = 255)
+    @Column(name = "passwordhash")
     private String passwordHash;
 
     @Column(name = "salt")
     private String salt;
 
-    @Column(name = "isVerified")
+    @NotNull
+    @Column(name = "isverified")
     @ColumnDefault(value = "FALSE")
     private boolean verified = false;
 }
