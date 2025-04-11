@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS SectionSemester CASCADE;
 DROP TABLE IF EXISTS News CASCADE;
 DROP TABLE IF EXISTS SectionMember CASCADE;
 DROP TABLE IF EXISTS MemberInfo CASCADE;
+DROP TABLE IF EXISTS Review CASCADE;
 
 CREATE TABLE MyMember
 (
@@ -357,3 +358,10 @@ CREATE TABLE MemberInfo
 
 -- Insert default event type
 INSERT INTO EventType (nameEventType, defaultPoints) VALUES ('Ostalo', 1);
+
+CREATE TABLE Review (
+    idReview BIGSERIAL PRIMARY KEY,
+    idAuthor BIGINT NOT NULL,
+    textReview VARCHAR(80),
+    FOREIGN KEY (idAuthor) REFERENCES SectionMember(idSectionMember) ON DELETE CASCADE,
+)
