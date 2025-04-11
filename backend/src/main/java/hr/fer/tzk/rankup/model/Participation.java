@@ -14,9 +14,10 @@ import org.hibernate.annotations.ColumnDefault;
 public class Participation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idparticipation")
     private Long idParticipation;
 
-    @Column(name = "addPoints")
+    @Column(name = "addpoints")
     @ColumnDefault(value = "0")
     private int addPoints = 0;
 

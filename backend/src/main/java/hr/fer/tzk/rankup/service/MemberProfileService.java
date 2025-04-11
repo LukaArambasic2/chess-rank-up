@@ -69,6 +69,7 @@ public class MemberProfileService {
         ProfileGeneralInfoDto profileGeneralInfo = new ProfileGeneralInfoDto();
         profileGeneralInfo.setFirstName(sectionMember.getMember().getFirstName());
         profileGeneralInfo.setLastName(sectionMember.getMember().getLastName());
+        profileGeneralInfo.setJmbag(sectionMember.getMember().getJmbag());
         profileGeneralInfo.setRankName(sectionMember.getRank().getName());
         profileGeneralInfo.setPointsTotal(sectionMember.getPointsAll());
         profileGeneralInfo.setPointsSemester(pointsSemester);
@@ -77,6 +78,7 @@ public class MemberProfileService {
     }
 
     public ActivityPageDto getActivityPage(Long idSection, Long idMember) {
+        System.out.println("\n\nLet's start");
         Optional<SectionMember> sectionMemberOpt = sectionMemberService.findSectionMemberByIdSection(idMember, idSection);
         if (sectionMemberOpt.isEmpty()) {
             return null;
@@ -84,7 +86,9 @@ public class MemberProfileService {
         SectionMember sectionMember = sectionMemberOpt.get();
 
         Member member = sectionMember.getMember();
+        System.out.println("Section id: " + idSection + ", Member id: " + idMember);
         List<Participation> participations = participationRepository.findAllByMember_Id(idMember);
+        System.out.println("Here");
         List<ProfileEventDto> events = participations.stream()
                 .filter(participation -> participation.getEvent().getSection().getId().equals(idSection))
                 .map(ParticipationMapper::toDto)

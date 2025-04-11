@@ -1,10 +1,16 @@
 package hr.fer.tzk.rankup.controller;
 
 import hr.fer.tzk.rankup.dto.DetailedMemberDto;
+import hr.fer.tzk.rankup.dto.SectionDto;
+import hr.fer.tzk.rankup.dto.SectionMemberDto;
 import hr.fer.tzk.rankup.form.BasicMemberForm;
 import hr.fer.tzk.rankup.mapper.MemberMapper;
+import hr.fer.tzk.rankup.mapper.SectionMapper;
 import hr.fer.tzk.rankup.model.Member;
+import hr.fer.tzk.rankup.model.Section;
+import hr.fer.tzk.rankup.model.SectionMember;
 import hr.fer.tzk.rankup.service.MemberService;
+import hr.fer.tzk.rankup.service.SectionMemberService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +26,12 @@ import java.util.Optional;
 @RequestMapping("/members")
 public class MemberController {
     private final MemberService memberService;
+    private final SectionMemberService sectionMemberService;
 
     @Autowired
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, SectionMemberService sectionMemberService) {
         this.memberService = memberService;
+        this.sectionMemberService = sectionMemberService;
     }
 
 
@@ -47,6 +55,18 @@ public class MemberController {
         return ResponseEntity.ok(detailedMember);
     }
 
+    /**
+     * Find all sections the member is a part of.
+     *
+     * @param idMember member
+     * @return list of sections
+     */
+    @GetMapping("/{idMember}/sections")
+    public ResponseEntity<List<SectionDto>> findSections(@PathVariable Long idMember) {
+        List<SectionMember> mySectionsMemberList = sectionMemberService.findAllSectionMembersByIdMember(idMember);
+        List<SectionDto> mySections = mySectionsMemberList.stream().map(SectionMember::getSection).map(SectionMapper::toDto).toList();
+        return ResponseEntity.ok(mySections);
+    }
 
     @PostMapping
     public ResponseEntity<String> createMember(@Valid @RequestBody BasicMemberForm member) throws URISyntaxException {

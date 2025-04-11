@@ -15,4 +15,5 @@ public class SectionMemberDto {
     private boolean active;
     private int pointsTotal;
     private String rank;
+    private String section;
 }

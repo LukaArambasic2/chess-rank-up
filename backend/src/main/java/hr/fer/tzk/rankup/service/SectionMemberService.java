@@ -31,6 +31,10 @@ public class SectionMemberService {
         return sectionMemberRepository.findAllBySection_Id(idSection);
     }
 
+    public List<SectionMember> findAllSectionMembersByIdMember(Long idMember) {
+        return sectionMemberRepository.findAllByMember_Id(idMember);
+    }
+
     public Optional<SectionMember> findSectionMemberByIdSection(Long idMember, Long idSection) {
         return sectionMemberRepository.findSectionMemberByMember_IdAndSection_Id(idMember, idSection);
     }

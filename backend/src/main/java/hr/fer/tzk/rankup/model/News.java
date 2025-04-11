@@ -31,7 +31,7 @@ public class News {
     @Temporal(TemporalType.DATE)
     private LocalDate dateEdited;
 
-    @Column(name = "myContent", length = 80, nullable = false)
+    @Column(name = "mycontent", length = 80, nullable = false)
     private String content;
 
     @Column(name = "images", length = 80)

@@ -19,6 +19,7 @@ public class SectionMemberMapper {
         dto.setActive(sectionMember.isActive());
         dto.setPointsTotal(sectionMember.getPointsAll());
         dto.setRank(sectionMember.getRank().getName());
+        dto.setSection(sectionMember.getSection().getName());
         
         return dto;
     }
