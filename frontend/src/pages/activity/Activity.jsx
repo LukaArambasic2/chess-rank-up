@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
 import TableRow from '../../components/table-row/TableRow';
 import './Activity.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 
 const Activity = () => {
@@ -25,6 +26,21 @@ const Activity = () => {
             points: 1
         }
     ]
+    const [activities, setActivities] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            await axios.get(`http://localhost:8080/api/sections/${1}/members/${1}/profile/activities`)
+                .then(response => {
+                    console.log("Activities list: ", response.data.events);
+                    setActivities(response.data.events);
+                })
+                .catch(error => {
+                    console.log("Error: ", error);
+                })
+        }
+        fetchData();
+    }, []);
 
     return (
             <div className='container2'>
@@ -40,8 +56,8 @@ const Activity = () => {
                     <div className='maleniHeader3'>Bodovi</div>
                 </div>
 
-                {tests.map(test => (
-                    <TableRow event={test} />
+                {activities && activities.map(activity => (
+                    <TableRow event={activity} />
                 ))}
             </div>
     );

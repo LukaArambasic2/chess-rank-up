@@ -1,19 +1,40 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import TitleContainer from "../../components/titleContainer/TitleContainer";
+import {useParams} from "react-router-dom";
+import api from "../../api";
+import login from "../login/Login";
 
 const Post = () => {
+    const [post, setPost] = useState();
+    const {id} = useParams();
+
+    useEffect(() => {
+
+        async function fetchData() {
+            await api.get(`/news/${id}`)
+                .then(response => {
+                    setPost(response.data);
+                })
+                .catch(error => {
+                    console.log("Error fetching data: ", error);
+                })
+        }
+        fetchData();
+    }, []);
+
     return (
         <div className="container">
-            <TitleContainer title={"Obavijest"} description={"Autor: " + "\n" + "Vrijeme objave: "} />
-            <div className="aboutText">
-                <h2>Obavijesti info</h2>
+            {post && (
+            <>
+                <TitleContainer title={post.title} description={"Objavljeno: " + post.dateCreated} />
                 <article>
-                    Ovdje ide tekst
-                    Tekst je automatski generiran...
-                    Imamo template na kojem se objavljuje samo doda: vrijeme, autor, broj sakupljenih bodova.
-                    I onda postoji još opcija postavljanja pravih objava. Nije pretjerano važno, ali mogla bi imati neku zvjezdicu ili nešto što naglašava da je tu objavu važno za pročitati.
+                    {post.content}
                 </article>
-            </div>
+                <p className="aboutText">
+                    Autor: {post.author.firstName} {post.author.lastName}
+                </p>
+            </>
+            )}
         </div>
     )
 }

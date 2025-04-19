@@ -1,12 +1,30 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import'./Scoreboard2.css';
 import RankOrder from "../../components/rank-order/RankOrder";
 import TitleContainer from "../../components/titleContainer/TitleContainer";
 import RankPosition from "../../components/rank-position/RankPosition";
+import api from "../../api";
 
-const ScoreboardTotal = ({name, description}) => {
-    
+const Scoreboard = ({name, description}) => {
+
+    const [scoreboard, setScoreboard] = useState([]);
+    const [topThree, setTopThree] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            await api.get(`/sections/${1}/scoreboard/${name.toLowerCase()}`)
+                .then(response => {
+                    console.log("Scoreboard: ", response.data);
+                    setScoreboard(response.data);
+                    setTopThree(response.data.slice(0,3));
+                })
+                .catch(error => {
+                    console.log("Error fetching data: ", error);
+                });
+        }
+        fetchData();
+    }, []);
 
     const mjesto4 = {
         place: 4,
@@ -31,42 +49,16 @@ const ScoreboardTotal = ({name, description}) => {
         mjesto4, mjesto5, mjesto6
     ]
 
-    const topThree = [
-        {
-            place: 2,
-            name: "Ime Prezime",
-            points: 7
-        },
-        {
-            place: 1,
-            name: "Ime Prezime",
-            points: 9
-        },
-        {
-            place: 3,
-            name: "Ime Prezime",
-            points: 5
-        }
-    ]
-
     return (
         <>
             <div className="container">
                 <TitleContainer title={`Scoreboard ${name}`} description={description}/>
-                <div className="topThree">
-                    {topThree.map(position => (
-                        <RankPosition item={position}/>
-                    ))}
-                </div>
-
-                    {/*tu dodavat mjesta 4. nadalje*/}
-
-                    {mjesta.map(mjesto => (
-                        <RankOrder  mjesto={mjesto} />
+                    {scoreboard.map((member, index) => (
+                        <RankOrder  mjesto={member} place={index+1} />
                     ))}
             </div>
         </>
     );
 }
 
-export default ScoreboardTotal;
+export default Scoreboard;

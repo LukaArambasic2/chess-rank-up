@@ -6,8 +6,8 @@ const NewsButton = ({ item, onClick }) => {
     return (
         <div id="descriptive-card" className="listElement" onClick={()=>onClick(item)}>
             <h1 id="news-title">{item.title}</h1>
-            <p id="news-author">{item.author}</p>
-            <p id="news-created-at">Kreirana: {item.time}</p>
+            <p id="news-author">{item.author.firstName} {item.author.lastName}</p>
+            <p id="news-created-at">Objavljeno: {item.dateCreated}</p>
         </div>
     );
 };

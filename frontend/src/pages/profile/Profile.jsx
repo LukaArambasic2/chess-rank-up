@@ -3,20 +3,24 @@ import './Profile.css';
 import Curved from "../Curved";
 import { Link } from "react-router-dom";
 import Navigation from "../../components/navigation/Navigation";
-import apiClient from "../../apiClient";
-import axios from "axios";
+import api from "../../api";
+import QRCode from 'qrcode';
 
-const Profile = ({member}) => {
-    const [attributes, setAttributes] = useState([
-        {attribute:"Lichess account", value:"username123"}, 
-        {attribute:"Rank", value:"pijun"}, 
-    ]);
+const Profile = () => {
+    const [member,setMember] = useState({});
+    const [qr, setQr] = useState();
 
     useEffect(() => {
-        const response = axios.get('http://localhost:8080/api/sections')
-            .then(response => console.log(response.data))
-            .catch(error => console.error(error));
-        console.log(response);
+        async function fetchData() {
+            await api.get(`sections/${1}/members/${3}/profile/general`)
+                .then(response => {
+                    setMember(response.data);
+                    QRCode.toDataURL(response.data.jmbag, {width: 300, margin: 2}).then(url => setQr(url));
+                    console.log("General profile info: ", response.data);
+                })
+                .catch(error => console.error(error));
+        }
+        fetchData();
     }, []);
     
     return (
@@ -24,7 +28,7 @@ const Profile = ({member}) => {
             <div style={{width:"100%", padding: "2vh 5vw 0 5vw", boxSizing:"border-box", zIndex:1000}}>
                 <Navigation />
             </div>
-            <div id="profile" >Profil</div>
+            <div id="profile" >{member.section} Profil</div>
             <div id="circles">
                 <div id="bigCircle" />
                 <div id="smallCircle" />
@@ -32,26 +36,21 @@ const Profile = ({member}) => {
             <div id="curved"><Curved /></div>
 
             <div className="whiteBackgroundContainer"> 
-                <p className="profileText">Ime Prezime</p>
+                <p className="profileText">{member.firstName} {member.lastName}, {member.jmbag}</p>
                 <div className="twoContainer">
                     <div className="pointsContainer" id="lijevi">
                         <p className="pointsTitle">Bodovi <br /> u semestru </p>
-                        <p className="pointsNumber">10</p>
-                        <p className="pointsPass">Do prolaza: <span className="pointsMini">2</span></p>    
+                        <p className="pointsNumber">{member.pointsSemester}</p>
+                        <p className="pointsPass">Do prolaza: <span className="pointsMini">{member.additionalPointsNeeded}</span></p>
                     </div>
 
                     <div className="pointsContainer" id="desni">
                         <p className="pointsTitle" id="ri">Ukupan <br /> broj bodova</p>
-                        <p className="pointsNumber">23</p>
+                        <p className="pointsNumber">{member.pointsTotal}</p>
                     </div>
                 </div>
 
                 <div className="twoContainer">
-                    <div className="attributes">
-                        {attributes.map(attribute => (
-                            <p className="attribute">{attribute.attribute} <br /> <span className="value">{attribute.value}</span></p>
-                        ))}
-                    </div>
 
                     <Link to="/profile/activity">
                         <div className="activity">
@@ -60,7 +59,7 @@ const Profile = ({member}) => {
                     </Link>
                 </div>
              
-                <img src="/jmbag.jpg" className="slikica" alt="JMBAG"/>
+                <img src={qr} className="slikica" alt="JMBAG" style={{width: "300px"}}/>
           
             </div>
 

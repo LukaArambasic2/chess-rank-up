@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/button/Button";
 import TitleContainer from "../../components/titleContainer/TitleContainer";
 
-const Scoreboard = () => {
+const ScoreboardList = () => {
     const nav = useNavigate();
     const timeScales = [
         {id: 1, name: "Semestar", to:"semester"},
@@ -32,4 +32,4 @@ const Scoreboard = () => {
     );
 }
 
-export default Scoreboard;
+export default ScoreboardList;
