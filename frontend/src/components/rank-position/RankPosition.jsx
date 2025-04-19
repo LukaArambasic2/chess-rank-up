@@ -3,9 +3,9 @@ import "./RankPosition.css";
 
 const RankPosition = ({item}) => {
     return (
-        <div className="rankPosition" id={"rankPosition"+item.place}>
+        <div className="rankPosition" id={"rankPosition"+item.points}>
             <div className="rankBox"/>
-            <div className="rankNumber">{item.place}</div>
+            <div className="rankNumber">{item.points}</div>
         </div>
     );
 }
