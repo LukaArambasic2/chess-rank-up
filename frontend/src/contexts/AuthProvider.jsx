@@ -9,11 +9,17 @@ export const AuthProvider = ({children}) => {
     const login = async (email, password) => {
         let errorText = null;
         let errorTrue = false;
-        await api.post('auth/login', {email, password}).then(response => {
-            console.log(response.data);
-            localStorage.setItem('token', response.data.token);
-            setUser(response.data.user);
-        }).catch(error => logout())
+        console.log("Now here", email, password);
+        await api.post('auth/login', {email:email, password:password})
+            .then(response => {
+                localStorage.setItem('token', response.data.token);
+                let user = response.data.user;
+                user = {...user, id: response.data.id};
+                setUser(user);})
+            .catch(error => {
+                console.log("Erroroorroroorrorooror")
+                logout()
+            })
     }
 
     const logout = () => {
@@ -22,11 +28,6 @@ export const AuthProvider = ({children}) => {
         setUser(null);
     }
 
-    /**
-     *
-     * TODO: Need to enable interceptors
-     * @returns {Promise<void>}
-     */
     const checkUser = async () => {
         await api.get('auth/me')
             .then(response => setUser(response.data.user))
