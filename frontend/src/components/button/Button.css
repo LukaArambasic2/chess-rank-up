@@ -1,0 +1,8 @@
+#customButton {
+    padding: 50px;
+}
+
+#customButton:hover {
+    background-color: #f0f0f0;
+    color: #7F61BA;
+}

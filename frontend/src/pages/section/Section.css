@@ -1,0 +1,26 @@
+#enroll-button-container {
+    position:fixed;
+    bottom: 0px;
+    z-index: 2;
+    height: 6vh;
+    background-color: #f0f0f0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+
+.enroll-button-text {
+
+}
+
+#enroll-button-green {
+    width: 90%;
+    background-color: #28a745;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border:0;
+}

@@ -1,0 +1,62 @@
+#navbarContainer {
+    width: 100%;
+    z-index: 1000;
+}
+
+#navbarIcon{
+    display: flex;
+    color:black;
+}
+
+#navbarIcon2{
+    position: absolute;
+    top: 6vh;
+    left: 6vw;
+    color:black;
+}
+
+.openNavBar{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    background-color: #7F61BA;
+    top:0px;
+    left:0px;
+    width: 100vw;
+    height: 100vh;    
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+#navbarList {
+    text-align:left;
+    align-self: center;
+}
+
+#navbarList a{
+    color:white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    
+}
+
+li{
+    list-style-type: none;
+    margin: 16px;
+}
+
+#navbarButton {
+    margin-top: 3vh;
+    width: 100%;
+    background: none;
+    color: white;
+    font-size: 16px;
+    font-weight:600;
+    border: 0px;
+
+}
