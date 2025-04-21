@@ -67,7 +67,6 @@ public class SectionMemberController {
     /**
      * Creates a new section member.
      *
-     * @roles ADMIN
      * @param idSection the ID of the section to which the member will be added.
      * @param member the form containing the member's details.
      * @return ResponseEntity containing the created SectionMemberDto object and an HTTP CREATED status,

@@ -16,6 +16,7 @@ public class NewsMapper {
         }
         NewsDto newsDto = new NewsDto();
         BasicMemberDto basicMemberDto = MemberMapper.toBasicDto(news.getAuthor());
+        newsDto.setId(news.getId());
         newsDto.setAuthor(basicMemberDto);
         newsDto.setContent(news.getContent());
         newsDto.setTitle(news.getTitle());

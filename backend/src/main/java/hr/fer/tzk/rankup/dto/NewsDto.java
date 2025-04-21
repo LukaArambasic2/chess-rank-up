@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NewsDto {
+    private Long id;
     private String title;
     private LocalDate dateCreated;
     private LocalDate dateEdited;

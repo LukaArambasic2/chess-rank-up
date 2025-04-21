@@ -12,6 +12,7 @@ public class SectionMemberMapper {
         }
         
         SectionMemberDto dto = new SectionMemberDto();
+        dto.setSectionId(sectionMember.getSection().getId());
         dto.setFirstName(sectionMember.getMember().getFirstName());
         dto.setLastName(sectionMember.getMember().getLastName());
         dto.setEmail(sectionMember.getMember().getEmail());

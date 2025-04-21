@@ -42,7 +42,7 @@ public class SectionMemberService {
     public Optional<SectionMember> createSectionMemberFromJmbagAndRank(Long idSection, String jmbag, String rankName) {
         Optional<Member> memberOpt = memberService.findMemberByJmbag(jmbag);
         Optional<Section> sectionOpt = sectionService.findSectionById(idSection);
-        Optional<Rank> rankOpt = rankService.findRankByName(rankName);
+        Optional<Rank> rankOpt = rankService.findRankByNameAndSection_Id(rankName, idSection);
         if (memberOpt.isEmpty() || sectionOpt.isEmpty() || rankOpt.isEmpty()) {
             return Optional.empty();
         }

@@ -57,16 +57,21 @@ public class MemberProfileService {
 
         Long idSemester = semester.getId();
         Optional<SectionSemester> sectionSemesterOpt = sectionSemesterService.findSectionSemesterByAlterKey(idMember, idSection, idSemester);
+        int pointsModifier;
+        int threshold;
+        int pointsSemester;
+
         if (sectionSemesterOpt.isEmpty()) {
             return null;
         }
         System.out.println("4");
 
         SectionSemester sectionSemester = sectionSemesterOpt.get();
-        int pointsModifier = sectionMember.getRank().getPointsModifier();
-        int threshold = sectionSemester.getThreshold();
-        int pointsSemester = sectionSemester.getPoints();
+        pointsModifier = sectionMember.getRank().getPointsModifier();
+        threshold = sectionSemester.getThreshold();
+        pointsSemester = sectionSemester.getPoints();
         ProfileGeneralInfoDto profileGeneralInfo = new ProfileGeneralInfoDto();
+        profileGeneralInfo.setSectionId(sectionMember.getSection().getId());
         profileGeneralInfo.setFirstName(sectionMember.getMember().getFirstName());
         profileGeneralInfo.setLastName(sectionMember.getMember().getLastName());
         profileGeneralInfo.setJmbag(sectionMember.getMember().getJmbag());

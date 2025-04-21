@@ -21,7 +21,7 @@ public class RankService {
         return rankRepository.findAll();
     }
 
-    public Optional<Rank> findRankByName(String name) {
-        return rankRepository.findByName(name);
+    public Optional<Rank> findRankByNameAndSection_Id(String name, Long sectionId) {
+        return rankRepository.findByNameAndSection_Id(name, sectionId);
     }
 }

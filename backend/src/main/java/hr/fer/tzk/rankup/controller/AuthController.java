@@ -1,5 +1,6 @@
 package hr.fer.tzk.rankup.controller;
 
+import hr.fer.tzk.rankup.dto.UserDto;
 import hr.fer.tzk.rankup.form.LoginForm;
 import hr.fer.tzk.rankup.form.RegisterForm;
 import hr.fer.tzk.rankup.service.AuthService;
@@ -26,8 +27,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody LoginForm login) {
-        AbstractMap.SimpleEntry<HttpStatus, String> response = authService.login(login);
+    public ResponseEntity<UserDto> login(@Valid @RequestBody LoginForm login) {
+        AbstractMap.SimpleEntry<HttpStatus, UserDto> response = authService.login(login);
         return ResponseEntity.status(response.getKey()).body(response.getValue());
     }
 

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SectionMemberDto {
+    private Long sectionId;
     private String firstName;
     private String lastName;
     private String jmbag;

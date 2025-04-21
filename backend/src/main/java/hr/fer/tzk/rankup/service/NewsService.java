@@ -37,7 +37,7 @@ public class NewsService {
     }
 
     public List<NewsDto> findAllBySection(Long idSection) {
-        return newsRepository.findAllBySection_IdOrderByDateCreated(idSection).stream().map(NewsMapper::toDto).toList();
+        return newsRepository.findAllBySection_IdOrderByDateCreatedDesc(idSection).stream().map(NewsMapper::toDto).toList();
     }
 
     public NewsDto findById(Long id) {
