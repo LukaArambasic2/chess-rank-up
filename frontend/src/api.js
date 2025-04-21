@@ -9,16 +9,25 @@ const api = axios.create({
     },
 });
 
-/*api.interceptors.request.use(
+api.interceptors.request.use(
     config => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+        // niz endpointa na kojima ne želimo dodavati Authorization header
+        const skipAuth = ['/login', '/register', '/reset'];
+
+        // ako URL završava jednim od njih, samo vrati config bez mijenjanja
+        if (!skipAuth.some(ep => config.url.endsWith(ep))) {
+            const token = localStorage.getItem('token');
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
         }
-    }, error => {
-        console.error("This happened!");
+
+        return config;  // OBAVEZNO vraćaš config
+    },
+    error => {
+        console.error("Interceptor request error:", error);
         return Promise.reject(error);
     }
-);*/
+);
 
 export default api;

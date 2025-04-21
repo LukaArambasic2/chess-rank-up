@@ -3,25 +3,35 @@ import TitleContainer from "../../components/titleContainer/TitleContainer";
 import JoinButton from "../../components/button-join/JoinButton";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "../../api";
+import {useAuth} from "../../contexts/AuthProvider";
+import {log} from "qrcode/lib/core/galois-field";
+import {useSection} from "../../contexts/SectionProvider";
 
 const Join = () => {
-/*    const [sections, setSections] = useState([
-        { id: 1, title: 'Chess Club', description: 'Click to see more...' },
-        { id: 2, title: 'Music Band', description: 'Click to see more...' },
-        { id: 3, title: 'Art Club', description: 'Click to see more...' },
-        { id: 4, title: 'Football Team', description: 'Click to see more...' }
-    ]);*/
     const [sections, setSections] = useState([]);
     const nav = useNavigate();
+    const {user} = useAuth();
+    const {setSectionId} = useSection();
 
     useEffect(() => {
         // TODO: Add axios to fetch sections from an API
         // Example: axios.get('/api/sections').then(response => setSections(response.data));
         async function fetchData() {
-            await axios.get("http://localhost:8080/api/sections")
+            let functionSections = [];
+            await api.get("sections")
                 .then(response => {
-                    console.log(response.data);
                     setSections(response.data);
+                    functionSections = response.data;
+                    return api.get(`members/${user.id}/sections`)
+                })
+                .then(response => {
+                    const mySectionIds = response.data.map(section => section.id);
+                    const updatedSections = functionSections.map(section => ({
+                        ...section,
+                        enrolled: mySectionIds.includes(section.id)
+                    }));
+                    setSections(updatedSections);
                 })
                 .catch(error => {
                     console.log("Error happened: ", error);
@@ -30,16 +40,22 @@ const Join = () => {
         fetchData();
     }, []);
 
-    const handleSectionClick = (section) => {
-        // TODO: Handle what happens when a section is clicked
-        console.log(`Section clicked: ${section.title}`);
-        nav("/section")
+    const handleSectionClick = (id) => {
+        nav(`/section/${id}`)
     };
 
-    const handleJoinClick = (section) => {
+    const handleJoinClick = async (id) => {
         // TODO: Handle what happens when a section is clicked
-        console.log(`Section clicked: ${section.title}`);
-        nav("/profile")
+        console.log(`Section clicked:`, {rankName: "Pijun", jmbag: user.jmbag});
+        await api.post(`sections/${id}/members`, {rankName: "Pijun", jmbag: user.jmbag})
+            .then(response => {
+                console.log("Added section successfully!", response.data);
+                setSectionId(id);
+                nav(`/profile`);
+            })
+            .catch(error => {
+                console.log("Error adding section: ", error);
+            })
     };
 
     return (

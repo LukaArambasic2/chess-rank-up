@@ -2,17 +2,18 @@ import React from "react";
 import "./Section.css"
 import { useState, useEffect } from "react";
 import TitleContainer from "../../components/titleContainer/TitleContainer";
-import { useNavigate } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import api from "../../api";
 
 const Section = () => {
     const [isJoined, setIsJoined] = useState(false);
     const [detailedSection, setDetailedSection] = useState({});
     const nav = useNavigate();
+    const {id} = useParams();
 
     useEffect(() => {
         async function fetchData() {
-            await api.get(`/sections/${1}`)
+            await api.get(`/sections/${id}`)
                 .then(response => {
                     setDetailedSection(response.data);
                     console.log("Detailed section: ", response.data)

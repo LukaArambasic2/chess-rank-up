@@ -1,18 +1,22 @@
 import React, {useEffect, useState} from "react";
 import './Profile.css';
 import Curved from "../Curved";
-import { Link } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Navigation from "../../components/navigation/Navigation";
 import api from "../../api";
 import QRCode from 'qrcode';
+import {useAuth} from "../../contexts/AuthProvider";
+import {useSection} from "../../contexts/SectionProvider";
 
 const Profile = () => {
+    const {user} = useAuth();
+    const {sectionId} = useSection();
     const [member,setMember] = useState({});
     const [qr, setQr] = useState();
 
     useEffect(() => {
         async function fetchData() {
-            await api.get(`sections/${1}/members/${3}/profile/general`)
+            await api.get(`sections/${sectionId}/members/${user.id}/profile/general`)
                 .then(response => {
                     setMember(response.data);
                     QRCode.toDataURL(response.data.jmbag, {width: 300, margin: 2}).then(url => setQr(url));

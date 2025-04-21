@@ -4,12 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faHome, faUser, faInfoCircle, faNewspaper, faCalendar, faTrophy, faList, faQuestion} from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from 'react-router-dom'
 import "./Navigation.css"
+import {useSection} from "../../contexts/SectionProvider";
 
 
 const Navigation = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoggedIn, setLoggedIn] = useState(true);
     const navigate = useNavigate();
+    const {sectionId} = useSection();
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -21,6 +23,8 @@ const Navigation = () => {
         localStorage.removeItem("firstName");
         localStorage.removeItem("lastName");
         localStorage.removeItem("idSection");
+        localStorage.removeItem("token");
+
         //provjeriti treba li još nešto obrisati prilikom odjave
         navigate('/');
     }
@@ -29,7 +33,14 @@ const Navigation = () => {
         navigate("login")
     }
 
-    const id = localStorage.getItem("idSection");
+    const handleNavigate = (path) => {
+        if (sectionId) {
+            navigate(path);
+        } else {
+            navigate('/my-sections')
+        }
+    }
+
     return (
         <div id='navbarContainer'>
             <div id="navbarIcon" onClick={toggleMenu}>
@@ -42,19 +53,18 @@ const Navigation = () => {
                     </div>
                     {isLoggedIn && (
                         <ul id='navbarList'>
-                            <li><Link to="/"><FontAwesomeIcon icon={faHome} /> Home</Link></li>
-                            <li><Link to="/profile"><FontAwesomeIcon icon={faUser} /> Profil</Link></li>
-                            <li><Link to="/scoreboard"><FontAwesomeIcon icon={faTrophy} /> Scoreboard</Link></li>
-                            <li><Link to="/news"><FontAwesomeIcon icon={faNewspaper} /> Obavijesti</Link></li>
-                            <li><Link to="/events"><FontAwesomeIcon icon={faCalendar} /> Događaji</Link></li>
-                            <li><Link to="/about"><FontAwesomeIcon icon={faQuestion} /> O aplikaciji</Link></li>
+                            <li><a onClick={()=>navigate("/")}><FontAwesomeIcon icon={faHome} /> Home</a></li>
+                            <li><a onClick={()=>handleNavigate(`/profile`)}><FontAwesomeIcon icon={faUser} /> Profil</a></li>
+                            <li><a onClick={()=>handleNavigate(`/scoreboard`)} ><FontAwesomeIcon icon={faTrophy} /> Scoreboard</a></li>
+                            <li><a onClick={()=>handleNavigate(`/news`)}><FontAwesomeIcon icon={faNewspaper} /> Obavijesti</a></li>
+                            <li><a onClick={()=>navigate("/about")}><FontAwesomeIcon icon={faQuestion} /> O aplikaciji</a></li>
                             <li><button id='navbarButton' onClick={handleLogout}>Odjava</button></li>    
                         </ul>
                     )}
                     {!isLoggedIn && (
                         <ul id='navbarList'>
-                            <li><Link to="/"><FontAwesomeIcon icon={faHome} /> Home</Link></li>
-                            <li><Link to="/about"><FontAwesomeIcon icon={faQuestion} /> O aplikaciji</Link></li>
+                            <li><a onClick={()=>navigate("/")}><FontAwesomeIcon icon={faHome} /> Home</a></li>
+                            <li><a onClick={()=>navigate("/about")}><FontAwesomeIcon icon={faQuestion} /> O aplikaciji</a></li>
                             <li><button id='navbarButton' onClick={handleLogin}>Prijava</button></li>    
                         </ul>
                     )}
