@@ -1,5 +1,6 @@
 package hr.fer.tzk.rankup.service;
 
+import hr.fer.tzk.rankup.dto.UserDto;
 import hr.fer.tzk.rankup.model.Member;
 import hr.fer.tzk.rankup.model.Verification;
 import hr.fer.tzk.rankup.repository.VerificationRepository;
@@ -55,7 +56,7 @@ public class VerificationService {
         }
     }
 
-    public ResponseEntity verify(String URL) {
+    public ResponseEntity<String> verify(String URL) {
         Optional<Verification> verification = verificationRepository.findVerificationByUrl(URL);
 
         if (verification.isEmpty()) {

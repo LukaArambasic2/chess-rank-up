@@ -63,9 +63,12 @@ public class MemberController {
      */
     @GetMapping("/{idMember}/sections")
     public ResponseEntity<List<SectionDto>> findSections(@PathVariable Long idMember) {
-        System.out.println("I have been called");
         List<SectionMember> mySectionsMemberList = sectionMemberService.findAllSectionMembersByIdMember(idMember);
-        List<SectionDto> mySections = mySectionsMemberList.stream().map(SectionMember::getSection).map(SectionMapper::toDto).toList();
+        List<SectionDto> mySections = mySectionsMemberList.stream().map(sectionMember -> {
+            SectionDto sectionDto = SectionMapper.toDto(sectionMember.getSection());
+            sectionDto.setRank(sectionMember.getRank().getName());
+            return sectionDto;
+        }).toList();
         return ResponseEntity.ok(mySections);
     }
 

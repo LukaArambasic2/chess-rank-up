@@ -12,4 +12,5 @@ public class SectionDto {
     private String name;
     private String descriptionUrl;
     private String logoUrl;
+    private String rank = null;
 }

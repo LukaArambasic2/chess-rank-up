@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.AbstractMap;
 import java.util.Optional;
@@ -95,4 +96,29 @@ public class AuthService {
 
         return new AbstractMap.SimpleEntry<>(HttpStatus.OK, null);
     }
+
+    public UserDto me(String token) {
+        // 1) validacija i izdvajanje emaila iz tokena
+        String email = jwtUtil.validateAndExtractEmail(token);
+        if (email == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Nevažeći ili istekao token");
+        }
+
+        // 2) dohvat korisnika po emailu
+        Member member = memberService.findMemberByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Korisnik ne postoji"));
+
+        // 3) mapiranje u DTO
+        BasicMemberDto basic = MemberMapper.toBasicDto(member);
+
+        // 4) vraćanje složenog UserDto
+        return new UserDto(
+                basic,            // user
+                token,            // token
+                null,             // error
+                member.getId()    // id
+        );
+    }
+
 }

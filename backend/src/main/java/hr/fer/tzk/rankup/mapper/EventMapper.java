@@ -13,6 +13,7 @@ public class EventMapper {
         }
 
         EventDto eventDTO = new EventDto();
+        eventDTO.setId(event.getId());
         eventDTO.setName(event.getName());
         eventDTO.setDate(event.getDate());
         eventDTO.setDescription(event.getDescription());
